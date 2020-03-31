@@ -239,10 +239,10 @@
 
       
         <ul>
-<li><strong>&#x672C;&#x793A;&#x4F8B;&#x4E2D;&#x7684; JSP &#x7684;&#x4EE3;&#x7801;</strong>&#xFF1A;<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span> isELIgnored=<span class="string">&quot;false&quot;</span> %&gt;</span><br><span class="line"> </span><br><span class="line">&lt;%  String name = request.getParameter(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">&quot;abc&quot;</span>.equals(name))</span><br><span class="line">        out.print(<span class="string">&quot;&lt;font color=&apos;red&apos;&gt;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&lt;/font&gt;&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        out.print(<span class="string">&quot;&lt;font color=&apos;green&apos;&gt;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&lt;/font&gt;&quot;</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<li><strong>本示例中的 JSP 的代码</strong>：<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> contentType=<span class="string">"text/html; charset=UTF-8"</span></span><br><span class="line">    pageEncoding=<span class="string">"UTF-8"</span> isELIgnored=<span class="string">"false"</span> %&gt;</span><br><span class="line"> </span><br><span class="line">&lt;%  String name = request.getParameter(<span class="string">"name"</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">"abc"</span>.equals(name))</span><br><span class="line">        out.print(<span class="string">"&lt;font color='red'&gt;已经存在&lt;/font&gt;"</span>);</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        out.print(<span class="string">"&lt;font color='green'&gt;可以使用&lt;/font&gt;"</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
 <a id="more"></a></li>
-<li><strong>AJAX</strong>&#xFF08;Asynchronous JavaScript and XML&#xFF09;&#x662F;&#x4E00;&#x79CD;&#x65E0;&#x9700;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#x6574;&#x4E2A;&#x9875;&#x9762;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5BF9;&#x7F51;&#x9875;&#x7684;&#x67D0;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#x7684;&#x6280;&#x672F;&#x3002;  </li>
-<li><strong>Hello AJAX</strong>&#xFF1A;<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>&#x8F93;&#x5165;&#x8D26;&#x53F7;&#xFF1A;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;name&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">onkeyup</span>=<span class="string">&quot;check()&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;checkResult&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript"><span class="keyword">var</span> xmlhttp;</span></span><br><span class="line"><span class="actionscript"><span class="function"><span class="keyword">function</span> <span class="title">check</span><span class="params">()</span> </span>{</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> name = <span class="built_in">document</span>.getElementById(<span class="string">&quot;name&quot;</span>).value;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> url = <span class="string">&quot;http://how2j.cn/study/checkName.jsp?name=&quot;</span> + name;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// &#x54CD;&#x5E94;&#x51FD;&#x6570;</span></span></span><br><span class="line">    xmlhttp.onreadystatechange = checkResult;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// &#x8BBE;&#x7F6E;&#x8BBF;&#x95EE;&#x7684;&#x9875;&#x9762;</span></span></span><br><span class="line"><span class="actionscript">    xmlhttp.open(<span class="string">&quot;GET&quot;</span>, url, <span class="literal">true</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// &#x6267;&#x884C;&#x8BBF;&#x95EE;</span></span></span><br><span class="line"><span class="actionscript">    xmlhttp.send(<span class="literal">null</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// &#x53EA;&#x6709;&#x5728;&#x7528;&quot;POST&quot;&#xFF0C;&#x5E76;&#x4E14;&#x9700;&#x8981;&#x53D1;&#x9001;&#x53C2;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x624D;&#x4F1A;&#x4F7F;&#x7528;&#x5230;send&#x3002;</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">// xmlhttp.send(&quot;user=&quot;+username+&quot;&amp;password=&quot;+password)</span></span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="actionscript"><span class="function"><span class="keyword">function</span> <span class="title">checkResult</span><span class="params">()</span> </span>{</span></span><br><span class="line">    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) {</span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">&apos;checkResult&apos;</span>).innerHTML = xmlhttp.responseText;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<li><strong>AJAX</strong>（Asynchronous JavaScript and XML）是一种无需重新加载整个页面的情况下，对网页的某部分进行更新的技术。  </li>
+<li><strong>Hello AJAX</strong>：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>输入账号：<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"name"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">onkeyup</span>=<span class="string">"check()"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"checkResult"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript"><span class="keyword">var</span> xmlhttp;</span></span><br><span class="line"><span class="actionscript"><span class="function"><span class="keyword">function</span> <span class="title">check</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> name = <span class="built_in">document</span>.getElementById(<span class="string">"name"</span>).value;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> url = <span class="string">"http://how2j.cn/study/checkName.jsp?name="</span> + name;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 响应函数</span></span></span><br><span class="line">    xmlhttp.onreadystatechange = checkResult;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 设置访问的页面</span></span></span><br><span class="line"><span class="actionscript">    xmlhttp.open(<span class="string">"GET"</span>, url, <span class="literal">true</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 执行访问</span></span></span><br><span class="line"><span class="actionscript">    xmlhttp.send(<span class="literal">null</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 只有在用"POST"，并且需要发送参数的时候，才会使用到send。</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">// xmlhttp.send("user="+username+"&amp;password="+password)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript"><span class="function"><span class="keyword">function</span> <span class="title">checkResult</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line">    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) &#123;</span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'checkResult'</span>).innerHTML = xmlhttp.responseText;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <!--lalala--></li>
 </ul>
 
@@ -452,6 +452,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -238,52 +238,52 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>&#x5C55;&#x5F00;</strong>&#xFF1A;</p>
+        <p><strong>展开</strong>：</p>
 <ul>
-<li><strong>&#x5B57;&#x7B26;&#x5C55;&#x5F00;</strong>&#xFF1A;<ul>
+<li><strong>字符展开</strong>：<ul>
 <li><code>echo *</code></li>
 <li><code>echo D*</code></li>
 <li><code>echo [[:upper:]]*</code></li>
 </ul>
 </li>
-<li><strong>&#x8DEF;&#x5F84;&#x540D;&#x5C55;&#x5F00;</strong>&#xFF1A;<ul>
+<li><strong>路径名展开</strong>：<ul>
 <li><code>ls -d .* | less</code></li>
 <li><code>ls -d .[!.]?*</code></li>
 </ul>
 </li>
-<li><strong>&#x6CE2;&#x6D6A;&#x7EBF;&#x5C55;&#x5F00;</strong>&#xFF1A;<a id="more"></a><ul>
+<li><strong>波浪线展开</strong>：<a id="more"></a><ul>
 <li><code>echo ~</code></li>
 </ul>
 </li>
-<li><strong>&#x7B97;&#x6570;&#x8868;&#x8FBE;&#x5F0F;&#x5C55;&#x5F00;</strong>&#xFF1A;<ul>
+<li><strong>算数表达式展开</strong>：<ul>
 <li><code>echo $(((5**2) * 3))</code></li>
 </ul>
 </li>
-<li><strong>&#x82B1;&#x62EC;&#x53F7;&#x5C55;&#x5F00;</strong>&#xFF1A;<ul>
+<li><strong>花括号展开</strong>：<ul>
 <li><code>echo Front-{A,B,C}-Back</code></li>
 <li><code>echo Number_{1..5}</code></li>
 <li><code>mkdir {2007..2009}-0{1..9} {2007..2009}-{10..12}</code></li>
 </ul>
 </li>
-<li><strong>&#x53C2;&#x6570;&#x5C55;&#x5F00;</strong>&#xFF1A;<ul>
+<li><strong>参数展开</strong>：<ul>
 <li><code>echo $USER</code></li>
 <li><code>printenv | less</code></li>
 </ul>
 </li>
-<li><strong>&#x547D;&#x4EE4;&#x66FF;&#x6362;</strong>&#xFF08;&#x547D;&#x4EE4;&#x66FF;&#x6362;&#x5141;&#x8BB8;&#x6211;&#x4EEC;&#x628A;&#x4E00;&#x4E2A;&#x547D;&#x4EE4;&#x7684;&#x8F93;&#x51FA;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5C55;&#x5F00;&#x6A21;&#x5F0F;&#x6765;&#x4F7F;&#x7528;&#xFF09;&#xFF1A;<ul>
+<li><strong>命令替换</strong>（命令替换允许我们把一个命令的输出作为一个展开模式来使用）：<ul>
 <li><code>ls -l $(which cp)</code></li>
 <li><code>file $(ls /usr/bin/* | grep zip)</code></li>
 </ul>
 </li>
 </ul>
-<p><strong>&#x5F15;&#x7528;</strong>&#xFF1A;</p>
+<p><strong>引用</strong>：</p>
 <ul>
-<li><strong>&#x76F4;&#x63A5;&#x5F15;&#x7528;</strong>&#xFF1A;&#x540E;&#x679C;&#x5C31;&#x662F;&#x5404;&#x79CD;&#x8F6C;&#x4E49;&#x3002;</li>
-<li><strong>&#x53CC;&#x5F15;&#x53F7;&#x5F15;&#x7528;</strong>&#xFF1A;&#x5982;&#x679C;&#x4F60;&#x628A;&#x6587;&#x672C;&#x653E;&#x5728;&#x53CC;&#x5F15;&#x53F7;&#x4E2D;&#xFF0C;Shell &#x4F7F;&#x7528;&#x7684;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#xFF0C;&#x9664;&#x4E86; $&#xFF0C;\ (&#x53CD;&#x659C;&#x6760;&#xFF09;&#xFF0C;&#x548C; `&#xFF08;&#x5012;&#x5F15;&#x53F7;&#xFF09;&#x4E4B;&#x5916;&#xFF0C;&#x5219;&#x5931;&#x53BB;&#x5B83;&#x4EEC;&#x7684;&#x7279;&#x6B8A;&#x542B;&#x4E49;&#xFF0C;&#x88AB;&#x5F53;&#x4F5C;&#x666E;&#x901A;&#x5B57;&#x7B26;&#x6765;&#x770B;&#x5F85;&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5B57;&#x7B26;&#x5C55;&#x5F00;&#x3001;&#x8DEF;&#x5F84;&#x540D;&#x5C55;&#x5F00;&#x3001;&#x6CE2;&#x6D6A;&#x7EBF;&#x5C55;&#x5F00;&#x548C;&#x82B1;&#x62EC;&#x53F7;&#x5C55;&#x5F00;&#x90FD;&#x88AB;&#x7981;&#x6B62;&#xFF0C;&#x7136;&#x800C;&#x53C2;&#x6570;&#x5C55;&#x5F00;&#xFF0C;&#x7B97;&#x672F;&#x5C55;&#x5F00;&#xFF0C;&#x548C;&#x547D;&#x4EE4;&#x66FF;&#x6362; &#x4ECD;&#x7136;&#x6267;&#x884C;&#x3002;</li>
-<li><strong>&#x5355;&#x5F15;&#x53F7;&#x5F15;&#x7528;</strong>&#xFF1A;&#x8F6C;&#x4E49;&#x90FD;&#x4E0D;&#x6267;&#x884C;&#x3002;</li>
-<li><strong>&#x7EFC;&#x5408;&#x4F8B;&#x5B50;</strong>&#xFF1A;<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[me@linuxbox ~]$ echo text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER</span><br><span class="line">text /home/me/ls-output.txt a b foo 4 me</span><br><span class="line">[me@linuxbox ~]$ echo &quot;text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER&quot;</span><br><span class="line">text ~/*.txt   {a,b} foo 4 me</span><br><span class="line">[me@linuxbox ~]$ echo &apos;text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER&apos;</span><br><span class="line">text ~/*.txt  {a,b} $(echo foo) $((2+2)) $USER</span><br></pre></td></tr></table></figure>
+<li><strong>直接引用</strong>：后果就是各种转义。</li>
+<li><strong>双引号引用</strong>：如果你把文本放在双引号中，Shell 使用的特殊字符，除了 $，\ (反斜杠），和 `（倒引号）之外，则失去它们的特殊含义，被当作普通字符来看待。这意味着字符展开、路径名展开、波浪线展开和花括号展开都被禁止，然而参数展开，算术展开，和命令替换 仍然执行。</li>
+<li><strong>单引号引用</strong>：转义都不执行。</li>
+<li><strong>综合例子</strong>：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[me@linuxbox ~]$ echo text ~/*.txt &#123;a,b&#125; $(echo foo) $((2+2)) $USER</span><br><span class="line">text /home/me/ls-output.txt a b foo 4 me</span><br><span class="line">[me@linuxbox ~]$ echo "text ~/*.txt &#123;a,b&#125; $(echo foo) $((2+2)) $USER"</span><br><span class="line">text ~/*.txt   &#123;a,b&#125; foo 4 me</span><br><span class="line">[me@linuxbox ~]$ echo 'text ~/*.txt &#123;a,b&#125; $(echo foo) $((2+2)) $USER'</span><br><span class="line">text ~/*.txt  &#123;a,b&#125; $(echo foo) $((2+2)) $USER</span><br></pre></td></tr></table></figure>
 <!--lalala--></li>
-<li><strong>&#x8F6C;&#x4E49;&#x5B57;&#x7B26;</strong>&#xFF1A;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x7528;<code>\</code>&#x6765;&#x8F6C;&#x4E49;&#xFF0C;&#x800C;<code>\</code>&#x7528;<code>&quot;\&quot;</code>&#x6765;&#x8F6C;&#x4E49;&#x3002;</li>
+<li><strong>转义字符</strong>：特殊字符用<code>\</code>来转义，而<code>\</code>用<code>&quot;\&quot;</code>来转义。</li>
 </ul>
 
     </div>
@@ -492,6 +492,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

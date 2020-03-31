@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="git init                    &amp;#x2014;&amp;#x2014;&amp;#x521B;&amp;#x5EFA;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93; git add ***                 &amp;#x2014;&amp;#x2014;&amp;#x628A;&amp;#x6587;&amp;#x4EF6;&amp;#x6DFB;&amp;#x52A0;&amp;#x5230;&amp;#x672C;&amp;#x573">
+  <meta name="description" content="git init                    ——创建本地仓库 git add ***                 ——把文件添加到本地仓库 git commit -m &quot;description&quot; ——把文件提交到仓库并添加描述 git commit                  ——更详细地纪录信息，#号不删除，在后面添加，标题和正文之前要有空行 git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跟廖雪峰学习Git">
 <meta property="og:url" content="https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/index.html">
 <meta property="og:site_name" content="Adventures of xijinian">
-<meta property="og:description" content="git init                    &amp;#x2014;&amp;#x2014;&amp;#x521B;&amp;#x5EFA;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93; git add ***                 &amp;#x2014;&amp;#x2014;&amp;#x628A;&amp;#x6587;&amp;#x4EF6;&amp;#x6DFB;&amp;#x52A0;&amp;#x5230;&amp;#x672C;&amp;#x573">
+<meta property="og:description" content="git init                    ——创建本地仓库 git add ***                 ——把文件添加到本地仓库 git commit -m &quot;description&quot; ——把文件提交到仓库并添加描述 git commit                  ——更详细地纪录信息，#号不删除，在后面添加，标题和正文之前要有空行 git">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-10-23T13:05:06.000Z">
 <meta property="article:modified_time" content="2018-03-17T13:17:22.000Z">
@@ -239,33 +239,33 @@
 
       
         <ul>
-<li><code>git init</code>                    &#x2014;&#x2014;&#x521B;&#x5EFA;&#x672C;&#x5730;&#x4ED3;&#x5E93;</li>
-<li><code>git add ***</code>                 &#x2014;&#x2014;&#x628A;&#x6587;&#x4EF6;&#x6DFB;&#x52A0;&#x5230;&#x672C;&#x5730;&#x4ED3;&#x5E93;</li>
-<li><code>git commit -m &quot;description&quot;</code> &#x2014;&#x2014;&#x628A;&#x6587;&#x4EF6;&#x63D0;&#x4EA4;&#x5230;&#x4ED3;&#x5E93;&#x5E76;&#x6DFB;&#x52A0;&#x63CF;&#x8FF0;</li>
-<li><code>git commit</code>                  &#x2014;&#x2014;&#x66F4;&#x8BE6;&#x7EC6;&#x5730;&#x7EAA;&#x5F55;&#x4FE1;&#x606F;&#xFF0C;#&#x53F7;&#x4E0D;&#x5220;&#x9664;&#xFF0C;&#x5728;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#xFF0C;&#x6807;&#x9898;&#x548C;&#x6B63;&#x6587;&#x4E4B;&#x524D;&#x8981;&#x6709;&#x7A7A;&#x884C;</li>
-<li><code>git status</code>                  &#x2014;&#x2014;&#x638C;&#x63E1;&#x5F53;&#x524D;&#x4ED3;&#x5E93;&#x72B6;&#x6001;</li>
-<li><code>git diff</code>                    &#x2014;&#x2014;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x5DE5;&#x4F5C;&#x6811;&#x4E0E;&#x6682;&#x5B58;&#x533A;&#x7684;&#x5DEE;&#x522B;&#xFF08;&#x5DE5;&#x4F5C;&#x6811; add &#x5230;&#x6682;&#x5B58;&#x533A;&#x540E;&#x5B83;&#x4FE9;&#x5C31;&#x6CA1;&#x533A;&#x522B;&#xFF09;</li>
-<li><code>git diff HEAD</code>               &#x2014;&#x2014;&#x67E5;&#x770B;&#x5DE5;&#x4F5C;&#x6811;&#x548C;&#x6700;&#x65B0;&#x63D0;&#x4EA4;&#x7684;&#x5DEE;&#x522B;&#xFF0C;&#x53EF;&#x5728;&#x6267;&#x884C; <code>git add</code> &#x540E;&#x3001;&#x6267;&#x884C; <code>git commit</code> &#x524D;&#x6267;&#x884C;&#xFF0C;&#x7B49;&#x786E;&#x8BA4;&#x5B8C;&#x6BD5;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x63D0;&#x4EA4;&#xFF08;&#x8FD9;&#x91CC;&#x7684; <code>HEAD</code> &#x662F;&#x6307;&#x5411;&#x5F53;&#x524D;&#x5206;&#x652F;&#x4E2D;&#x6700;&#x65B0;&#x4E00;&#x6B21;&#x63D0;&#x4EA4;&#x7684;&#x6307;&#x9488;&#xFF09;</li>
-<li><code>git log (&#x53EF;&#x52A0;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x540E;&#x9762;&#x540C;)</code>   &#x2014;&#x2014;&#x663E;&#x793A;&#x4ECE;&#x6700;&#x8FD1;&#x5230;&#x6700;&#x8FDC;&#x7684;&#x63D0;&#x4EA4;&#x65E5;&#x5FD7;</li>
-<li><code>git log --pretty=oneline</code>    &#x2014;&#x2014;&#x67E5;&#x770B;&#x7B80;&#x7565;&#x7248;&#x7684;&#x63D0;&#x4EA4;&#x65E5;&#x5FD7;</li>
-<li><code>git log -p</code>                  &#x2014;&#x2014;&#x663E;&#x793A;&#x6587;&#x4EF6;&#x7684;&#x6539;&#x52A8;</li>
-<li><code>git reset --hard HEAD^</code>      &#x2014;&#x2014;&#x56DE;&#x9000;&#x5230;&#x4E0A;&#x4E00;&#x4E2A;&#x7248;&#x672C;</li>
-<li><code>git branch</code>                  &#x2014;&#x2014;&#x663E;&#x793A;&#x5206;&#x652F;&#x4E00;&#x89C8;&#x8868;&#xFF0C;&#x540C;&#x65F6;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x6240;&#x5728;&#x5206;&#x652F;</li>
-<li><code>git checkout -b &quot;feature&quot;</code>   &#x2014;&#x2014;&#x521B;&#x5EFA;&#x3001;&#x5207;&#x6362;&#x5206;&#x652F;&#x3002;&#x5728;&#x6B64;&#x5206;&#x652F;&#x4E0B;&#x505A;&#x4E8B;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230; master&#xFF0C;<code>-b</code>&#x5E94;&#x8BE5;&#x662F;&#x201C;&#x6CA1;&#x6709;&#x5C31;&#x521B;&#x5EFA;&#x201D;&#x7684;&#x610F;&#x601D;</li>
-<li><code>git checkout -</code>              &#x2014;&#x2014;<code>-</code> &#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x5206;&#x652F;&#x7684;&#x610F;&#x601D;</li>
-<li><code>git merge --no-ff feature-A</code> &#x2014;&#x2014;&#x5408;&#x5E76;&#x5206;&#x652F;</li>
-<li><code>git log --graph</code>             &#x2014;&#x2014;&#x4EE5;&#x56FE;&#x5F62;&#x67E5;&#x770B;&#x65E5;&#x5FD7;</li>
-<li><code>git reflog</code>                  &#x2014;&#x2014;&#x5982;&#x679C;&#x56DE;&#x9000;&#x4E86;&#xFF0C;&#x518D;&#x60F3;&#x56DE;&#x5230;&#x56DE;&#x9000;&#x4E4B;&#x524D;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x7528;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x56DE;&#x9000;&#x70B9;&#x540E;&#x7684; log</li>
-<li>&#x5F53;&#x5206;&#x652F;&#x5408;&#x5E76;&#x51B2;&#x7A81;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x5904;&#x7406;&#x51B2;&#x7A81;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x518D; add&#xFF0C;&#x518D; commit&#x3002;</li>
-<li><code>git commit --amend</code>          &#x2014;&#x2014;&#x4FEE;&#x6539;&#x4E0A;&#x4E00;&#x6761;&#x63D0;&#x4EA4;&#x4FE1;&#x606F;</li>
-<li><code>git rebase -i &#xFF08;&#x5982;HEAD~2&#xFF09;</code>   &#x2014;&#x2014;&#x538B;&#x7F29;&#x5386;&#x53F2;&#xFF08;&#x5C06; pick &#x6539;&#x6210; fixup&#xFF09;</li>
-<li><code>git commit -am &quot;balabala&quot;</code>   &#x2014;&#x2014;&#x4E00;&#x6B21;&#x6027; add &#x548C; commit</li>
-<li><code>git remote add &quot;&#x6807;&#x8BC6;&#x7B26;&quot; git@github.com:XIJINIAN/git-tutorial.git</code>  &#x2014;&#x2014;&#x94FE;&#x63A5;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li>
-<li><code>git push -u &quot;&#x6807;&#x8BC6;&#x7B26;&quot; master</code>  &#x2014;&#x2014;&#x63A8;&#x9001;&#x672C;&#x5730;&#x4ED3;&#x5E93;&#x5230;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li>
-<li><code>git push -u &quot;&#x6807;&#x8BC6;&#x7B26;&quot; feature-D</code>&#x2014;&#x2014;&#x63A8;&#x9001;&#x81F3; master &#x4EE5;&#x5916;&#x7684;&#x5206;&#x652F;&#x81F3;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li>
-<li><code>git clone git@github.com:github-book/git-tutorial.git</code>   &#x2014;&#x2014;&#x5C06; GitHub &#x4E0A;&#x7684;&#x4ED3;&#x5E93; clone &#x5230;&#x672C;&#x5730;&#xFF08;&#x9ED8;&#x8BA4; master &#x5206;&#x652F;&#xFF09;</li>
-<li><code>git checkout -b feature-D &quot;&#x6807;&#x8BC6;&#x7B26;&quot;/feature-D</code>  &#x2014;&#x2014;&#x5728;&#x672C;&#x5730;&#x65B0;&#x5EFA;&#x5206;&#x652F; feature-D &#x5E76;&#x83B7;&#x53D6;&#x8FDC;&#x7A0B;&#x7684; feature-D &#x5206;&#x652F;</li>
-<li><code>git pull &quot;&#x6807;&#x8BC6;&#x7B26;&quot; feature-D</code>  &#x2014;&#x2014;&#x83B7;&#x53D6;&#x8FDC;&#x7AEF;&#x6700;&#x65B0;&#x5206;&#x652F;&#x5185;&#x5BB9;&#x5230;&#x672C;&#x5730;&#x5DE5;&#x4F5C;&#x533A;</li>
+<li><code>git init</code>                    ——创建本地仓库</li>
+<li><code>git add ***</code>                 ——把文件添加到本地仓库</li>
+<li><code>git commit -m &quot;description&quot;</code> ——把文件提交到仓库并添加描述</li>
+<li><code>git commit</code>                  ——更详细地纪录信息，#号不删除，在后面添加，标题和正文之前要有空行</li>
+<li><code>git status</code>                  ——掌握当前仓库状态</li>
+<li><code>git diff</code>                    ——查看当前工作树与暂存区的差别（工作树 add 到暂存区后它俩就没区别）</li>
+<li><code>git diff HEAD</code>               ——查看工作树和最新提交的差别，可在执行 <code>git add</code> 后、执行 <code>git commit</code> 前执行，等确认完毕后再进行提交（这里的 <code>HEAD</code> 是指向当前分支中最新一次提交的指针）</li>
+<li><code>git log (可加文件名，后面同)</code>   ——显示从最近到最远的提交日志</li>
+<li><code>git log --pretty=oneline</code>    ——查看简略版的提交日志</li>
+<li><code>git log -p</code>                  ——显示文件的改动</li>
+<li><code>git reset --hard HEAD^</code>      ——回退到上一个版本</li>
+<li><code>git branch</code>                  ——显示分支一览表，同时查看当前所在分支</li>
+<li><code>git checkout -b &quot;feature&quot;</code>   ——创建、切换分支。在此分支下做事不会影响到 master，<code>-b</code>应该是“没有就创建”的意思</li>
+<li><code>git checkout -</code>              ——<code>-</code> 是上一个分支的意思</li>
+<li><code>git merge --no-ff feature-A</code> ——合并分支</li>
+<li><code>git log --graph</code>             ——以图形查看日志</li>
+<li><code>git reflog</code>                  ——如果回退了，再想回到回退之前，就需要用这个命令查看回退点后的 log</li>
+<li>当分支合并冲突的时候，需要处理冲突的文件，然后再 add，再 commit。</li>
+<li><code>git commit --amend</code>          ——修改上一条提交信息</li>
+<li><code>git rebase -i （如HEAD~2）</code>   ——压缩历史（将 pick 改成 fixup）</li>
+<li><code>git commit -am &quot;balabala&quot;</code>   ——一次性 add 和 commit</li>
+<li><code>git remote add &quot;标识符&quot; git@github.com:XIJINIAN/git-tutorial.git</code>  ——链接远程仓库</li>
+<li><code>git push -u &quot;标识符&quot; master</code>  ——推送本地仓库到远程仓库</li>
+<li><code>git push -u &quot;标识符&quot; feature-D</code>——推送至 master 以外的分支至远程仓库</li>
+<li><code>git clone git@github.com:github-book/git-tutorial.git</code>   ——将 GitHub 上的仓库 clone 到本地（默认 master 分支）</li>
+<li><code>git checkout -b feature-D &quot;标识符&quot;/feature-D</code>  ——在本地新建分支 feature-D 并获取远程的 feature-D 分支</li>
+<li><code>git pull &quot;标识符&quot; feature-D</code>  ——获取远端最新分支内容到本地工作区</li>
 </ul>
 
     </div>
@@ -474,6 +474,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

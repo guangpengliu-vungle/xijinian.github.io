@@ -239,50 +239,50 @@
 
       
         <blockquote>
-<p><strong>&#x672C;&#x8282;&#x5185;&#x5BB9;&#x57FA;&#x4E8E;LC-3</strong></p>
+<p><strong>本节内容基于LC-3</strong></p>
 </blockquote>
-<p>&#x6982;&#x8FF0;&#xFF1A;</p>
+<p>概述：</p>
 <ul>
-<li>&#x9AD8;&#x7EA7;&#x8BED;&#x8A00;&#x901A;&#x5E38;&#x662F;&#x201C;ISA&#x65E0;&#x5173;&#x201D;&#x7684;&#xFF0C;&#x800C;&#x4F4E;&#x7EA7;&#x8BED;&#x8A00;&#x901A;&#x5E38;&#x662F;&#x201C;ISA&#x76F8;&#x5173;&#x7684;&#x201D;&#x3002;&#x4E8B;&#x5B9E;&#x4E0A;&#xFF0C;&#x5BF9;&#x4E8E;&#x7279;&#x5B9A;&#x7684;ISA&#xFF0C;&#x901A;&#x5E38;&#x53EA;&#x5B58;&#x5728;&#x4E00;&#x79CD;&#x5BF9;&#x5E94;&#x7684;&#x6C47;&#x7F16;&#x8BED;&#x8A00;&#x3002;</li>
+<li>高级语言通常是“ISA无关”的，而低级语言通常是“ISA相关的”。事实上，对于特定的ISA，通常只存在一种对应的汇编语言。</li>
 </ul>
-<p>&#x6307;&#x4EE4;&#xFF1A;</p>
+<p>指令：</p>
 <ul>
-<li>&#x6C47;&#x7F16;&#x8BED;&#x8A00;&#x7684;&#x6307;&#x4EE4;&#x683C;&#x5F0F;&#xFF1A;<code>LABEL OPCODE OPERANDS ;COMMENTS</code>:<code>LABEL</code>&#x548C;<code>;COMMENTS</code>&#x5B57;&#x6BB5;&#x90FD;&#x662F;&#x53EF;&#x9009;&#x7684;&#x3002;</li>
-<li><code>LABEL</code>&#x662F;&#x6307;&#x5411;&#x5185;&#x5B58;&#x5355;&#x5143;&#x7684;&#x4E00;&#x4E2A;&#x7B26;&#x53F7;&#x540D;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x5728;&#x7A0B;&#x5E8F;&#x4E2D;&#x76F4;&#x63A5;&#x5F15;&#x7528;&#x3002;</li>
-<li><code>COMMENTS</code>&#x6709;&#x4E24;&#x4E2A;&#x4F5C;&#x7528;&#xFF1A;&#x4E3A;&#x4EE3;&#x7801;&#x63D0;&#x4F9B;&#x66F4;&#x6DF1;&#x7684;<strong>&#x6D1E;&#x5BDF;&#x529B;</strong>&#xFF1B;&#x4E00;&#x884C;&#x4E2D;&#x989D;&#x5916;&#x7684;&#x7A7A;&#x683C;&#x7528;&#x6765;&#x5206;&#x5272;&#x4EE3;&#x7801;&#x7247;&#x6BB5;&#x3002;<a id="more"></a>
+<li>汇编语言的指令格式：<code>LABEL OPCODE OPERANDS ;COMMENTS</code>:<code>LABEL</code>和<code>;COMMENTS</code>字段都是可选的。</li>
+<li><code>LABEL</code>是指向内存单元的一个符号名，它可以在程序中直接引用。</li>
+<li><code>COMMENTS</code>有两个作用：为代码提供更深的<strong>洞察力</strong>；一行中额外的空格用来分割代码片段。<a id="more"></a>
 
 
 </li>
 </ul>
-<p>&#x4F2A;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<p>伪操作：</p>
 <ul>
-<li>&#x4F2A;&#x64CD;&#x4F5C;&#x4E00;&#x4E2A;&#x66F4;&#x6807;&#x51C6;&#x7684;&#x540D;&#x5B57;&#x662F;&#x201C;&#x6C47;&#x7F16;&#x6307;&#x4EE4;&#x201D;&#x3002;&#x4E4B;&#x6240;&#x4EE5;&#x79F0;&#x4E3A;&#x4F2A;&#x64CD;&#x4F5C;&#x662F;&#x56E0;&#x4E3A;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x5B83;&#x4EEC;&#x7684;&#x65F6;&#x5019;&#x4E0D;&#x4EA7;&#x751F;&#x4EFB;&#x4F55;&#x64CD;&#x4F5C;&#x3002;</li>
-<li>&#x4F2A;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x662F;&#x7A0B;&#x5E8F;&#x5458;&#x4F20;&#x7ED9;&#x6C47;&#x7F16;&#x5668;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x7528;&#x4E8E;&#x6307;&#x5BFC;&#x6C47;&#x7F16;&#x5668;&#x7684;&#x6C47;&#x7F16;&#x64CD;&#x4F5C;&#x3002;</li>
-<li><code>.ORIG</code>&#x544A;&#x8BC9;&#x6C47;&#x7F16;&#x5668;&#x5185;&#x5B58;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</li>
-<li><code>.FILL</code>&#x544A;&#x8BC9;&#x6C47;&#x7F16;&#x5668;&#x5F00;&#x59CB;&#xFF08;&#x5360;&#x7528;&#xFF09;&#x4E0B;&#x4E00;&#x4E2A;&#x5730;&#x5740;&#xFF0C;&#x5E76;&#x586B;&#x5145;&#x521D;&#x59CB;&#x503C;&#xFF08;&#x5982;&#x64CD;&#x4F5C;&#x6570;&#xFF09;&#x3002;</li>
-<li><code>.BLKW</code>&#x544A;&#x8BC9;&#x6C47;&#x7F16;&#x5668;&#x5728;&#x7A0B;&#x5E8F;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x5F00;&#x59CB;&#x5360;&#x7528;&#x4E00;&#x8FDE;&#x4E32;&#x7684;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#xFF0C;&#x5177;&#x4F53;&#x6570;&#x76EE;&#x7531;&#x5176;&#x64CD;&#x4F5C;&#x6570;&#x51B3;&#x5B9A;&#x3002;&#x7279;&#x522B;&#x9002;&#x7528;&#x4E8E;&#x64CD;&#x4F5C;&#x6570;&#x503C;&#x4E0D;&#x786E;&#x5B9A;&#x7684;&#x573A;&#x5408;&#x3002;</li>
-<li><code>.STRINGZ</code>&#x544A;&#x8BC9;&#x6C47;&#x7F16;&#x5668;&#x8FDE;&#x7EED;&#x5360;&#x7528;&#x5E76;&#x521D;&#x59CB;&#x5316;n+1&#x4E2A;&#x5355;&#x5143;&#xFF0C;&#x5176;&#x64CD;&#x4F5C;&#x6570;&#x662F;&#x53CC;&#x62EC;&#x53F7;&#x62EC;&#x8D77;&#x6765;&#x7684;n&#x4E2A;&#x5B57;&#x7B26;&#x3002;n+1&#x4E2A;&#x5185;&#x5B58;&#x5355;&#x5143;&#x7684;&#x524D;n&#x4E2A;&#x5B57;&#x7684;&#x5185;&#x5BB9;&#x5206;&#x522B;&#x662F;&#x5B57;&#x7B26;&#x4E32;&#x5BF9;&#x5E94;&#x5B57;&#x7B26;&#x7684;ASKII&#x7801;&#x7684;<strong>&#x96F6;&#x6269;&#x5C55;</strong>&#x503C;&#xFF0C;&#x5185;&#x5B58;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5B57;&#x5219;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x4E3A;0&#x3002;</li>
-<li><code>.END</code>&#x544A;&#x8BC9;&#x6C47;&#x7F16;&#x5668;&#x201C;&#x7A0B;&#x5E8F;&#x7ED3;&#x675F;&#x4E86;&#x201D;&#xFF0C;&#x51FA;&#x73B0;&#x5176;&#x540E;&#x7684;&#x4EE3;&#x7801;&#x90FD;&#x5C06;&#x4E0D;&#x518D;&#x6267;&#x884C;&#xFF08;&#x5B83;&#x5E76;&#x4E0D;&#x4F1A;&#x505C;&#x6B62;&#x7A0B;&#x5E8F;&#x7684;&#x6267;&#x884C;&#xFF09;&#x3002;</li>
-<li>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	  .ORIG x3050</span><br><span class="line">	  .FILL x0006</span><br><span class="line">	  .BLKW 1</span><br><span class="line">;</span><br><span class="line">	  .ORIG x3010</span><br><span class="line">HELLO .STRINGZ &quot;Hello, World!&quot;</span><br><span class="line">	  .END</span><br></pre></td></tr></table></figure>
+<li>伪操作一个更标准的名字是“汇编指令”。之所以称为伪操作是因为程序执行它们的时候不产生任何操作。</li>
+<li>伪操作可以理解为是程序员传给汇编器的消息，用于指导汇编器的汇编操作。</li>
+<li><code>.ORIG</code>告诉汇编器内存的位置。</li>
+<li><code>.FILL</code>告诉汇编器开始（占用）下一个地址，并填充初始值（如操作数）。</li>
+<li><code>.BLKW</code>告诉汇编器在程序空间中，开始占用一连串的地址空间，具体数目由其操作数决定。特别适用于操作数值不确定的场合。</li>
+<li><code>.STRINGZ</code>告诉汇编器连续占用并初始化n+1个单元，其操作数是双括号括起来的n个字符。n+1个内存单元的前n个字的内容分别是字符串对应字符的ASKII码的<strong>零扩展</strong>值，内存的最后一个字则被初始化为0。</li>
+<li><code>.END</code>告诉汇编器“程序结束了”，出现其后的代码都将不再执行（它并不会停止程序的执行）。</li>
+<li>代码示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	  .ORIG x3050</span><br><span class="line">	  .FILL x0006</span><br><span class="line">	  .BLKW 1</span><br><span class="line">;</span><br><span class="line">	  .ORIG x3010</span><br><span class="line">HELLO .STRINGZ &quot;Hello, World!&quot;</span><br><span class="line">	  .END</span><br></pre></td></tr></table></figure>
 <!--lalala-->
 
 
 </li>
 </ul>
-<p>&#x6C47;&#x7F16;&#x8FC7;&#x7A0B;&#xFF1A;</p>
+<p>汇编过程：</p>
 <ul>
-<li>&#x4ECE;&#x6C47;&#x7F16;&#x8BED;&#x8A00;&#x7FFB;&#x8BD1;&#x6210;LC-3 ISA&#x683C;&#x5F0F;&#x7684;&#x673A;&#x5668;&#x8BED;&#x8A00;&#x4EE3;&#x7801;&#xFF0C;&#x9700;&#x8981;&#x501F;&#x52A9;&#x6C47;&#x7F16;&#x5668;&#x3002;</li>
-<li>&#x6C47;&#x7F16;&#x7684;&#x8FC7;&#x7A0B;&#x9700;&#x8981;&#x7ECF;&#x8FC7;&#x4E24;&#x904D;&#x626B;&#x63CF;&#xFF0C;&#x5373;&#xFF1A;<strong>&#x7B26;&#x53F7;&#x8868;&#x7684;&#x6784;&#x5EFA;</strong>&#x4EE5;&#x53CA;<strong>&#x5C06;&#x6240;&#x6709;&#x7684;&#x6C47;&#x7F16;&#x6307;&#x4EE4;&#x7FFB;&#x8BD1;&#x6210;&#x5BF9;&#x5E94;&#x7684;&#x673A;&#x5668;&#x6307;&#x4EE4;</strong>&#x3002;</li>
-<li>&#x7B26;&#x53F7;&#x8868;&#x7684;&#x6784;&#x5EFA;&#x8FC7;&#x7A0B;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2460;&#x4E22;&#x5F03;&#x6CE8;&#x91CA;&#x884C;&#x3002;</span><br><span class="line">&#x2461;.ORIG&#x4F2A;&#x64CD;&#x4F5C;&#xFF0C;&#x4E3A;&#x7B2C;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x5206;&#x914D;&#x5982;&#x53C2;&#x6570;&#x6240;&#x793A;&#x7684;&#x5730;&#x5740;&#xFF1B;&#x91C7;&#x7528;&#x4E00;&#x4E2A;&#x5730;&#x5740;&#x8DDF;&#x8E2A;&#x8BA1;&#x6570;&#x5668;LC&#xFF0C;LC&#x7684;&#x521D;&#x59CB;&#x503C;&#x7531;.ORIG&#x6307;&#x5B9A;&#x3002;</span><br><span class="line">&#x2462;&#x6BCF;&#x6210;&#x529F;&#x8BC6;&#x522B;&#x4E00;&#x6761;&#x6709;&#x6548;&#x6307;&#x4EE4;LC+1&#xFF0C;&#x5982;&#x679C;&#x8BE5;&#x6307;&#x4EE4;&#x7684;&#x5934;&#x90E8;&#x5B58;&#x5728;&#x201C;&#x6807;&#x8BC6;&#x201D;&#x5B57;&#x6BB5;&#xFF0C;&#x5219;&#x4E3A;&#x8BE5;&#x6807;&#x8BC6;&#x521B;&#x5EFA;&#x4E8C;&#x5143;&#x7EC4;[&#x7B26;&#x53F7;][&#x5730;&#x5740;&#x503C;]&#xFF0C;&#x5176;&#x4E2D;&#x5730;&#x5740;&#x503C;&#x5C31;&#x662F;LC&#x8BA1;&#x6570;&#x5668;&#x5F53;&#x524D;&#x7684;&#x5185;&#x5BB9;&#x3002;</span><br><span class="line">&#x2463;&#x7EE7;&#x7EED;&#x8BC6;&#x522B;&#xFF0C;&#x76F4;&#x5230;.END&#x3002;</span><br></pre></td></tr></table></figure>
+<li>从汇编语言翻译成LC-3 ISA格式的机器语言代码，需要借助汇编器。</li>
+<li>汇编的过程需要经过两遍扫描，即：<strong>符号表的构建</strong>以及<strong>将所有的汇编指令翻译成对应的机器指令</strong>。</li>
+<li>符号表的构建过程：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">①丢弃注释行。</span><br><span class="line">②.ORIG伪操作，为第一条指令分配如参数所示的地址；采用一个地址跟踪计数器LC，LC的初始值由.ORIG指定。</span><br><span class="line">③每成功识别一条有效指令LC+1，如果该指令的头部存在“标识”字段，则为该标识创建二元组[符号][地址值]，其中地址值就是LC计数器当前的内容。</span><br><span class="line">④继续识别，直到.END。</span><br></pre></td></tr></table></figure>
 <!--lalala-->
 
 
 </li>
 </ul>
-<p>&#x76F8;&#x5173;&#x77E5;&#x8BC6;&#xFF1A;</p>
+<p>相关知识：</p>
 <ul>
-<li>&#x5F53;&#x8BA1;&#x7B97;&#x673A;&#x5F00;&#x59CB;&#x7A0B;&#x5E8F;&#x7684;&#x6267;&#x884C;&#x65F6;&#xFF0C;&#x6267;&#x884C;&#x5B9E;&#x4F53;&#x53C8;&#x79F0;&#x4E3A;&#x201C;&#x53EF;&#x6267;&#x884C;&#x6620;&#x50CF;&#x201D;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x7531;&#x591A;&#x4E2A;&#x76F8;&#x4E92;&#x72EC;&#x7ACB;&#x7684;&#x6A21;&#x5757;&#x7EC4;&#x88C5;&#x5728;&#x4E00;&#x8D77;&#x5F62;&#x6210;&#x7684;&#x3002;&#x6240;&#x6709;&#x8FD9;&#x4E9B;&#x6A21;&#x5757;&#x7EC4;&#x88C5;&#x4E4B;&#x524D;&#xFF0C;&#x90FD;&#x662F;&#x4E00;&#x4E2A;&#x4E2A;&#x72EC;&#x7ACB;&#x7684;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#xFF0C;&#x6700;&#x540E;&#x662F;&#x901A;&#x8FC7;<strong>&#x94FE;&#x63A5;</strong>&#x64CD;&#x4F5C;&#x5C06;&#x8FD9;&#x4E9B;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x62FC;&#x88C5;&#x6210;&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x6620;&#x50CF;&#x7684;&#x3002;</li>
-<li>&#x5E93;&#x51FD;&#x6570;&#x90FD;&#x662F;&#x76EE;&#x6807;&#x683C;&#x5F0F;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6E90;&#x4EE3;&#x7801;&#x683C;&#x5F0F;&#x3002;</li>
+<li>当计算机开始程序的执行时，执行实体又称为“可执行映像”，通常是由多个相互独立的模块组装在一起形成的。所有这些模块组装之前，都是一个个独立的目标文件，最后是通过<strong>链接</strong>操作将这些目标文件拼装成一个可执行映像的。</li>
+<li>库函数都是目标格式文件，而不是源代码格式。</li>
 </ul>
 
     </div>
@@ -491,6 +491,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

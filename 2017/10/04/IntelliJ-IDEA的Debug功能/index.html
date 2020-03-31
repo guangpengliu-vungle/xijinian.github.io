@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="&amp;#x8FD9;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x4E00;&amp;#x76F4;&amp;#x5728;&amp;#x4F7F;&amp;#x7528;IntelliJ IDEA, &amp;#x4ECA;&amp;#x5929;&amp;#x628A;&amp;#x8C03;&amp;#x8BD5;&amp;#x533A;&amp;#x5DE5;&amp;#x5177;&amp;#x7684;&amp;#x4F7F;&amp;#x7528;&amp;#x65B9;&amp;#x6CD5;&amp;#x8BB0;&amp;">
+  <meta name="description" content="这段时间一直在使用IntelliJ IDEA, 今天把调试区工具的使用方法记录于此。 先编译好要调试的程序。1.设置断点… 查看原帖">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IntelliJ IDEA的Debug功能">
 <meta property="og:url" content="https://www.xijinian.top/2017/10/04/IntelliJ-IDEA%E7%9A%84Debug%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="Adventures of xijinian">
-<meta property="og:description" content="&amp;#x8FD9;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x4E00;&amp;#x76F4;&amp;#x5728;&amp;#x4F7F;&amp;#x7528;IntelliJ IDEA, &amp;#x4ECA;&amp;#x5929;&amp;#x628A;&amp;#x8C03;&amp;#x8BD5;&amp;#x533A;&amp;#x5DE5;&amp;#x5177;&amp;#x7684;&amp;#x4F7F;&amp;#x7528;&amp;#x65B9;&amp;#x6CD5;&amp;#x8BB0;&amp;">
+<meta property="og:description" content="这段时间一直在使用IntelliJ IDEA, 今天把调试区工具的使用方法记录于此。 先编译好要调试的程序。1.设置断点… 查看原帖">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-10-04T06:07:11.000Z">
 <meta property="article:modified_time" content="2018-04-13T12:07:10.000Z">
@@ -238,9 +238,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&#x8FD9;&#x6BB5;&#x65F6;&#x95F4;&#x4E00;&#x76F4;&#x5728;&#x4F7F;&#x7528;IntelliJ IDEA, &#x4ECA;&#x5929;&#x628A;&#x8C03;&#x8BD5;&#x533A;&#x5DE5;&#x5177;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x8BB0;&#x5F55;&#x4E8E;&#x6B64;&#x3002;</p>
-<p>&#x5148;&#x7F16;&#x8BD1;&#x597D;&#x8981;&#x8C03;&#x8BD5;&#x7684;&#x7A0B;&#x5E8F;&#x3002;<br>1.&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;&#x2026;</p>
-<p><a href="http://www.cnblogs.com/Bowu/p/4026117.html" target="_blank" rel="noopener">&#x67E5;&#x770B;&#x539F;&#x5E16;</a></p>
+        <p>这段时间一直在使用IntelliJ IDEA, 今天把调试区工具的使用方法记录于此。</p>
+<p>先编译好要调试的程序。<br>1.设置断点…</p>
+<p><a href="http://www.cnblogs.com/Bowu/p/4026117.html" target="_blank" rel="noopener">查看原帖</a></p>
 
     </div>
 
@@ -448,6 +448,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

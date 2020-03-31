@@ -238,11 +238,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&#x7B2C;&#x516B;&#x6761;&#xFF1A;&#x8986;&#x76D6;<code>equals</code>&#x65F6;&#x8BF7;&#x9075;&#x5B88;&#x901A;&#x7528;&#x7EA6;&#x5B9A;<br><a href="https://zhengyq.gitbooks.io/effective-java-2/content/di-8-tiao-ff1a-fu-gai-equals-shi-qing-zun-shou-tong-yong-yue-ding.html" target="_blank" rel="noopener">https://zhengyq.gitbooks.io/effective-java-2/content/di-8-tiao-ff1a-fu-gai-equals-shi-qing-zun-shou-tong-yong-yue-ding.html</a><br><a href="http://www.jianshu.com/p/a986e25ae616" target="_blank" rel="noopener">http://www.jianshu.com/p/a986e25ae616</a></p>
-<p>&#x7B2C;&#x4E5D;&#x6761;&#xFF1A;&#x8986;&#x76D6;<code>equals</code>&#x65F6;&#x603B;&#x8981;&#x8986;&#x76D6;<code>hashCode</code><br><a href="http://www.jianshu.com/p/40ee40f155aa" target="_blank" rel="noopener">http://www.jianshu.com/p/40ee40f155aa</a><a id="more"></a></p>
-<p>&#x7B2C;&#x5341;&#x6761;&#xFF1A;&#x59CB;&#x7EC8;&#x8981;&#x8986;&#x76D6;<code>toSting</code><br><a href="http://www.cnblogs.com/wangliyue/p/4451142.html" target="_blank" rel="noopener">http://www.cnblogs.com/wangliyue/p/4451142.html</a></p>
-<p>&#x7B2C;&#x5341;&#x4E00;&#x6761;&#xFF1A;&#x8C28;&#x614E;&#x5730;&#x8986;&#x76D6;<code>clone</code><br><a href="https://zhengyq.gitbooks.io/effective-java-2/content/item11.html" target="_blank" rel="noopener">https://zhengyq.gitbooks.io/effective-java-2/content/item11.html</a><br><a href="http://www.jianshu.com/p/40d8319ca937" target="_blank" rel="noopener">http://www.jianshu.com/p/40d8319ca937</a></p>
-<p>&#x7B2C;&#x5341;&#x4E8C;&#x6761;&#xFF1A;&#x8003;&#x8651;&#x5B9E;&#x73B0;<code>Comparable</code>&#x63A5;&#x53E3;<br><a href="http://www.jianshu.com/p/f0d39ab402eb" target="_blank" rel="noopener">http://www.jianshu.com/p/f0d39ab402eb</a></p>
+        <p>第八条：覆盖<code>equals</code>时请遵守通用约定<br><a href="https://zhengyq.gitbooks.io/effective-java-2/content/di-8-tiao-ff1a-fu-gai-equals-shi-qing-zun-shou-tong-yong-yue-ding.html" target="_blank" rel="noopener">https://zhengyq.gitbooks.io/effective-java-2/content/di-8-tiao-ff1a-fu-gai-equals-shi-qing-zun-shou-tong-yong-yue-ding.html</a><br><a href="http://www.jianshu.com/p/a986e25ae616" target="_blank" rel="noopener">http://www.jianshu.com/p/a986e25ae616</a></p>
+<p>第九条：覆盖<code>equals</code>时总要覆盖<code>hashCode</code><br><a href="http://www.jianshu.com/p/40ee40f155aa" target="_blank" rel="noopener">http://www.jianshu.com/p/40ee40f155aa</a><a id="more"></a></p>
+<p>第十条：始终要覆盖<code>toSting</code><br><a href="http://www.cnblogs.com/wangliyue/p/4451142.html" target="_blank" rel="noopener">http://www.cnblogs.com/wangliyue/p/4451142.html</a></p>
+<p>第十一条：谨慎地覆盖<code>clone</code><br><a href="https://zhengyq.gitbooks.io/effective-java-2/content/item11.html" target="_blank" rel="noopener">https://zhengyq.gitbooks.io/effective-java-2/content/item11.html</a><br><a href="http://www.jianshu.com/p/40d8319ca937" target="_blank" rel="noopener">http://www.jianshu.com/p/40d8319ca937</a></p>
+<p>第十二条：考虑实现<code>Comparable</code>接口<br><a href="http://www.jianshu.com/p/f0d39ab402eb" target="_blank" rel="noopener">http://www.jianshu.com/p/f0d39ab402eb</a></p>
 
     </div>
 
@@ -450,6 +450,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

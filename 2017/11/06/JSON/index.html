@@ -239,10 +239,10 @@
 
       
         <ul>
-<li><strong>Hello JSON</strong>&#xFF1A;<ul>
-<li><strong>JSON</strong>&#xFF08;JavaScript Object Notation&#xFF09;&#x7FFB;&#x8BD1;&#x4E3A;&#xFF1A;JavaScript &#x5BF9;&#x8C61;&#x8868;&#x793A;&#x6CD5;&#x3002;&#x5B83;&#x662F;&#x4E00;&#x79CD;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x7684;&#x65B9;&#x5F0F;&#x3002;</li>
-<li>&#x521B;&#x5EFA; JSON &#x5BF9;&#x8C61;&#xFF1A;<code>var gareen = {&quot;name&quot;:&quot;&#x76D6;&#x4F26;&quot;, &quot;hp&quot;:616};</code></li>
-<li>&#x8BBF;&#x95EE; JSON &#x5BF9;&#x8C61;&#xFF1A;<code>document.write(&quot;&#x82F1;&#x96C4;&#x540D;&#x79F0;&#xFF1A;&quot; + gareen.name);</code><a id="more"></a>
+<li><strong>Hello JSON</strong>：<ul>
+<li><strong>JSON</strong>（JavaScript Object Notation）翻译为：JavaScript 对象表示法。它是一种存储数据的方式。</li>
+<li>创建 JSON 对象：<code>var gareen = {&quot;name&quot;:&quot;盖伦&quot;, &quot;hp&quot;:616};</code></li>
+<li>访问 JSON 对象：<code>document.write(&quot;英雄名称：&quot; + gareen.name);</code><a id="more"></a>
 
 
 
@@ -252,10 +252,10 @@
 </li>
 </ul>
 <ul>
-<li><strong>JSON &#x6570;&#x7EC4;</strong>&#xFF1A;<ul>
-<li>&#x521B;&#x5EFA; JSON &#x6570;&#x7EC4;&#xFF1A;<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> heros = </span><br><span class="line">[</span><br><span class="line">    {<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&#x76D6;&#x4F26;&quot;</span>, <span class="string">&quot;hp&quot;</span>:<span class="number">616</span>},</span><br><span class="line">    {<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&#x63D0;&#x83AB;&quot;</span>, <span class="string">&quot;hp&quot;</span>:<span class="number">313</span>},</span><br><span class="line">    {<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&#x6B7B;&#x54E5;&quot;</span>, <span class="string">&quot;hp&quot;</span>:<span class="number">432</span>},</span><br><span class="line">    {<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&#x706B;&#x5973;&quot;</span>, <span class="string">&quot;hp&quot;</span>:<span class="number">389</span>}</span><br><span class="line">]</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">&quot;JSON &#x6570;&#x7EC4;&#x5927;&#x5C0F;&#xFF1A;&quot;</span> + heros.length);</span><br></pre></td></tr></table></figure>
+<li><strong>JSON 数组</strong>：<ul>
+<li>创建 JSON 数组：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> heros = </span><br><span class="line">[</span><br><span class="line">    &#123;<span class="string">"name"</span>:<span class="string">"盖伦"</span>, <span class="string">"hp"</span>:<span class="number">616</span>&#125;,</span><br><span class="line">    &#123;<span class="string">"name"</span>:<span class="string">"提莫"</span>, <span class="string">"hp"</span>:<span class="number">313</span>&#125;,</span><br><span class="line">    &#123;<span class="string">"name"</span>:<span class="string">"死哥"</span>, <span class="string">"hp"</span>:<span class="number">432</span>&#125;,</span><br><span class="line">    &#123;<span class="string">"name"</span>:<span class="string">"火女"</span>, <span class="string">"hp"</span>:<span class="number">389</span>&#125;</span><br><span class="line">]</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">"JSON 数组大小："</span> + heros.length);</span><br></pre></td></tr></table></figure>
 <!--lalala--></li>
-<li>&#x8BBF;&#x95EE; JSON &#x6570;&#x7EC4;&#xFF1A;<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.write(<span class="string">&quot;&#x7B2C;4&#x4E2A;&#x82F1;&#x96C4;&#x662F;&#xFF1A;&quot;</span> + heros[<span class="number">3</span>].name);</span><br></pre></td></tr></table></figure>
+<li>访问 JSON 数组：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.write(<span class="string">"第4个英雄是："</span> + heros[<span class="number">3</span>].name);</span><br></pre></td></tr></table></figure>
 <!--lalala-->
 
 
@@ -266,9 +266,9 @@
 </li>
 </ul>
 <ul>
-<li><strong>&#x5BF9;&#x8C61;&#x8F6C;&#x6362;</strong>&#xFF1A;<ul>
-<li>JSON &#x5BF9;&#x8C61;&#x4E0E; JavaScript &#x5BF9;&#x8C61;&#xFF1A;JavaScript &#x5BF9;&#x8C61;&#x5206;&#x5185;&#x7F6E;&#x5BF9;&#x8C61;&#xFF08;Number&#x3001;String&#x3001;Array&#x3001;Date&#x3001;Math&#xFF09;&#x548C;&#x81EA;&#x5B9A;&#x4E49;&#x5BF9;&#x8C61;&#x3002;JSON &#x5C31;&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x5BF9;&#x8C61;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x662F;&#x4EE5; JSON &#x8FD9;&#x6837;&#x7684;&#x6570;&#x636E;&#x7EC4;&#x7EC7;&#x65B9;&#x5F0F;&#x8868;&#x8FBE;&#x51FA;&#x6765;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x5B58;&#x5728; JSON &#x5BF9;&#x8C61;&#x4E0E; JavaScript &#x5BF9;&#x8C61;&#x7684;&#x8F6C;&#x6362;&#x95EE;&#x9898;&#x3002;</li>
-<li>&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x4E3A; JSON &#x5BF9;&#x8C61;&#xFF1A;&#x901A;&#x8FC7;&#x5B57;&#x7B26;&#x4E32;&#x62FC;&#x63A5;&#x5F97;&#x5230;&#x4E00;&#x4E2A; JSON &#x7ED3;&#x6784;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5E76;&#x4E0D;&#x662F;&#x4E00;&#x4E2A; JSON &#x5BF9;&#x8C61;&#xFF0C;&#x9700;&#x8981;&#x901A;&#x8FC7; eval &#x6216;&#x8005;&#x4F7F;&#x7528; JQuery &#x7684; $.parseJSON &#x8F6C;&#x6362;&#x51FD;&#x6570;&#x8F6C;&#x6362;&#x5F97;&#x5230;&#xFF1A;<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = <span class="string">&quot;{\&quot;name\&quot;:\&quot;&#x76D6;&#x4F26;\&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="string">&quot;, \&quot;hp\&quot;:616}&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> s3 = s1 + s2;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">&quot;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;JSON&#x683C;&#x5F0F;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF1A;&quot;</span> + s3);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line"><span class="comment">// eval &#x51FD;&#x6570;&#x8981;&#x4EE5;&apos;(&apos;&#x5F00;&#x5934;&#xFF0C;&#x4EE5;&apos;)&apos;&#x7ED3;&#x5C3E; </span></span><br><span class="line"><span class="keyword">var</span> gareen = <span class="built_in">eval</span>(<span class="string">&quot;(&quot;</span> + s3 + <span class="string">&quot;)&quot;</span>);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">&quot;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;JSON&#x5BF9;&#x8C61;&#xFF1A;&quot;</span> + gareen);</span><br></pre></td></tr></table></figure>
+<li><strong>对象转换</strong>：<ul>
+<li>JSON 对象与 JavaScript 对象：JavaScript 对象分内置对象（Number、String、Array、Date、Math）和自定义对象。JSON 就是自定义对象，只不过是以 JSON 这样的数据组织方式表达出来，所以不存在 JSON 对象与 JavaScript 对象的转换问题。</li>
+<li>字符串转为 JSON 对象：通过字符串拼接得到一个 JSON 结构的字符串，并不是一个 JSON 对象，需要通过 eval 或者使用 JQuery 的 $.parseJSON 转换函数转换得到：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = <span class="string">"&#123;\"name\":\"盖伦\""</span>;</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="string">", \"hp\":616&#125;"</span>;</span><br><span class="line"><span class="keyword">var</span> s3 = s1 + s2;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">"这是一个JSON格式的字符串："</span> + s3);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line"><span class="comment">// eval 函数要以'('开头，以')'结尾 </span></span><br><span class="line"><span class="keyword">var</span> gareen = <span class="built_in">eval</span>(<span class="string">"("</span> + s3 + <span class="string">")"</span>);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">"这是一个JSON对象："</span> + gareen);</span><br></pre></td></tr></table></figure>
 <!--lalala--></li>
 </ul>
 </li>
@@ -480,6 +480,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

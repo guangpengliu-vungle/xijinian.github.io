@@ -568,8 +568,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>&#x80CC;&#x5305;&#x7684;&#x5178;&#x578B;&#x7528;&#x4F8B;&#xFF1A;  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">    Bag&lt;Double&gt; numbers = <span class="keyword">new</span> Bag&lt;Double&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!StdIn.isEmpty()){</span><br><span class="line">        numbers.add(StdIn.readDouble());</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">int</span> N = numbers.size();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> sum = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">double</span> x : numbers){</span><br><span class="line">        sum += x;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">double</span> average = sum / N;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+          <p>背包的典型用例：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Bag&lt;Double&gt; numbers = <span class="keyword">new</span> Bag&lt;Double&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!StdIn.isEmpty())&#123;</span><br><span class="line">        numbers.add(StdIn.readDouble());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> N = numbers.size();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> sum = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">double</span> x : numbers)&#123;</span><br><span class="line">        sum += x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">double</span> average = sum / N;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <!--lalala-->
       
     </div>
@@ -804,7 +804,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>&#x76F8;&#x7231;&#x5982;&#x6B64;&#x7B80;&#x5355;<br>&#x53EA;&#x9700;&#x4F60;&#x4E5F;&#x7231;&#x6211;</p>
+          <p>相爱如此简单<br>只需你也爱我</p>
 
       
     </div>
@@ -1161,6 +1161,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

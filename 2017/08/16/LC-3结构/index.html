@@ -243,49 +243,49 @@
       
         <p>ISA</p>
 <ul>
-<li>ISA&#x5B9A;&#x4E49;&#x4E86;&#x8F6F;&#x4EF6;&#x7F16;&#x7A0B;&#x6240;&#x9700;&#x8981;&#x7684;<strong>&#x5FC5;&#x8981;&#x800C;&#x5B8C;&#x6574;</strong>&#x7684;&#x63CF;&#x8FF0;&#x3002;</li>
-<li>ISA&#x7ED9;&#x51FA;&#x4E86;<strong>&#x5185;&#x5B58;&#x7EC4;&#x7EC7;&#x65B9;&#x5F0F;</strong>&#x3001;<strong>&#x5BC4;&#x5B58;&#x5668;&#x7EC4;</strong>&#x3001;<strong>&#x6307;&#x4EE4;&#x96C6;&#xFF08;&#x5305;&#x62EC;&#x64CD;&#x4F5C;&#x7801;&#x3001;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3001;&#x5BFB;&#x5740;&#x6A21;&#x5F0F;&#xFF09;</strong>&#x7B49;&#x4FE1;&#x606F;&#x3002;</li>
+<li>ISA定义了软件编程所需要的<strong>必要而完整</strong>的描述。</li>
+<li>ISA给出了<strong>内存组织方式</strong>、<strong>寄存器组</strong>、<strong>指令集（包括操作码、数据类型、寻址模式）</strong>等信息。</li>
 </ul>
-<p>&#x5185;&#x5B58;&#x7EC4;&#x7EC7;</p>
+<p>内存组织</p>
 <ul>
-<li>LC-3&#x7684;&#x53EF;&#x5BFB;&#x5740;&#x7A7A;&#x95F4;&#x5927;&#x5C0F;&#x662F;$2^{16}$&#xFF0C;&#x5BFB;&#x5740;&#x57FA;&#x672C;&#x5355;&#x4F4D;&#x662F;16&#x4F4D;&#x3002;$2^{16}$&#x5927;&#x5C0F;&#x7684;&#x7A7A;&#x95F4;&#x5E76;&#x975E;&#x5168;&#x90E8;&#x7528;&#x4E8E;&#x5185;&#x5B58;&#x3002;</li>
-<li>&#x7531;&#x4E8E;LC-3&#x4E2D;&#x6570;&#x636E;&#x5C0F;&#x72D0;&#x72F8;&#x7684;&#x57FA;&#x672C;&#x5355;&#x4F4D;&#x662F;16&#x4F4D;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5728;&#x6B64;&#x79F0;&#x8FD9;16&#x4F4D;&#x4E3A;&#x4E00;&#x4E2A;<strong>&#x5B57;</strong>&#xFF0C;&#x540C;&#x65F6;&#x6211;&#x4EEC;&#x4E5F;&#x79F0;LC-3&#x662F;&#x4E00;&#x4E2A;<strong>&#x5B57;&#x5BFB;&#x5740;</strong>&#x673A;&#x5668;&#x3002;<a id="more"></a></li>
+<li>LC-3的可寻址空间大小是$2^{16}$，寻址基本单位是16位。$2^{16}$大小的空间并非全部用于内存。</li>
+<li>由于LC-3中数据小狐狸的基本单位是16位，所以我们在此称这16位为一个<strong>字</strong>，同时我们也称LC-3是一个<strong>字寻址</strong>机器。<a id="more"></a></li>
 </ul>
-<p>&#x5BC4;&#x5B58;&#x5668;&#x7EC4;</p>
+<p>寄存器组</p>
 <ul>
-<li>&#x5BC4;&#x5B58;&#x5668;&#x548C;&#x5185;&#x5B58;&#x7684;&#x7279;&#x6027;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF1A;&#x2460;&#x8BB0;&#x5FC6;&#x7279;&#x6027;&#xFF1B;&#x2461;&#x72EC;&#x7ACB;&#x5BFB;&#x5740;&#x3002;</li>
-<li>LC-3&#x4E2D;&#x63D0;&#x4F9B;&#x4E86;8&#x4E2A;GPR&#xFF0C;&#x5373;&#x6807;&#x8BC6;&#x7F16;&#x53F7;&#x53EA;&#x9700;&#x8981;3&#x4F4D;&#x5C31;&#x591F;&#x4E86;&#xFF08;$2^3=8$&#xFF09;&#x3002;</li>
+<li>寄存器和内存的特性是一样的：①记忆特性；②独立寻址。</li>
+<li>LC-3中提供了8个GPR，即标识编号只需要3位就够了（$2^3=8$）。</li>
 </ul>
-<p>&#x6307;&#x4EE4;&#x96C6;&#xFF08;&#x5305;&#x62EC;&#x64CD;&#x4F5C;&#x7801;&#x3001;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3001;&#x5BFB;&#x5740;&#x6A21;&#x5F0F;&#xFF09;</p>
+<p>指令集（包括操作码、数据类型、寻址模式）</p>
 <ul>
-<li>&#x64CD;&#x4F5C;&#x7801;<ul>
-<li>LC-3&#x7684;&#x64CD;&#x4F5C;&#x7801;&#x5408;&#x96C6;&#xFF08;+&#x8868;&#x793A;&#x8BE5;&#x6307;&#x4EE4;&#x5C06;&#x6539;&#x53D8;&#x6761;&#x4EF6;&#x7801;&#xFF09;&#xFF1A;<br><img data-src="https://ws2.sinaimg.cn/large/006tKfTcly1filnjzvavcj30e30p00u8.jpg" alt></li>
-<li><strong>&#x6761;&#x4EF6;&#x7801;</strong>&#xFF1A;&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x7684;ISA&#x90FD;&#x62E5;&#x6709;&#x201C;&#x57FA;&#x4E8E;&#x4E4B;&#x524D;&#x6307;&#x4EE4;&#x7684;&#x6267;&#x884C;&#x7ED3;&#x679C;&#x6765;&#x6539;&#x53D8;&#x6307;&#x4EE4;&#x6267;&#x884C;&#x5E8F;&#x5217;&#x201D;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x5176;&#x4E2D;&#x7684;&#x673A;&#x5236;&#x5C31;&#x662F;&#x201C;&#x6761;&#x4EF6;&#x7801;&#x201D;&#x3002;</li>
-<li>&#x6211;&#x4EEC;&#x79F0;&#x5B58;&#x5728;&#x6307;&#x4EE4;&#x4E4B;&#x4E2D;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#x4E3A;&#x201C;&#x5B57;&#x9762;&#x503C;&#x201D;&#x6216;&#x8005;&#x201C;&#x7ACB;&#x5373;&#x6570;&#x201D;&#x3002;</li>
-<li>&#x5728;LC-3&#x4E2D;&#xFF1A;&#x6BCF;&#x5F53;8&#x4E2A;&#x901A;&#x7528;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x88AB;&#x6539;&#x5199;&#x6216;&#x8005;&#x5199;&#x5165;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E09;&#x4E2A;&#x5355;bit&#x4F4D;&#x5C31;&#x4F1A;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF08;&#x7F6E;1&#x6216;&#x8005;&#x7F6E;0&#xFF09;&#x3002;&#x4E09;&#x4E2A;&#x4F4D;&#x5BC4;&#x5B58;&#x5668;&#x5206;&#x522B;&#x662F;N&#x3001;Z&#x548C;P&#x3002;&#x6839;&#x636E;&#x5199;&#x5165;&#x7ED3;&#x679C;&#x662F;&#x8D1F;&#x6570;&#x3001;&#x96F6;&#x3001;&#x6B63;&#x6570;&#x6765;&#x51B3;&#x5B9A;&#x4E09;&#x4F4D;&#x5355;bit&#x7684;&#x6570;&#x503C;&#x3002;</li>
-<li>&#x5728;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x4E2D;&#xFF0C;&#x540C;&#x4E00;&#x4E2A;&#x5BC4;&#x5B58;&#x5668;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x626E;&#x6F14;&#x6E90;&#x5BC4;&#x5B58;&#x5668;&#x548C;&#x76EE;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x3002;</li>
-<li>LC-3&#x53EA;&#x652F;&#x6301;&#x4E09;&#x79CD;&#x64CD;&#x4F5C;&#x6307;&#x4EE4;&#xFF1A;ADD&#x3001;AND&#x548C;NOT&#x3002;</li>
-<li>&#x5728;&#x6267;&#x884C;&#x8282;&#x62CD;&#xFF0C;&#x68C0;&#x67E5;&#x6761;&#x4EF6;&#x7801;&#xFF0C;&#x82E5;&#x68C0;&#x67E5;&#x540E;&#x53D1;&#x73B0;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x6761;&#x4EF6;&#x7801;&#x4E3A;1&#xFF0C;&#x90FD;&#x5C06;&#x4F7F;PC&#x5185;&#x5BB9;&#x91CD;&#x65B0;&#x4FEE;&#x6539;&#x3002;&#x82E5;bit[11:9]&#x4E09;&#x4E2A;&#x4F4D;&#x90FD;&#x662F;1&#xFF0C;&#x5219;&#x79F0;&#x4E3A;&#x201C;<strong>&#x65E0;&#x6761;&#x4EF6;&#x8DF3;&#x8F6C;</strong>&#x201D;&#x3002;&#x82E5;&#x90FD;&#x662F;0&#xFF0C;&#x5219;&#x4E0D;&#x68C0;&#x67E5;&#x3002;</li>
-<li><code>JMP</code>&#xFF08;&#x64CD;&#x4F5C;&#x7801;1100&#xFF09;&#x6307;&#x4EE4;&#x7684;&#x4EFB;&#x52A1;&#x5C31;&#x662F;&#x5C06;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x5185;&#x5BB9;&#x88C5;&#x5165;PC&#x4F5C;&#x4E3A;&#x6307;&#x4EE4;&#x8DF3;&#x8F6C;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x8FD9;&#x6837;&#xFF0C;PC&#x5C31;&#x53EF;&#x4EE5;&#x6307;&#x5411;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x7684;&#x4EFB;&#x610F;&#x5730;&#x5740;&#x3002;</li>
-<li><code>TRAP</code>&#xFF08;&#x64CD;&#x4F5C;&#x7801;1111&#xFF09;&#x7684;&#x4EFB;&#x52A1;&#x662F;&#x6539;&#x53D8;PC&#x5185;&#x5BB9;&#xFF0C;&#x4F7F;&#x5176;<strong>&#x9677;&#x5165;</strong>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7684;&#x67D0;&#x4E2A;&#x4EE3;&#x7801;&#x5165;&#x53E3;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x8FD8;&#x5C06;<code>TRAP</code>&#x6307;&#x4EE4;&#x79F0;&#x4E3A;&#x6FC0;&#x6D3B;&#x4E86;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7684;&#x670D;&#x52A1;&#x8C03;&#x7528;&#x3002;</li>
+<li>操作码<ul>
+<li>LC-3的操作码合集（+表示该指令将改变条件码）：<br><img data-src="https://ws2.sinaimg.cn/large/006tKfTcly1filnjzvavcj30e30p00u8.jpg" alt=""></li>
+<li><strong>条件码</strong>：几乎所有的ISA都拥有“基于之前指令的执行结果来改变指令执行序列”的能力，其中的机制就是“条件码”。</li>
+<li>我们称存在指令之中的操作数为“字面值”或者“立即数”。</li>
+<li>在LC-3中：每当8个通用寄存器中任意一个被改写或者写入的时候，三个单bit位就会发生变化（置1或者置0）。三个位寄存器分别是N、Z和P。根据写入结果是负数、零、正数来决定三位单bit的数值。</li>
+<li>在一条指令中，同一个寄存器可以同时扮演源寄存器和目的寄存器。</li>
+<li>LC-3只支持三种操作指令：ADD、AND和NOT。</li>
+<li>在执行节拍，检查条件码，若检查后发现任何一个条件码为1，都将使PC内容重新修改。若bit[11:9]三个位都是1，则称为“<strong>无条件跳转</strong>”。若都是0，则不检查。</li>
+<li><code>JMP</code>（操作码1100）指令的任务就是将寄存器的内容装入PC作为指令跳转的地址，这样，PC就可以指向内存空间的任意地址。</li>
+<li><code>TRAP</code>（操作码1111）的任务是改变PC内容，使其<strong>陷入</strong>操作系统的某个代码入口，因此我们还将<code>TRAP</code>指令称为激活了操作系统的服务调用。</li>
 </ul>
 </li>
-<li>&#x6570;&#x636E;&#x7C7B;&#x578B;<ul>
-<li><strong>&#x6570;&#x636E;&#x7C7B;&#x578B;</strong>&#x662F;&#x6307;&#x7C7B;&#x578B;&#x7684;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#xFF0C;&#x5373;&#x610F;&#x5473;&#x7740;ISA&#x662F;&#x600E;&#x6837;&#x8868;&#x8FBE;&#x4FE1;&#x606F;&#x7684;&#x3002;LC-3&#x7684;ISA&#x552F;&#x4E00;&#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF1A;<strong>&#x8865;&#x7801;&#x6574;&#x6570;</strong>&#x3002;</li>
+<li>数据类型<ul>
+<li><strong>数据类型</strong>是指类型的表达方式，即意味着ISA是怎样表达信息的。LC-3的ISA唯一支持的数据类型：<strong>补码整数</strong>。</li>
 </ul>
 </li>
-<li>&#x5BFB;&#x5740;&#x6A21;&#x5F0F;<ul>
-<li><strong>&#x5BFB;&#x5740;&#x6A21;&#x5F0F;</strong>&#x662F;&#x5B9A;&#x4E49;&#x64CD;&#x4F5C;&#x6570;&#x6765;&#x6E90;&#xFF08;&#x4F4D;&#x7F6E;&#xFF09;&#x7684;&#x4E00;&#x79CD;&#x673A;&#x5236;&#x3002;&#x64CD;&#x4F5C;&#x6570;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x7684;&#x5730;&#x65B9;&#x65E0;&#x975E;&#x662F;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#xFF1A;&#x5185;&#x5B58;&#x3001;&#x5BC4;&#x5B58;&#x5668;&#x6216;&#x8005;&#x6307;&#x4EE4;&#x672C;&#x8EAB;&#x3002;</li>
-<li>LC-3&#x5171;&#x652F;&#x6301;5&#x79CD;&#x5BFB;&#x5740;&#x6A21;&#x5F0F;&#xFF1A;<strong>&#x7ACB;&#x5373;&#x6570;</strong>&#x3001;<strong>&#x5BC4;&#x5B58;&#x5668;</strong>&#x3001;<strong>&#x76F8;&#x5BF9;</strong>&#x3001;<strong>&#x95F4;&#x63A5;</strong>&#x548C;<strong>&#x57FA;&#x5740;&#x504F;&#x79FB;</strong>&#x3002;</li>
-<li>&#x6570;&#x636E;&#x4ECE;&#x5185;&#x5B58;&#x79FB;&#x5165;&#x5BC4;&#x5B58;&#x5668;&#x4E3A;&#x201C;<strong>&#x88C5;&#x8F7D;</strong>&#x201D;&#xFF0C;&#x800C;&#x4ECE;&#x5BC4;&#x5B58;&#x5668;&#x8F6C;&#x5165;&#x5185;&#x5B58;&#x53EB;&#x505A;&#x201C;<strong>&#x5B58;&#x50A8;</strong>&#x201D;&#x3002;</li>
+<li>寻址模式<ul>
+<li><strong>寻址模式</strong>是定义操作数来源（位置）的一种机制。操作数可能存在的地方无非是以下三种：内存、寄存器或者指令本身。</li>
+<li>LC-3共支持5种寻址模式：<strong>立即数</strong>、<strong>寄存器</strong>、<strong>相对</strong>、<strong>间接</strong>和<strong>基址偏移</strong>。</li>
+<li>数据从内存移入寄存器为“<strong>装载</strong>”，而从寄存器转入内存叫做“<strong>存储</strong>”。</li>
 </ul>
 </li>
 </ul>
-<p>&#x6570;&#x636E;&#x901A;&#x8DEF;</p>
+<p>数据通路</p>
 <ul>
-<li>&#x5FAA;&#x73AF;&#x63A7;&#x5236;&#x7684;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#xFF1A;&#x2460;&#x8BA1;&#x7B97;&#x5668;&#x65B9;&#x6CD5;&#xFF1B;&#x2461;&#x54E8;&#x5175;&#x6CD5;&#xFF08;&#x91C7;&#x7528;&#x4E00;&#x4E2A;&#x4E8B;&#x524D;&#x77E5;&#x9053;&#x4E0D;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x503C;&#x4F5C;&#x4E3A;&#x6570;&#x636E;&#x5E8F;&#x5217;&#x5C3E;&#x90E8;&#x7684;&#x54E8;&#x5175;&#xFF0C;&#x5F53;&#x53D1;&#x73B0;&#x5230;&#x5B83;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5FAA;&#x73AF;&#x5C31;&#x7ED3;&#x675F;&#xFF09;</li>
-<li>LC-3&#x7684;&#x6570;&#x636E;&#x901A;&#x8DEF;&#x56FE;&#xFF1A;<br><img data-src="https://ws3.sinaimg.cn/large/006tKfTcgy1fimwijpc1wj30jl0ozgmt.jpg" alt></li>
-<li>&#x57FA;&#x672C;&#x90E8;&#x4EF6;&#xFF1A;&#x5168;&#x5C40;&#x603B;&#x7EBF;&#x3001;&#x5185;&#x5B58;&#x3001;ALU&#x548C;&#x5BC4;&#x5B58;&#x5668;&#x6587;&#x4EF6;&#x3001;PC&#x548C;PCMUX&#x4EE5;&#x53CA;MARMUX&#x3002;</li>
+<li>循环控制的两种方法：①计算器方法；②哨兵法（采用一个事前知道不可能出现的值作为数据序列尾部的哨兵，当发现到它的时候，循环就结束）</li>
+<li>LC-3的数据通路图：<br><img data-src="https://ws3.sinaimg.cn/large/006tKfTcgy1fimwijpc1wj30jl0ozgmt.jpg" alt=""></li>
+<li>基本部件：全局总线、内存、ALU和寄存器文件、PC和PCMUX以及MARMUX。</li>
 </ul>
 
     </div>
@@ -494,6 +494,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

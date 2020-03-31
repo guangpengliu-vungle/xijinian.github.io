@@ -644,7 +644,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>&#x6216;&#x8005; &#x6211;&#x4E5F;&#x5728;&#x610F;&#x5F97;&#x5230;&#x4E0E;&#x5931;&#x53BB;<br>&#x4F46;&#x66F4;&#x6015;&#x7684;&#x662F; &#x4F60;&#x5931;&#x671B;&#x7684;&#x773C;&#x775B;</p>
+          <p>或者 我也在意得到与失去<br>但更怕的是 你失望的眼睛</p>
 
       
     </div>
@@ -716,7 +716,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>&#x7A97;&#x5916;&#x6700;&#x540E;&#x4E00;&#x53EA;&#x86D0;&#x86D0;<br>&#x60F3;&#x518D;&#x804A;&#x4E00;&#x591C;<br>&#x4F60;&#x8BF4;&#x5929;&#x51B7;&#x8981;&#x5173;&#x7A97;&#x4E86;&#x6539;&#x5929;&#x5427;<br>&#x63D0;&#x524D;&#x5F00;&#x59CB;&#x6C38;&#x522B;</p>
+          <p>窗外最后一只蛐蛐<br>想再聊一夜<br>你说天冷要关窗了改天吧<br>提前开始永别</p>
 
       
     </div>
@@ -905,6 +905,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

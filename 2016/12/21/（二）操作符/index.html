@@ -239,29 +239,29 @@
 
       
         <ul>
-<li>&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x90FD;&#x53EA;&#x80FD;&#x64CD;&#x4F5C;&#x201C;&#x57FA;&#x672C;&#x7C7B;&#x578B;&#x201D;&#x3002;&#x4F8B;&#x5916;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x662F;<code>=</code>&#x3001;<code>==</code>&#x548C;<code>&#xFF01;=</code>&#xFF0C;&#x8FD9;&#x4E9B;&#x64CD;&#x4F5C;&#x7B26;&#x80FD;&#x591F;&#x64CD;&#x4F5C;&#x6240;&#x6709;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;String&#x7C7B;&#x652F;&#x6301;<code>+</code>&#x548C;<code>+=</code>&#x3002;</li>
-<li>&#x57FA;&#x672C;&#x7C7B;&#x578B;&#x5B58;&#x50A8;&#x4E86;&#x5B9E;&#x9645;&#x7684;&#x6570;&#x503C;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6307;&#x5411;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#x3002;</li>
-<li>&#x5BF9;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x771F;&#x6B63;&#x64CD;&#x4F5C;&#x7684;&#x662F;&#x5BF9;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#x3002;</li>
-<li>&#x4E0D;&#x518D;&#x88AB;&#x5F15;&#x7528;&#x7684;&#x5BF9;&#x8C61;&#x4F1A;&#x7531;&#x201C;&#x5783;&#x573E;&#x56DE;&#x6536;&#x5668;&#x201D;&#x81EA;&#x52A8;&#x6E05;&#x7406;&#x3002;<a id="more"></a></li>
-<li>&#x5F53;&#x65B9;&#x6CD5;&#x7684;&#x5F62;&#x53C2;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x5BF9;&#x5F62;&#x53C2;&#x7684;&#x5F15;&#x7528;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x5BF9;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#x3002;</li>
-<li>&#x968F;&#x673A;&#x6570;&#x751F;&#x6210;&#x5668;&#x5BF9;&#x4E8E;&#x7279;&#x5B9A;&#x7684;&#x79CD;&#x5B50;&#x503C;&#x603B;&#x662F;&#x4EA7;&#x751F;&#x76F8;&#x540C;&#x7684;&#x968F;&#x673A;&#x6570;&#x5E8F;&#x5217;&#xFF0C;<code>47</code>&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x8FD9;&#x6837;&#x7684;<code>&#x9B54;&#x5E7B;&#x6570;&#x5B57;</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Rondom rand = <span class="keyword">new</span> Random(<span class="number">47</span>);</span><br><span class="line"><span class="keyword">int</span> i = rand.nextInt(<span class="number">100</span>) + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">float</span> j = rand.nextFloat(<span class="number">100</span>) + <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<li>几乎所有的操作符都只能操作“基本类型”。例外的操作符是<code>=</code>、<code>==</code>和<code>！=</code>，这些操作符能够操作所有的对象。除此之外，String类支持<code>+</code>和<code>+=</code>。</li>
+<li>基本类型存储了实际的数值，而不是指向一个对象的引用。</li>
+<li>对一个对象进行操作的时候，我们真正操作的是对对象的引用。</li>
+<li>不再被引用的对象会由“垃圾回收器”自动清理。<a id="more"></a></li>
+<li>当方法的形参是一个对象时，那么在方法的作用域中对形参的引用实际上就是对对象的引用。</li>
+<li>随机数生成器对于特定的种子值总是产生相同的随机数序列，<code>47</code>就是一个这样的<code>魔幻数字</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Rondom rand = <span class="keyword">new</span> Random(<span class="number">47</span>);</span><br><span class="line"><span class="keyword">int</span> i = rand.nextInt(<span class="number">100</span>) + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">float</span> j = rand.nextFloat(<span class="number">100</span>) + <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
 <!--lalala--></li>
-<li><code>==</code>&#x6C38;&#x8FDC;&#x7528;&#x6765;&#x6BD4;&#x8F83;&#x5730;&#x5740;&#x3002;&#x5BF9;&#x4E8E;&#x57FA;&#x672C;&#x7C7B;&#x578B;&#x6765;&#x8BF4;&#xFF0C;&#x5B83;&#x4EEC;&#x76F8;&#x540C;&#x7684;&#x6570;&#x503C;&#x672C;&#x6765;&#x5C31;&#x5B58;&#x5728;&#x76F8;&#x540C;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;&#x57FA;&#x672C;&#x7C7B;&#x578B;&#x6765;&#x8BF4;&#xFF0C;<code>==</code>&#x4E5F;&#x76F8;&#x5F53;&#x4E8E;&#x6BD4;&#x8F83;&#x6570;&#x503C;&#xFF1B;&#x800C;&#x5BF9;&#x4E8E;&#x5BF9;&#x8C61;&#x6765;&#x8BF4;&#xFF0C;&#x65E0;&#x8BBA;&#x5BF9;&#x8C61;&#x7684;&#x503C;&#x662F;&#x5426;&#x4E00;&#x6837;&#x5B83;&#x4EEC;&#x7684;&#x5730;&#x5740;&#x80AF;&#x5B9A;&#x4E0D;&#x4E00;&#x6837;&#x3002;&#x8FD8;&#x5E94;&#x8BE5;&#x6CE8;&#x610F;&#x7684;&#x662F;Integer&#x7684;&#x88C5;&#x7BB1;&#x95EE;&#x9898;&#x3002;</li>
-<li><code>equals</code>&#x672C;&#x5E94;&#x8BE5;&#x662F;&#x6BD4;&#x8F83;&#x503C;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x662F;&#x5728;Java&#x4E2D;<code>equals</code>&#x7684;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#x662F;&#x6BD4;&#x8F83;&#x5F15;&#x7528;&#xFF08;&#x4E0D;&#x540C;&#x7C7B;&#x4E2D;&#x53EF;&#x4EE5;&#x91CD;&#x5199;<code>equals</code>&#x65B9;&#x6CD5;&#xFF0C;&#x8B6C;&#x5982;&#x9ED8;&#x8BA4;Integer&#x7C7B;&#x4E2D;&#x5C31;&#x662F;&#x6BD4;&#x8F83;&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x5BB9;&#xFF09;&#xFF0C;&#x597D;&#x5728;&#x5927;&#x591A;&#x6570;&#x7684;Java&#x7C7B;&#x5E93;&#x90FD;&#x5B9E;&#x73B0;&#x4E86;<code>equals()</code>&#xFF0C;&#x4EE5;&#x4FBF;&#x76F4;&#x63A5;&#x6765;&#x6BD4;&#x8F83;&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6BD4;&#x8F83;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#x3002;</li>
-<li>&#x903B;&#x8F91;&#x64CD;&#x4F5C;&#x7B26;&#x5177;&#x6709;&#x201C;&#x77ED;&#x8DEF;&#x201D;&#x73B0;&#x8C61;&#x3002;</li>
-<li>Java&#x4E2D;&#x7684;<code>1.39e-43</code>&#x6307;&#x7684;&#x662F;<code>1.39 * 10 ^ (-43)</code>&#x3002;</li>
-<li>&#x5982;&#x679C;&#x7F16;&#x8BD1;&#x5668;&#x80FD;&#x591F;&#x6B63;&#x786E;&#x8BC6;&#x522B;&#x7C7B;&#x578B;&#xFF0C;&#x5C31;&#x4E0D;&#x5FC5;&#x5728;&#x6570;&#x503C;&#x540E;&#x9762;&#x52A0;&#x4E0A;&#x8868;&#x793A;&#x5176;&#x8EAB;&#x4EFD;&#x7684;&#x5B57;&#x7B26;&#x3002;</li>
-<li>&#x6309;&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#x548C;&#x903B;&#x8F91;&#x64CD;&#x4F5C;&#x7B26;&#x975E;&#x5E38;&#x76F8;&#x4F3C;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x4F1A;&#x201C;&#x77ED;&#x8DEF;&#x201D;&#x3002;&#x5B83;&#x8FD8;&#x65B0;&#x589E;&#x4E86;&#x4E00;&#x4E2A;&#x5F02;&#x6216;&#x64CD;&#x4F5C;<code>^</code>(&#x4E0D;&#x76F8;&#x540C;&#x8F93;&#x51FA;1)&#x3002;</li>
-<li><code>&amp;=</code>&#x3001;<code>|=</code>&#x548C;<code>^=</code>&#x90FD;&#x662F;&#x5408;&#x6CD5;&#x7684;&#xFF0C;<code>~</code>&#x662F;&#x4E00;&#x5143;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x80FD;&#x4E0E;<code>=</code>&#x8054;&#x5408;&#x4F7F;&#x7528;&#x3002;</li>
-<li>&#x5DE6;&#x79FB;&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;<code>&lt;&lt;</code>&#x4F4E;&#x4F4D;&#x8865;0&#xFF1B;&#x53F3;&#x79FB;&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;<code>&gt;&gt;</code>&#x82E5;&#x7B26;&#x53F7;&#x4E3A;&#x6B63;&#xFF0C;&#x5219;&#x9AD8;&#x4F4D;&#x8865;0&#xFF0C;&#x82E5;&#x7B26;&#x53F7;&#x4E3A;&#x8D1F;&#xFF0C;&#x5219;&#x9AD8;&#x4F4D;&#x8865;1&#xFF1B;&#x65E0;&#x7B26;&#x53F7;&#x53F3;&#x79FB;&#x64CD;&#x4F5C;&#x7B26;<code>&gt;&gt;&gt;</code>&#x662F;&#x9AD8;&#x4F4D;&#x8865;0&#x3002;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>{</span><br><span class="line">    <span class="keyword">int</span> i = -<span class="number">1</span>;</span><br><span class="line">    System.out.println(Integer.toBinaryString(i));</span><br><span class="line">    <span class="comment">//&#x7B49;&#x540C;&#x4E8E; i = i &gt;&gt;&gt; 10;</span></span><br><span class="line">    i &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">    System.out.println(Integer.toBinaryString(i));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<li><code>==</code>永远用来比较地址。对于基本类型来说，它们相同的数值本来就存在相同的地址，所以对于基本类型来说，<code>==</code>也相当于比较数值；而对于对象来说，无论对象的值是否一样它们的地址肯定不一样。还应该注意的是Integer的装箱问题。</li>
+<li><code>equals</code>本应该是比较值的方法，但是在Java中<code>equals</code>的默认行为是比较引用（不同类中可以重写<code>equals</code>方法，譬如默认Integer类中就是比较对象的内容），好在大多数的Java类库都实现了<code>equals()</code>，以便直接来比较对象的内容，而不是比较对象的引用。</li>
+<li>逻辑操作符具有“短路”现象。</li>
+<li>Java中的<code>1.39e-43</code>指的是<code>1.39 * 10 ^ (-43)</code>。</li>
+<li>如果编译器能够正确识别类型，就不必在数值后面加上表示其身份的字符。</li>
+<li>按位操作符和逻辑操作符非常相似，但是不会“短路”。它还新增了一个异或操作<code>^</code>(不相同输出1)。</li>
+<li><code>&amp;=</code>、<code>|=</code>和<code>^=</code>都是合法的，<code>~</code>是一元操作符，所以不能与<code>=</code>联合使用。</li>
+<li>左移位操作符<code>&lt;&lt;</code>低位补0；右移位操作符<code>&gt;&gt;</code>若符号为正，则高位补0，若符号为负，则高位补1；无符号右移操作符<code>&gt;&gt;&gt;</code>是高位补0。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = -<span class="number">1</span>;</span><br><span class="line">    System.out.println(Integer.toBinaryString(i));</span><br><span class="line">    <span class="comment">//等同于 i = i &gt;&gt;&gt; 10;</span></span><br><span class="line">    i &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">    System.out.println(Integer.toBinaryString(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <!--lalala--></li>
-<li>&#x82E5;&#x5BF9;<code>char</code>&#x3001;<code>short</code>&#x4EE5;&#x53CA;<code>byte</code>&#x7B49;&#x7C7B;&#x578B;&#x8FDB;&#x884C;&#x79FB;&#x4F4D;&#x64CD;&#x4F5C;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x5148;&#x5C06;&#x5176;&#x8F6C;&#x4E3A;<code>int</code>&#x7C7B;&#x578B;&#xFF0C;&#x6B64;&#x65F6;&#x79FB;&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#x53F3;&#x8FB9;&#x64CD;&#x4F5C;&#x6570;&#x7684;&#x4F4E;&#x4E94;&#x4F4D;&#x662F;&#x6709;&#x6548;&#x7684;&#xFF08;&lt;32&#xFF09;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x679C;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;int&#x7C7B;&#x578B;&#xFF1B;&#x5982;&#x679C;&#x5BF9;<code>long</code>&#x8FDB;&#x884C;&#x79FB;&#x4F4D;&#x64CD;&#x4F5C;&#xFF0C;&#x6B64;&#x65F6;&#x79FB;&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#x53F3;&#x8FB9;&#x64CD;&#x4F5C;&#x6570;&#x7684;&#x4F4E;&#x516D;&#x4F4D;&#x662F;&#x6709;&#x6548;&#x7684;&#xFF08;&lt;64&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x7B49;&#x5230;&#x7684;&#x7ED3;&#x679C;&#x4E5F;&#x662F;long&#x3002;</li>
-<li>&#x82E5;&#x79FB;&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#x4E0E;&#x7B49;&#x53F7;&#x7EC4;&#x5408;&#x4F7F;&#x7528;&#xFF0C;&#x90A3;&#x4E48;&#x5F53;&#x5BF9;<code>short</code>&#x548C;<code>byte</code>&#x8FDB;&#x884C;&#x65E0;&#x7B26;&#x53F7;&#x53F3;&#x79FB;&#x64CD;&#x4F5C;&#x65F6;&#x9700;&#x8981;&#x5C0F;&#x5FC3;&#x3002;</li>
-<li>&#x6570;&#x5B57;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x73B0;&#x5F62;&#x5F0F;&#x79F0;&#x4E3A;&#x201C;&#x6709;&#x7B26;&#x53F7;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8865;&#x7801;&#x201D;&#x3002;</li>
-<li><code>String</code>&#x7C7B;&#x578B;&#x540E;&#x9762;&#x7684;&#x53D8;&#x91CF;&#x90FD;&#x4F1A;&#x8F6C;&#x6210;<code>String</code>&#x7C7B;&#x578B;&#xFF0C;&#x62EC;&#x53F7;&#x5185;&#x7684;&#x9664;&#x5916;&#x3002;</li>
-<li>&#x5982;&#x679C;&#x8981;&#x6267;&#x884C;<code>&#x7A84;&#x5316;&#x8F6C;&#x6362;</code>&#xFF0C;&#x5219;&#x5FC5;&#x987B;&#x8FDB;&#x884C;<code>&#x5F3A;&#x5236;&#x7C7B;&#x578B;&#x8F6C;&#x6362;</code>&#x3002;</li>
-<li>&#x5C06;<code>float</code>&#x6216;<code>double</code>&#x8F6C;&#x578B;&#x4E3A;<code>int</code>&#x65F6;&#x603B;&#x4F1A;&#x8FDB;&#x884C;&#x622A;&#x5C3E;&#x64CD;&#x4F5C;&#xFF1B;<code>Math.roung()</code>&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x56DB;&#x820D;&#x4E94;&#x5165;&#x3002;</li>
-<li>Java&#x4E2D;&#x4E0D;&#x9700;&#x8981;sizeof&#xFF0C;&#x6240;&#x4EE5;&#x4E5F;&#x6CA1;&#x6709;&#x3002;</li>
+<li>若对<code>char</code>、<code>short</code>以及<code>byte</code>等类型进行移位操作，那么会先将其转为<code>int</code>类型，此时移位操作符右边操作数的低五位是有效的（&lt;32），得到的结果也是一个int类型；如果对<code>long</code>进行移位操作，此时移位操作符右边操作数的低六位是有效的（&lt;64），那么等到的结果也是long。</li>
+<li>若移位操作符与等号组合使用，那么当对<code>short</code>和<code>byte</code>进行无符号右移操作时需要小心。</li>
+<li>数字的二进制表现形式称为“有符号的二进制补码”。</li>
+<li><code>String</code>类型后面的变量都会转成<code>String</code>类型，括号内的除外。</li>
+<li>如果要执行<code>窄化转换</code>，则必须进行<code>强制类型转换</code>。</li>
+<li>将<code>float</code>或<code>double</code>转型为<code>int</code>时总会进行截尾操作；<code>Math.roung()</code>可以进行四舍五入。</li>
+<li>Java中不需要sizeof，所以也没有。</li>
 </ul>
 
     </div>
@@ -470,6 +470,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -238,13 +238,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>to be continued&#x2026;</p>
+        <p>to be continued…</p>
 <ul>
-<li>&#x5728; Unity &#x4E2D;&#x5207;&#x6362; 3D/2D:<code>Edit</code> &#x2192; <code>Project Settings</code> &#x2192; <code>Editor</code> &#x2192; <code>Default Behavior Mode</code>&#x3002;</li>
-<li>&#x5E38;&#x5E38;&#x5728; <code>Project</code> &#x7A97;&#x53E3;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x5EFA;&#x7ACB; <code>Scenes</code>&#x3001;<code>Audios</code>&#x3001;<code>Prefabs</code>&#x3001;<code>Scripts</code>&#x3001;<code>Sprites</code>&#x7B49;&#x6587;&#x4EF6;&#x5939;&#x4EE5;&#x65B9;&#x4FBF;&#x5F52;&#x7C7B;&#x3002;</li>
-<li>&#x5728; 2D &#x6E38;&#x620F;&#x4E2D;&#x7ECF;&#x5E38;&#x7ED9;&#x80CC;&#x666F;&#x56FE;&#x7247;&#x7684; <code>Layer</code> &#x8BBE;&#x7F6E;&#x4E3A; <code>Background(&#x81EA;&#x5DF1;&#x521B;&#x5EFA;)</code>&#xFF0C;&#x7136;&#x540E;&#x518D;&#x5728;&#x53F3;&#x4E0A;&#x89D2;&#x5C06; <code>BackGround</code> &#x9501;&#x5B9A;&#xFF0C;&#x4EE5;&#x9632;&#x6B62;&#x5728; <code>Scene</code> &#x7A97;&#x53E3;&#x7ECF;&#x5E38;&#x8BEF;&#x9009;&#x3002;</li>
-<li>&#x5728;&#x80CC;&#x666F;&#x56FE;&#x7247;&#x548C;&#x5176;&#x4ED6;&#x56FE;&#x7247;&#x7684;&#x68C0;&#x89C6;&#x7A97;&#x53E3;&#x4E2D;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x9009;&#x9879;&#x53EB;&#x505A; <code>Sprite Renderer</code>,&#x5176;&#x4E2D;&#x6709;&#x4E24;&#x4E2A;&#x5185;&#x5BB9;&#x53EF;&#x4EE5;&#x6539;&#x53D8;&#x56FE;&#x7247;&#x5728;&#x5C4F;&#x5E55;&#x4E0A;&#x663E;&#x793A;&#x7684;&#x5C42;&#x6B21;&#xFF0C;&#x5176;&#x4E3A; <code>Sorting Layer</code> &#x548C; <code>Order in Layer</code>&#x3002;&#x5728; <code>Sorting Layer</code> &#x4E2D;&#xFF0C;&#x8D8A;&#x9760;&#x524D;&#x7684;&#x5C42;&#x5728; <code>Game</code> &#x7A97;&#x53E3;&#x4E0B;&#x8D8A;&#x9760;&#x540E;&#xFF1B;&#x5728; <code>Sorting Layer</code> &#x4E2D;&#xFF0C;&#x76F8;&#x5BF9;&#x6765;&#x8BF4;&#x6570;&#x5B57;&#x8D8A;&#x5927;&#x5728; <code>Game</code> &#x7A97;&#x53E3;&#x4E2D;&#x8D8A;&#x663E;&#x793A;&#x5728;&#x524D;&#x9762;&#xFF0C;&#x6570;&#x5B57;&#x8D8A;&#x5C0F;&#x8D8A;&#x9760;&#x540E;&#x3002;<a id="more"></a></li>
-<li>&#x5EFA;&#x7ACB;&#x968F;&#x5C4F;&#x5E55;&#x53C2;&#x6570;&#x53D8;&#x5316;&#x7684;&#x9690;&#x5F62;&#x56F4;&#x5899;&#xFF1A;<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ResetWall</span>(<span class="params"></span>)</span>{</span><br><span class="line">    RightWall = transform.Find (<span class="string">&quot;RightWall&quot;</span>).GetComponent&lt;BoxCollider2D&gt; ();</span><br><span class="line">    Vector3 UpWallPosition = Camera.main.ScreenToWorldPoint (<span class="keyword">new</span> Vector2 (Screen.width / <span class="number">2</span>, Screen.height));</span><br><span class="line">    UpWall.transform.position = UpWallPosition + <span class="keyword">new</span> Vector3(<span class="number">0</span>,<span class="number">0.5f</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">float</span> width = Camera.main.ScreenToWorldPoint (<span class="keyword">new</span> Vector2 (Screen.width, Screen.height)).x * <span class="number">2</span>;</span><br><span class="line">    UpWall.size = <span class="keyword">new</span> Vector2 (width, <span class="number">1</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<li>在 Unity 中切换 3D/2D:<code>Edit</code> → <code>Project Settings</code> → <code>Editor</code> → <code>Default Behavior Mode</code>。</li>
+<li>常常在 <code>Project</code> 窗口下，需要建立 <code>Scenes</code>、<code>Audios</code>、<code>Prefabs</code>、<code>Scripts</code>、<code>Sprites</code>等文件夹以方便归类。</li>
+<li>在 2D 游戏中经常给背景图片的 <code>Layer</code> 设置为 <code>Background(自己创建)</code>，然后再在右上角将 <code>BackGround</code> 锁定，以防止在 <code>Scene</code> 窗口经常误选。</li>
+<li>在背景图片和其他图片的检视窗口中，有一个选项叫做 <code>Sprite Renderer</code>,其中有两个内容可以改变图片在屏幕上显示的层次，其为 <code>Sorting Layer</code> 和 <code>Order in Layer</code>。在 <code>Sorting Layer</code> 中，越靠前的层在 <code>Game</code> 窗口下越靠后；在 <code>Sorting Layer</code> 中，相对来说数字越大在 <code>Game</code> 窗口中越显示在前面，数字越小越靠后。<a id="more"></a></li>
+<li>建立随屏幕参数变化的隐形围墙：<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ResetWall</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    RightWall = transform.Find (<span class="string">"RightWall"</span>).GetComponent&lt;BoxCollider2D&gt; ();</span><br><span class="line">    Vector3 UpWallPosition = Camera.main.ScreenToWorldPoint (<span class="keyword">new</span> Vector2 (Screen.width / <span class="number">2</span>, Screen.height));</span><br><span class="line">    UpWall.transform.position = UpWallPosition + <span class="keyword">new</span> Vector3(<span class="number">0</span>,<span class="number">0.5f</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">float</span> width = Camera.main.ScreenToWorldPoint (<span class="keyword">new</span> Vector2 (Screen.width, Screen.height)).x * <span class="number">2</span>;</span><br><span class="line">    UpWall.size = <span class="keyword">new</span> Vector2 (width, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <!--lalala--></li>
 </ul>
 
@@ -454,6 +454,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

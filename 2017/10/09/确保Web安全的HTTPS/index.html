@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="&amp;#x53D1;&amp;#x73B0;&amp;#x4E00;&amp;#x7BC7;&amp;#x5F88;&amp;#x597D;&amp;#x7684;&amp;#x6587;&amp;#x7AE0;&amp;#xFF0C;&amp;#x6765;&amp;#x81EA;&amp;#x5218;&amp;#x6B23;&amp;#x5927;&amp;#x5927;&amp;#xFF0C;&amp;#x5927;&amp;#x5BB6;&amp;#x611F;&amp;#x53D7;&amp;#x4E00;&amp;#x4E0B;&amp;#x2014;&amp;#x2014;">
+  <meta name="description" content="发现一篇很好的文章，来自刘欣大大，大家感受一下——一个故事讲完HTTPS 补充一点SSL和TSL的信息：HTTPS使用SSL（Secure Socket Layer）和TLS（Transport Layer Security）这两个协议。SSL技术最初是由浏览器开发商网景通信公司率先倡导的，开发过SSL3.0之前的版本。目前主导权已转移到IETF（Internet Engineering Task">
 <meta property="og:type" content="article">
 <meta property="og:title" content="确保Web安全的HTTPS">
 <meta property="og:url" content="https://www.xijinian.top/2017/10/09/%E7%A1%AE%E4%BF%9DWeb%E5%AE%89%E5%85%A8%E7%9A%84HTTPS/index.html">
 <meta property="og:site_name" content="Adventures of xijinian">
-<meta property="og:description" content="&amp;#x53D1;&amp;#x73B0;&amp;#x4E00;&amp;#x7BC7;&amp;#x5F88;&amp;#x597D;&amp;#x7684;&amp;#x6587;&amp;#x7AE0;&amp;#xFF0C;&amp;#x6765;&amp;#x81EA;&amp;#x5218;&amp;#x6B23;&amp;#x5927;&amp;#x5927;&amp;#xFF0C;&amp;#x5927;&amp;#x5BB6;&amp;#x611F;&amp;#x53D7;&amp;#x4E00;&amp;#x4E0B;&amp;#x2014;&amp;#x2014;">
+<meta property="og:description" content="发现一篇很好的文章，来自刘欣大大，大家感受一下——一个故事讲完HTTPS 补充一点SSL和TSL的信息：HTTPS使用SSL（Secure Socket Layer）和TLS（Transport Layer Security）这两个协议。SSL技术最初是由浏览器开发商网景通信公司率先倡导的，开发过SSL3.0之前的版本。目前主导权已转移到IETF（Internet Engineering Task">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-10-09T15:40:27.000Z">
 <meta property="article:modified_time" content="2017-10-10T15:58:58.000Z">
@@ -238,8 +238,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&#x53D1;&#x73B0;&#x4E00;&#x7BC7;&#x5F88;&#x597D;&#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x6765;&#x81EA;&#x5218;&#x6B23;&#x5927;&#x5927;&#xFF0C;&#x5927;&#x5BB6;&#x611F;&#x53D7;&#x4E00;&#x4E0B;&#x2014;&#x2014;<a href="https://mp.weixin.qq.com/s/StqqafHePlBkWAPQZg3NrA" target="_blank" rel="noopener"><strong>&#x4E00;&#x4E2A;&#x6545;&#x4E8B;&#x8BB2;&#x5B8C;HTTPS</strong></a></p>
-<p><strong>&#x8865;&#x5145;&#x4E00;&#x70B9;SSL&#x548C;TSL&#x7684;&#x4FE1;&#x606F;</strong>&#xFF1A;<br>HTTPS&#x4F7F;&#x7528;SSL&#xFF08;Secure Socket Layer&#xFF09;&#x548C;TLS&#xFF08;Transport Layer Security&#xFF09;&#x8FD9;&#x4E24;&#x4E2A;&#x534F;&#x8BAE;&#x3002;<br>SSL&#x6280;&#x672F;&#x6700;&#x521D;&#x662F;&#x7531;&#x6D4F;&#x89C8;&#x5668;&#x5F00;&#x53D1;&#x5546;&#x7F51;&#x666F;&#x901A;&#x4FE1;&#x516C;&#x53F8;&#x7387;&#x5148;&#x5021;&#x5BFC;&#x7684;&#xFF0C;&#x5F00;&#x53D1;&#x8FC7;SSL3.0&#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#x3002;&#x76EE;&#x524D;&#x4E3B;&#x5BFC;&#x6743;&#x5DF2;&#x8F6C;&#x79FB;&#x5230;IETF&#xFF08;Internet Engineering Task Force&#xFF0C;Internet&#x5DE5;&#x7A0B;&#x4EFB;&#x52A1;&#x7EC4;&#xFF09;&#x7684;&#x624B;&#x4E2D;&#x3002;<br>IETF&#x4EE5;SSL3.0&#x4E3A;&#x57FA;&#x51C6;&#xFF0C;&#x540E;&#x53C8;&#x5236;&#x5B9A;&#x4E86;TLS1.0&#x3001;TLS1.1&#x548C;TLS1.2&#x3002;TSL&#x662F;&#x4EE5;SSL&#x4E3A;&#x539F;&#x578B;&#x5F00;&#x53D1;&#x7684;&#x534F;&#x8BAE;&#xFF0C;&#x6709;&#x65F6;&#x4F1A;&#x7EDF;&#x4E00;&#x79F0;&#x8BE5;&#x534F;&#x8BAE;&#x4E3A;SSL&#x3002;&#x5F53;&#x524D;&#x4E3B;&#x6D41;&#x7684;&#x7248;&#x672C;&#x662F;<strong>SSL3.0</strong>&#x548C;<strong>TLS1.0</strong>&#x3002;<br>&#x7531;&#x4E8E;SSL1.0&#x534F;&#x8BAE;&#x5728;&#x8BBE;&#x8BA1;&#x4E4B;&#x521D;&#x88AB;&#x53D1;&#x73B0;&#x51FA;&#x4E86;&#x95EE;&#x9898;&#xFF0C;&#x5C31;&#x6CA1;&#x6709;&#x5B9E;&#x9645;&#x6295;&#x5165;&#x4F7F;&#x7528;&#x3002;SSL2.0&#x4E5F;&#x88AB;&#x53D1;&#x73B0;&#x5B58;&#x5728;&#x95EE;&#x9898;&#xFF0C;&#x6240;&#x4EE5;&#x5F88;&#x591A;&#x6D4F;&#x89C8;&#x5668;&#x76F4;&#x63A5;&#x5E9F;&#x9664;&#x4E86;&#x8BE5;&#x534F;&#x8BAE;&#x7248;&#x672C;&#x3002;</p>
+        <p>发现一篇很好的文章，来自刘欣大大，大家感受一下——<a href="https://mp.weixin.qq.com/s/StqqafHePlBkWAPQZg3NrA" target="_blank" rel="noopener"><strong>一个故事讲完HTTPS</strong></a></p>
+<p><strong>补充一点SSL和TSL的信息</strong>：<br>HTTPS使用SSL（Secure Socket Layer）和TLS（Transport Layer Security）这两个协议。<br>SSL技术最初是由浏览器开发商网景通信公司率先倡导的，开发过SSL3.0之前的版本。目前主导权已转移到IETF（Internet Engineering Task Force，Internet工程任务组）的手中。<br>IETF以SSL3.0为基准，后又制定了TLS1.0、TLS1.1和TLS1.2。TSL是以SSL为原型开发的协议，有时会统一称该协议为SSL。当前主流的版本是<strong>SSL3.0</strong>和<strong>TLS1.0</strong>。<br>由于SSL1.0协议在设计之初被发现出了问题，就没有实际投入使用。SSL2.0也被发现存在问题，所以很多浏览器直接废除了该协议版本。</p>
 
     </div>
 
@@ -447,6 +447,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

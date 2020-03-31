@@ -239,23 +239,23 @@
 
       
         <ul>
-<li>&#x6BCF;&#x4E2A;&#x7F16;&#x8BD1;&#x5355;&#x5143;&#xFF08;&#x8F6C;&#x8BD1;&#x5355;&#x5143;&#xFF09;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x4E2A; public &#x7C7B;&#xFF0C;&#x5426;&#x5219;&#x7F16;&#x8BD1;&#x5668;&#x5C31;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x3002;&#x5982;&#x679C;&#x5728;&#x8BE5;&#x7F16;&#x8BD1;&#x5355;&#x5143;&#x4E4B;&#x4E2D;&#x8FD8;&#x6709;&#x989D;&#x5916;&#x7684;&#x7C7B;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E9B;&#x7C7B;&#x5728;&#x5305;&#x5916;&#x9762;&#x662F;&#x65E0;&#x6CD5;&#x770B;&#x89C1;&#x7684;&#xFF0C;&#x5B83;&#x4EEC;&#x4E3B;&#x8981;&#x7528;&#x6765;&#x4E3A;&#x4E3B; public &#x7C7B;&#x63D0;&#x4F9B;&#x652F;&#x6301;&#x3002;</li>
-<li>&#x5728;&#x7F16;&#x8BD1;&#x4E00;&#x4E2A; <code>.java</code> &#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5F97;&#x5230;&#x5927;&#x91CF;&#x7684; <code>.class</code> &#x6587;&#x4EF6;&#xFF0C;&#x56E0;&#x4E3A;&#x6BCF;&#x4E2A;&#x7C7B;&#x90FD;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A; <code>.class</code> &#x6587;&#x4EF6;&#xFF08;&#x5373;&#x4F7F;&#x5B83;&#x4EEC;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x7F16;&#x8BD1;&#x5355;&#x5143;&#x4E2D;&#xFF09;&#x3002;</li>
-<li>Java &#x53EF;&#x8FD0;&#x884C;&#x7A0B;&#x5E8F;&#x65F6;&#x4E00;&#x7EC4;&#x53EF;&#x4EE5;&#x6253;&#x5305;&#x5E76;&#x538B;&#x7F29;&#x4E3A;&#x4E00;&#x4E2A; JAR &#x6587;&#x4EF6;&#x7684; <code>.class</code> &#x6587;&#x4EF6;&#x3002;</li>
-<li>&#x5728;&#x4F7F;&#x7528; JAR &#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x5FC5;&#x987B;&#x5728;&#x7C7B;&#x8DEF;&#x5F84;&#x5C06; JAR &#x6587;&#x4EF6;&#x7684;&#x5B9E;&#x9645;&#x540D;&#x79F0;&#x5199;&#x6E05;&#x695A;&#xFF0C;&#x800C;&#x4E0D;&#x4EC5;&#x662F;&#x6307;&#x660E;&#x5B83;&#x6240;&#x5728;&#x4F4D;&#x7F6E;&#x7684;&#x76EE;&#x5F55;&#x3002;</li>
-<li>&#x5F53;&#x7F16;&#x8BD1;&#x5668;&#x78B0;&#x5230; import &#x8BED;&#x53E5;&#x65F6;&#xFF0C;&#x5C31;&#x5F00;&#x59CB;&#x5728; CLASSPATH &#x6240;&#x6307;&#x5B9A;&#x7684;&#x76EE;&#x5F55;&#x4E2D;&#x67E5;&#x627E;&#xFF0C;&#x7136;&#x540E;&#x4ECE;&#x5DF2;&#x7F16;&#x8BD1;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x627E;&#x51FA;&#x540D;&#x79F0;&#x76F8;&#x7B26;&#x8005;&#x3002;<a id="more"></a></li>
-<li>&#x82E5;&#x4F7F;&#x7528; import &#x8BED;&#x53E5;&#x540E;&#xFF0C;&#x51FA;&#x73B0;&#x4E86;&#x4E24;&#x4E2A;&#x51B2;&#x7A81;&#x7684;&#x7C7B;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x5F3A;&#x5236;&#x660E;&#x786E;&#x6307;&#x660E;&#x3002;</li>
+<li>每个编译单元（转译单元）只能有一个 public 类，否则编译器就不会接受。如果在该编译单元之中还有额外的类，那么这些类在包外面是无法看见的，它们主要用来为主 public 类提供支持。</li>
+<li>在编译一个 <code>.java</code> 文件时，可能会得到大量的 <code>.class</code> 文件，因为每个类都会生成一个 <code>.class</code> 文件（即使它们在同一个编译单元中）。</li>
+<li>Java 可运行程序时一组可以打包并压缩为一个 JAR 文件的 <code>.class</code> 文件。</li>
+<li>在使用 JAR 文件时，必须在类路径将 JAR 文件的实际名称写清楚，而不仅是指明它所在位置的目录。</li>
+<li>当编译器碰到 import 语句时，就开始在 CLASSPATH 所指定的目录中查找，然后从已编译的文件中找出名称相符者。<a id="more"></a></li>
+<li>若使用 import 语句后，出现了两个冲突的类，就需要强制明确指明。</li>
 <li>import static</li>
-<li>&#x53EF;&#x4EE5;&#x7528; import &#x6539;&#x53D8;&#x884C;&#x4E3A;&#xFF0C;&#x8B6C;&#x5982;&#x901A;&#x8FC7;&#x4FEE;&#x6539;&#x88AB;&#x5BFC;&#x5165;&#x7684; package &#x7684;&#x65B9;&#x6CD5;&#x6765;&#x5B9E;&#x73B0;&#x5C06;&#x4F60;&#x7A0B;&#x5E8F;&#x4E2D;&#x7528;&#x5230;&#x7684;&#x4EE3;&#x7801;&#x4ECE;&#x8C03;&#x8BD5;&#x7248;&#x6539;&#x4E3A;&#x53D1;&#x5E03;&#x7248;&#x3002;</li>
-<li>protected &#x6BD4; &#x5305;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#xFF08;friendly&#xFF09;&#x5F00;&#x653E;&#xFF0C;&#x5B83;&#x5141;&#x8BB8;&#x5305;&#x5916;&#x6587;&#x4EF6;&#x7EE7;&#x627F;&#x5B83;&#x3002;</li>
-<li>&#x4E3A;&#x4E86;&#x6E05;&#x695A;&#x8D77;&#x89C1;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x91C7;&#x7528;&#x4E00;&#x79CD;&#x5C06; public &#x6210;&#x5458;&#x7F6E;&#x4E8E;&#x5F00;&#x5934;&#xFF0C;&#x7136;&#x540E;&#x4F9D;&#x6B21;&#x662F; protected&#x3001;friendly &#x548C; private&#xFF0C;&#x8FD9;&#x6216;&#x8BB8;&#x8BA9;&#x7A0B;&#x5E8F;&#x66F4;&#x6613;&#x8BFB;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x63A5;&#x53E3;&#x548C;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x6DF7;&#x5728;&#x4E86;&#x4E00;&#x8D77;&#x662F;&#x4E0D;&#x597D;&#x7684;&#xFF0C;&#x53E6;&#x5916;&#xFF0C;javadoc&#x6240;&#x63D0;&#x4F9B;&#x7684;&#x6CE8;&#x91CA;&#x6587;&#x6863;&#x7684;&#x529F;&#x80FD;&#x5341;&#x5206;&#x597D;&#x7528;&#xFF0C;&#x964D;&#x4F4E;&#x4E86;&#x7A0B;&#x5E8F;&#x53EF;&#x8BFB;&#x6027;&#x5BF9;&#x5BA2;&#x6237;&#x7AEF;&#x7A0B;&#x5E8F;&#x5458;&#x7684;&#x91CD;&#x8981;&#x6027;&#x3002;</li>
-<li>&#x867D;&#x7136;&#x4E0D;&#x662F;&#x5F88;&#x5E38;&#x7528;&#xFF0C;&#x4F46;&#x7F16;&#x8BD1;&#x5355;&#x5143;&#x5185;&#x5B8C;&#x5168;&#x4E0D;&#x5E26; public &#x7C7B;&#x4E5F;&#x662F;&#x53EF;&#x4EE5;&#x7684;&#xFF0C;&#x8FD9;&#x65F6;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x968F;&#x610F;&#x5BF9;&#x6587;&#x4EF6;&#x547D;&#x540D;&#x3002;</li>
-<li>&#x5BF9;&#x4E8E;&#x7C7B;&#x7684;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x53EA;&#x6709;&#x4E24;&#x79CD;&#xFF1A;&#x5305;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x6216; public&#x3002;</li>
-<li>&#x5C06;&#x6240;&#x6709;&#x7684;&#x6784;&#x9020;&#x5668;&#x6307;&#x5B9A;&#x4E3A; private &#x6765;&#x963B;&#x6B62;&#x76F4;&#x63A5;&#x521B;&#x5EFA;&#x67D0;&#x4E2A;&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x4E14;&#x5728;&#x8BE5;&#x7C7B;&#x4E2D;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x4E86;&#x8FD9;&#x4E9B; private &#x6784;&#x9020;&#x65B9;&#x6CD5;&#x8FD9;&#x6837;&#x7684;&#x6A21;&#x5F0F;&#xFF0C;&#x79F0;&#x4E3A;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;&#xFF0C;&#x56E0;&#x4E3A;&#x4F60;&#x59CB;&#x7EC8;&#x53EA;&#x80FD;&#x521B;&#x5EFA;&#x5B83;&#x7684;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x3002;&#x5982;&#x679C;&#x4F60;&#x60F3;&#x5728;&#x521B;&#x5EFA;&#x5BF9;&#x8C61;&#x7684;&#x540C;&#x65F6;&#x5E72;&#x4E9B;&#x4EC0;&#x4E48;&#xFF0C;&#x8FD9;&#x662F;&#x5927;&#x6709;&#x88E8;&#x76CA;&#x7684;&#x3002;</li>
-<li>&#x76F8;&#x540C;&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x6240;&#x6709;&#x4E0D;&#x5177;&#x6709;&#x660E;&#x786E; package &#x58F0;&#x660E;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x90FD;&#x88AB;&#x89C6;&#x4E3A;&#x8BE5;&#x76EE;&#x5F55;&#x4E0B;&#x9ED8;&#x8BA4;&#x5305;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x3002;</li>
-<li>&#x7531;&#x4E8E; C &#x8BED;&#x8A00;&#x4EC5;&#x6709;&#x5355;&#x4E00;&#x7684;&#x201C;&#x540D;&#x5B57;&#x7A7A;&#x95F4;&#x201D;&#xFF0C;&#x6240;&#x4EE5;&#x5728;50k&#x884C; - 100k&#x884C;&#x65F6;&#x5F88;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x540D;&#x79F0;&#x51B2;&#x7A81;&#xFF0C;&#x4F46;&#x662F; Java &#x5C31;&#x4E0D;&#x4F1A;&#x3002;</li>
-<li>&#x63A7;&#x5236;&#x5BF9;&#x6210;&#x5458;&#x7684;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x6709;&#x4E24;&#x4E2A;&#x539F;&#x56E0;&#xFF1A;&#x2460;&#x4F7F;&#x7528;&#x6237;&#x65E0;&#x9700;&#x63A5;&#x89E6;&#x90A3;&#x4E9B;&#x4ED6;&#x4EEC;&#x4E0D;&#x8BE5;&#x63A5;&#x89E6;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x7B80;&#x5316;&#x4E86;&#x4ED6;&#x4EEC;&#x5BF9;&#x7C7B;&#x7684;&#x7406;&#x89E3;&#xFF1B;&#x2461;&#x7C7B;&#x5E93;&#x8BBE;&#x8BA1;&#x8005;&#x53EF;&#x4EE5;&#x66F4;&#x6539;&#x7C7B;&#x7684;&#x5185;&#x90E8;&#x5DE5;&#x4F5C;&#x65B9;&#x5F0F;&#xFF0C;&#x800C;&#x4E0D;&#x5FC5;&#x62C5;&#x5FC3;&#x4F1A;&#x5BF9;&#x5BA2;&#x6237;&#x7AEF;&#x7A0B;&#x5E8F;&#x5458;&#x4EA7;&#x751F;&#x91CD;&#x5927;&#x5F71;&#x54CD;&#x3002;</li>
-<li>&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x63A7;&#x5236;&#x4E13;&#x6CE8;&#x4E8E;&#x7C7B;&#x5E93;&#x521B;&#x5EFA;&#x8005;&#x548C;&#x8BE5;&#x7C7B;&#x5E93;&#x5916;&#x90E8;&#x4F7F;&#x7528;&#x8005;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#xFF0C;&#x8FD9;&#x79CD;&#x5173;&#x7CFB;&#x4E5F;&#x662F;&#x4E00;&#x79CD;&#x901A;&#x4FE1;&#x65B9;&#x5F0F;&#x3002;&#x7136;&#x800C;&#xFF0C;&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x4E0B;&#x4E8B;&#x60C5;&#x5E76;&#x975E;&#x5982;&#x6B64;&#xFF0C;&#x56E0;&#x800C;&#x4E25;&#x683C;&#x5730;&#x9075;&#x5FAA;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x89C4;&#x5219;&#x4E0D;&#x4E00;&#x5B9A;&#x662F;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;&#xFF0C;&#x9ED8;&#x8BA4;&#x5305;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x4E5F;&#x8BB8;&#x53EA;&#x662F;&#x53EF;&#x884C;&#x800C;&#x5DF2;&#x3002;</li>
+<li>可以用 import 改变行为，譬如通过修改被导入的 package 的方法来实现将你程序中用到的代码从调试版改为发布版。</li>
+<li>protected 比 包访问权限（friendly）开放，它允许包外文件继承它。</li>
+<li>为了清楚起见，可能会采用一种将 public 成员置于开头，然后依次是 protected、friendly 和 private，这或许让程序更易读了，但是接口和具体实现混在了一起是不好的，另外，javadoc所提供的注释文档的功能十分好用，降低了程序可读性对客户端程序员的重要性。</li>
+<li>虽然不是很常用，但编译单元内完全不带 public 类也是可以的，这时，就可以随意对文件命名。</li>
+<li>对于类的访问权限只有两种：包访问权限或 public。</li>
+<li>将所有的构造器指定为 private 来阻止直接创建某个类的实例，且在该类中的静态方法调用了这些 private 构造方法这样的模式，称为单例模式，因为你始终只能创建它的一个对象。如果你想在创建对象的同时干些什么，这是大有裨益的。</li>
+<li>相同目录下的所有不具有明确 package 声明的文件，都被视为该目录下默认包的一部分。</li>
+<li>由于 C 语言仅有单一的“名字空间”，所以在50k行 - 100k行时很可能发生名称冲突，但是 Java 就不会。</li>
+<li>控制对成员的访问权限有两个原因：①使用户无需接触那些他们不该接触的部分，简化了他们对类的理解；②类库设计者可以更改类的内部工作方式，而不必担心会对客户端程序员产生重大影响。</li>
+<li>访问权限控制专注于类库创建者和该类库外部使用者之间的关系，这种关系也是一种通信方式。然而，很多情况下事情并非如此，因而严格地遵循访问权限规则不一定是最佳实践，默认包访问权限也许只是可行而已。</li>
 </ul>
 
     </div>
@@ -464,6 +464,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

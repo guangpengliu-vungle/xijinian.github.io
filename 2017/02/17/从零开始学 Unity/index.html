@@ -238,14 +238,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&#x5176;&#x5B9E;&#x6211;&#x662F;&#x4F1A;&#x4F7F;&#x7528; Unity &#x7684;&#xFF0C;&#x751A;&#x81F3;&#x8FD8;&#x7528; Unity &#x5F00;&#x53D1;&#x7684;&#x8F6F;&#x4EF6;&#x5F97;&#x4E86;&#x597D;&#x51E0;&#x4E2A;&#x5956;&#xFF0C;&#x9A97;&#x5403;&#x9A97;&#x559D;&#xFF0C;&#x4F46;&#x4E8B;&#x5B9E;&#x4E0A;&#xFF0C;&#x90A3;&#x53EA;&#x662F;&#x4E34;&#x65F6;&#x7A81;&#x51FB;&#xFF0C;&#x56E0;&#x4E3A;&#x5F53;&#x521D;&#x5938;&#x4E0B;&#x4E86;&#x6D77;&#x53E3;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x5F97;&#x4E0D;&#x505A;&#x51FA;&#x6765;&#x3002;&#x91CD;&#x65B0;&#x5F00;&#x59CB;&#x5427;&#xFF1A;</p>
+        <p>其实我是会使用 Unity 的，甚至还用 Unity 开发的软件得了好几个奖，骗吃骗喝，但事实上，那只是临时突击，因为当初夸下了海口，所以不得不做出来。重新开始吧：</p>
 <a id="more"></a>
 
-<p>&#x5F97;&#x5230;&#x672C;&#x7269;&#x4F53;&#x521A;&#x4F53;&#xFF1A;<code>rd = GetComponent&lt;Rigidbody&gt; ();</code><br>&#x5F97;&#x5230;&#x5F53;&#x524D;&#x7269;&#x4F53;&#x4F4D;&#x7F6E;&#xFF1A;<code>pos = transform.position;</code><br>&#x7ED9;&#x5F53;&#x524D;&#x7269;&#x4F53;&#x52A0;&#x529B;&#x65CB;&#x8F6C;&#xFF1A;<code>transform.Rotate (new Vector3 (0, 1, 0));</code><br>&#x83B7;&#x53D6;x&#x8F74;&#xFF1A;<code>Input.GetAxis (&quot;Horizontal&quot;);</code><br>&#x83B7;&#x53D6;y&#x8F74;&#xFF1A;<code>Input.GetAxis (&quot;Vertical&quot;);</code><br>&#x7ED9;&#x521A;&#x4F53;&#x52A0;&#x529B;&#xFF1A;<code>rd.AddForce (new Vector3 (h, 0, v) * 5);</code><br>UGUI&#x7684;&#x4F7F;&#x7528;&#xFF1A;<code>text.text = score.ToString();</code>&#x3001;&#x4E0E;<code>Alt</code>&#x952E;&#x7684;&#x7ED3;&#x5408;&#x4F7F;&#x7528;<br>&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#xFF1A;  </p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnCollisionEnter</span>(<span class="params">Collision collision</span>)</span> {</span><br><span class="line">    <span class="comment">//collision.collider&#x83B7;&#x53D6;&#x78B0;&#x649E;&#x4F53;</span></span><br><span class="line">    <span class="keyword">string</span> name = collision.collider.name;</span><br><span class="line">    print(name);</span><br><span class="line">    <span class="keyword">if</span>(collision.collider.tag == <span class="string">&quot;PickUp&quot;</span>){</span><br><span class="line">        Destroy (collision.collider.gameObject);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>得到本物体刚体：<code>rd = GetComponent&lt;Rigidbody&gt; ();</code><br>得到当前物体位置：<code>pos = transform.position;</code><br>给当前物体加力旋转：<code>transform.Rotate (new Vector3 (0, 1, 0));</code><br>获取x轴：<code>Input.GetAxis (&quot;Horizontal&quot;);</code><br>获取y轴：<code>Input.GetAxis (&quot;Vertical&quot;);</code><br>给刚体加力：<code>rd.AddForce (new Vector3 (h, 0, v) * 5);</code><br>UGUI的使用：<code>text.text = score.ToString();</code>、与<code>Alt</code>键的结合使用<br>碰撞检测：  </p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnCollisionEnter</span>(<span class="params">Collision collision</span>)</span> &#123;</span><br><span class="line">    <span class="comment">//collision.collider获取碰撞体</span></span><br><span class="line">    <span class="keyword">string</span> name = collision.collider.name;</span><br><span class="line">    print(name);</span><br><span class="line">    <span class="keyword">if</span>(collision.collider.tag == <span class="string">"PickUp"</span>)&#123;</span><br><span class="line">        Destroy (collision.collider.gameObject);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <!--lalala-->
-<p>&#x89E6;&#x53D1;&#x68C0;&#x6D4B;&#xFF1A;  </p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnTriggerEnter</span>(<span class="params">Collider collider</span>)</span>{</span><br><span class="line">    <span class="keyword">if</span>(collider.tag == <span class="string">&quot;PickUp&quot;</span>){</span><br><span class="line">        score++;</span><br><span class="line">        <span class="comment">//&#x9500;&#x6BC1;&#x78B0;&#x649E;&#x4F53;</span></span><br><span class="line">        Destroy (collider.gameObject);</span><br><span class="line">        text.text = score.ToString();</span><br><span class="line">        <span class="keyword">if</span>(score == <span class="number">9</span>){</span><br><span class="line">            <span class="comment">//&#x6FC0;&#x6D3B;GameObject</span></span><br><span class="line">            Message.SetActive (<span class="literal">true</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>触发检测：  </p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnTriggerEnter</span>(<span class="params">Collider collider</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(collider.tag == <span class="string">"PickUp"</span>)&#123;</span><br><span class="line">        score++;</span><br><span class="line">        <span class="comment">//销毁碰撞体</span></span><br><span class="line">        Destroy (collider.gameObject);</span><br><span class="line">        text.text = score.ToString();</span><br><span class="line">        <span class="keyword">if</span>(score == <span class="number">9</span>)&#123;</span><br><span class="line">            <span class="comment">//激活GameObject</span></span><br><span class="line">            Message.SetActive (<span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <!--lalala-->
     </div>
 
@@ -453,6 +453,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
