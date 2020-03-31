@@ -203,8 +203,8 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: "Microsoft YaHei", Verdana, sans-serif;
-  font-size: 16px;
+  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 1em;
   line-height: 2;
 }
 @media (max-width: 991px) {
@@ -219,7 +219,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Georgia, sans;
+  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -418,7 +418,7 @@ pre {
 }
 pre,
 code {
-  font-family: Monaco, Menlo, "Input Mono", "PT Mono", Consolas, monospace;
+  font-family: 'Monaco', consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei";
 }
 code {
   background: #eee;
@@ -1199,7 +1199,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #b6aa0a;
+  background: #bf884f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
