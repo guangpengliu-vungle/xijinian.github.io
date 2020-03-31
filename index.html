@@ -500,7 +500,7 @@
 </li>
 <li><p>为了提升文件操作的效率，可以使用缓冲区。注意要在写结束的时候，需将缓冲区的剩余内容同步到硬盘。</p>
 </li>
-<li><p>操作系统一般支持一种称之为内存映射文件的高效的随机读写大文件的方法，将文件直接映射到内存，操作内存就是操作文件，在内存映射文件中，只有访问到的数据才会被实际拷贝到内存，且数据只会拷贝一次，被操作系统以及多个应用程序共享。</p>
+<li><p>操作系统一般支持一种称之为内存映射文件的高效的随机读写大文件的方法，将文件直接映射到内存，操作内存就是操作文件，在内存映射文件中，只有访问到的数据才会被实际拷贝到内存，且数据只会拷贝一次，被操作系统以及多个应用程序共享。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/01/09/Java-IO/#more" rel="contents">
@@ -738,7 +738,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="类的基础"><a href="#类的基础" class="headerlink" title="类的基础"></a>类的基础</h2><ul>
+          <h3 id="类的基础"><a href="#类的基础" class="headerlink" title="类的基础"></a>类的基础</h3><ul>
 <li><code>this</code> 和 <code>super</code> 都要放在构造函数的第一行。</li>
 <li><code>import</code> 不能嵌套导入，<code>import java.util.*.*</code> 这种形式也是无效的。</li>
 <li>静态导入的语法是：<code>import static java.util.Arrays.*</code>，它能导入类的公开静态方法和成员，但是静态导入也不能滥用，因为这会让代码中的类难以区分。</li>
