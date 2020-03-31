@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Bean 的装配自动化装配 Bean流程 用一个类实现一个接口，并在此类上面标注 @Component 注解 构造一个 Config 类，在上面标注 @Configuration 和 @ComponentScan 注解，意图让 Spring 可以发现此类同包下的 Component 注解 在其他类中，可以直接在最开始定义的接口上标注一个 @Autowired 注解，这样就会把此注解的实现类注入到当">
+  <meta name="description" content="自动化装配 Bean流程 用一个类实现一个接口，并在此类上面标注 @Component 注解 构造一个 Config 类，在上面标注 @Configuration 和 @ComponentScan 注解，意图让 Spring 可以发现此类同包下的 Component 注解 在其他类中，可以直接在最开始定义的接口上标注一个 @Autowired 注解，这样就会把此注解的实现类注入到当前的类中了。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bean 的装配">
-<meta property="og:url" content="https://www.xijinian.top/2017/05/10/Bean-%E7%9A%84%E8%A3%85%E9%85%8D/index.html">
+<meta property="og:title" content="Spring Bean IN ACTION">
+<meta property="og:url" content="https://www.xijinian.top/2018/05/11/Spring-Bean-IN-ACTION/index.html">
 <meta property="og:site_name" content="Adventures of xijinian">
-<meta property="og:description" content="Bean 的装配自动化装配 Bean流程 用一个类实现一个接口，并在此类上面标注 @Component 注解 构造一个 Config 类，在上面标注 @Configuration 和 @ComponentScan 注解，意图让 Spring 可以发现此类同包下的 Component 注解 在其他类中，可以直接在最开始定义的接口上标注一个 @Autowired 注解，这样就会把此注解的实现类注入到当">
+<meta property="og:description" content="自动化装配 Bean流程 用一个类实现一个接口，并在此类上面标注 @Component 注解 构造一个 Config 类，在上面标注 @Configuration 和 @ComponentScan 注解，意图让 Spring 可以发现此类同包下的 Component 注解 在其他类中，可以直接在最开始定义的接口上标注一个 @Autowired 注解，这样就会把此注解的实现类注入到当前的类中了。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2017-05-10T15:35:08.000Z">
-<meta property="article:modified_time" content="2020-03-31T05:39:10.000Z">
+<meta property="article:published_time" content="2018-05-11T15:35:08.000Z">
+<meta property="article:modified_time" content="2020-03-31T06:01:46.000Z">
 <meta property="article:author" content="xijinian">
 <meta property="article:tag" content="Spring IN ACTION">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://www.xijinian.top/2017/05/10/Bean-%E7%9A%84%E8%A3%85%E9%85%8D/">
+<link rel="canonical" href="https://www.xijinian.top/2018/05/11/Spring-Bean-IN-ACTION/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Bean 的装配 | Adventures of xijinian</title>
+  <title>Spring Bean IN ACTION | Adventures of xijinian</title>
   
 
 
@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/05/10/Bean-%E7%9A%84%E8%A3%85%E9%85%8D/">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/11/Spring-Bean-IN-ACTION/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -200,7 +200,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Bean 的装配
+          Spring Bean IN ACTION
         </h1>
 
         <div class="post-meta">
@@ -210,7 +210,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-05-10 23:35:08" itemprop="dateCreated datePublished" datetime="2017-05-10T23:35:08+08:00">2017-05-10</time>
+              <time title="创建时间：2018-05-11 23:35:08" itemprop="dateCreated datePublished" datetime="2018-05-11T23:35:08+08:00">2018-05-11</time>
             </span>
 
           
@@ -222,8 +222,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2017/05/10/Bean-%E7%9A%84%E8%A3%85%E9%85%8D/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/10/Bean-的装配/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2018/05/11/Spring-Bean-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/11/Spring-Bean-IN-ACTION/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -238,7 +238,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Bean-的装配"><a href="#Bean-的装配" class="headerlink" title="Bean 的装配"></a>Bean 的装配</h2><h3 id="自动化装配-Bean"><a href="#自动化装配-Bean" class="headerlink" title="自动化装配 Bean"></a>自动化装配 Bean</h3><h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ul>
+        <h3 id="自动化装配-Bean"><a href="#自动化装配-Bean" class="headerlink" title="自动化装配 Bean"></a>自动化装配 Bean</h3><h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ul>
 <li>用一个类实现一个接口，并在此类上面标注 <code>@Component</code> 注解</li>
 <li>构造一个 Config 类，在上面标注 <code>@Configuration</code> 和 <code>@ComponentScan</code> 注解，意图让 Spring 可以发现此类同包下的 <code>Component</code> 注解</li>
 <li>在其他类中，可以直接在最开始定义的接口上标注一个 <code>@Autowired</code> 注解，这样就会把此注解的实现类注入到当前的类中了。</li>
@@ -334,7 +334,7 @@
 
 </li>
 </ul>
-<h2 id="高级装配"><a href="#高级装配" class="headerlink" title="高级装配"></a>高级装配</h2><h3 id="环境与-profile"><a href="#环境与-profile" class="headerlink" title="环境与 profile"></a>环境与 profile</h3><h4 id="类级别"><a href="#类级别" class="headerlink" title="类级别"></a>类级别</h4><p><code>@Profile</code> 注解可以应用在类级别上。它会告诉 Spring 这个配置类中的 bean 只有在响应的 profile 激活时才会创建。</p>
+<h3 id="环境与-profile"><a href="#环境与-profile" class="headerlink" title="环境与 profile"></a>环境与 profile</h3><h4 id="类级别"><a href="#类级别" class="headerlink" title="类级别"></a>类级别</h4><p><code>@Profile</code> 注解可以应用在类级别上。它会告诉 Spring 这个配置类中的 bean 只有在响应的 profile 激活时才会创建。</p>
 <h4 id="方法级别"><a href="#方法级别" class="headerlink" title="方法级别"></a>方法级别</h4><p>在 Spring 3.1 中，只能在类级别上使用 <code>@Profile</code> 注解。不过，从 Spring 3.2 开始，也可以在方法级别上使用 <code>@Profile</code> 注解，与 <code>@Bean</code> 注解一同使用。这样的话，就能将这两个 bean 的声明放到同一个配置类之中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceConfig</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Bean</span>(destroyMethod = <span class="string">"shutdown"</span>)</span><br><span class="line">  <span class="meta">@Profile</span>(<span class="string">"dev"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">embeddedDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> EmbeddedDatabaseBuilder()</span><br><span class="line">        .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">        .addScript(<span class="string">"classpath:schema.sql"</span>)</span><br><span class="line">        .addScript(<span class="string">"classpath:test-data.sql"</span>)</span><br><span class="line">        .build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@Profile</span>(<span class="string">"prod"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">jndiDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JndiObjectFactoryBean jndiObjectFactoryBean = <span class="keyword">new</span> JndiObjectFactoryBean();</span><br><span class="line">    jndiObjectFactoryBean.setJndiName(<span class="string">"jdbc/myDS"</span>);</span><br><span class="line">    jndiObjectFactoryBean.setResourceRef(<span class="keyword">true</span>);</span><br><span class="line">    jndiObjectFactoryBean.setProxyInterface(javax.sql.DataSource<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    <span class="keyword">return</span> (DataSource) jndiObjectFactoryBean.getObject();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -357,7 +357,7 @@
 <h3 id="条件化的-Bean"><a href="#条件化的-Bean" class="headerlink" title="条件化的 Bean"></a>条件化的 Bean</h3><h4 id="一个示例"><a href="#一个示例" class="headerlink" title="一个示例"></a>一个示例</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MagicBean</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MagicConfig</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="meta">@Conditional</span>(MagicExistsCondition<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">  <span class="title">public</span> <span class="title">MagicBean</span> <span class="title">magicBean</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MagicBean();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MagicExistsCondition</span> <span class="keyword">implements</span> <span class="title">Condition</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> </span>&#123;</span><br><span class="line">    Environment env = context.getEnvironment();</span><br><span class="line">    <span class="keyword">return</span> env.containsProperty(<span class="string">"magic"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="Condition-接口"><a href="#Condition-接口" class="headerlink" title="Condition 接口"></a>Condition 接口</h4><p>在 <code>@Condition</code> 后面的必然是一个实现了 <code>Condition</code> 接口的类，<code>Condition</code> 接口定义如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Condition</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Condition</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上面接口中的参数也是两个接口：</p>
 <ul>
@@ -494,12 +494,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/04/30/%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" rel="prev" title="基础编程模型">
-      <i class="fa fa-chevron-left"></i> 基础编程模型
+    <a href="/2018/05/10/%E8%B5%B0%E5%85%A5%E5%B9%B6%E8%A1%8C%E7%9A%84%E4%B8%96%E7%95%8C/" rel="prev" title="走入并行的世界">
+      <i class="fa fa-chevron-left"></i> 走入并行的世界
     </a></div>
       <div class="post-nav-item">
-    <a href="/2017/07/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" rel="next" title="计算机系统概论">
-      计算机系统概论 <i class="fa fa-chevron-right"></i>
+    <a href="/2018/05/12/Spring-MVC-IN-ACTION/" rel="next" title="Spring MVC IN ACTION">
+      Spring MVC IN ACTION <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -566,7 +566,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-的装配"><span class="nav-number">1.</span> <span class="nav-text">Bean 的装配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动化装配-Bean"><span class="nav-number">1.1.</span> <span class="nav-text">自动化装配 Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程"><span class="nav-number">1.1.1.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tips"><span class="nav-number">1.1.2.</span> <span class="nav-text">tips</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Java-中进行显示配置"><span class="nav-number">1.2.</span> <span class="nav-text">在 Java 中进行显示配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#含义"><span class="nav-number">1.2.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的-Bean"><span class="nav-number">1.2.2.</span> <span class="nav-text">简单的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#借助-java-Config-来实现注入"><span class="nav-number">1.2.3.</span> <span class="nav-text">借助 java Config 来实现注入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-XML-中进行显示配置"><span class="nav-number">1.3.</span> <span class="nav-text">在 XML 中进行显示配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明一个简单的-Bean"><span class="nav-number">1.3.1.</span> <span class="nav-text">声明一个简单的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#借助构造器注入初始化-Bean"><span class="nav-number">1.3.2.</span> <span class="nav-text">借助构造器注入初始化 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置属性"><span class="nav-number">1.3.3.</span> <span class="nav-text">设置属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入和混合设置"><span class="nav-number">1.4.</span> <span class="nav-text">导入和混合设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在-JavaConfig-中引入-XML-配置"><span class="nav-number">1.4.1.</span> <span class="nav-text">在 JavaConfig 中引入 XML 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在-XML-配置中引入-JavaConfig"><span class="nav-number">1.4.2.</span> <span class="nav-text">在 XML 配置中引入 JavaConfig</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级装配"><span class="nav-number">2.</span> <span class="nav-text">高级装配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境与-profile"><span class="nav-number">2.1.</span> <span class="nav-text">环境与 profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类级别"><span class="nav-number">2.1.1.</span> <span class="nav-text">类级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法级别"><span class="nav-number">2.1.2.</span> <span class="nav-text">方法级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML-中使用"><span class="nav-number">2.1.3.</span> <span class="nav-text">XML 中使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#激活-profile"><span class="nav-number">2.1.4.</span> <span class="nav-text">激活 profile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">2.1.5.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件化的-Bean"><span class="nav-number">2.2.</span> <span class="nav-text">条件化的 Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一个示例"><span class="nav-number">2.2.1.</span> <span class="nav-text">一个示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Condition-接口"><span class="nav-number">2.2.2.</span> <span class="nav-text">Condition 接口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理自动装配的歧义性"><span class="nav-number">2.3.</span> <span class="nav-text">处理自动装配的歧义性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标示首选的-Bean"><span class="nav-number">2.3.1.</span> <span class="nav-text">标示首选的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#限定自动装配的-Bean"><span class="nav-number">2.3.2.</span> <span class="nav-text">限定自动装配的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建自定义的限定符"><span class="nav-number">2.3.3.</span> <span class="nav-text">创建自定义的限定符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用自定义的限定符注解"><span class="nav-number">2.3.4.</span> <span class="nav-text">使用自定义的限定符注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">2.4.</span> <span class="nav-text">Bean 的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四种作用域"><span class="nav-number">2.4.1.</span> <span class="nav-text">四种作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单例和原型作用域"><span class="nav-number">2.4.2.</span> <span class="nav-text">单例和原型作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话和请求作用域"><span class="nav-number">2.4.3.</span> <span class="nav-text">会话和请求作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xml-中声明作用域代理"><span class="nav-number">2.4.4.</span> <span class="nav-text">xml 中声明作用域代理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时值注入"><span class="nav-number">2.5.</span> <span class="nav-text">运行时值注入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注入外部的值"><span class="nav-number">2.5.1.</span> <span class="nav-text">注入外部的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析属性占位符"><span class="nav-number">2.5.2.</span> <span class="nav-text">解析属性占位符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Spring-表达式语言进行装配"><span class="nav-number">2.5.3.</span> <span class="nav-text">使用 Spring 表达式语言进行装配</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动化装配-Bean"><span class="nav-number">1.</span> <span class="nav-text">自动化装配 Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程"><span class="nav-number">1.1.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tips"><span class="nav-number">1.2.</span> <span class="nav-text">tips</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Java-中进行显示配置"><span class="nav-number">2.</span> <span class="nav-text">在 Java 中进行显示配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#含义"><span class="nav-number">2.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的-Bean"><span class="nav-number">2.2.</span> <span class="nav-text">简单的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#借助-java-Config-来实现注入"><span class="nav-number">2.3.</span> <span class="nav-text">借助 java Config 来实现注入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-XML-中进行显示配置"><span class="nav-number">3.</span> <span class="nav-text">在 XML 中进行显示配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明一个简单的-Bean"><span class="nav-number">3.1.</span> <span class="nav-text">声明一个简单的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#借助构造器注入初始化-Bean"><span class="nav-number">3.2.</span> <span class="nav-text">借助构造器注入初始化 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置属性"><span class="nav-number">3.3.</span> <span class="nav-text">设置属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入和混合设置"><span class="nav-number">4.</span> <span class="nav-text">导入和混合设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在-JavaConfig-中引入-XML-配置"><span class="nav-number">4.1.</span> <span class="nav-text">在 JavaConfig 中引入 XML 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在-XML-配置中引入-JavaConfig"><span class="nav-number">4.2.</span> <span class="nav-text">在 XML 配置中引入 JavaConfig</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境与-profile"><span class="nav-number">5.</span> <span class="nav-text">环境与 profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类级别"><span class="nav-number">5.1.</span> <span class="nav-text">类级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法级别"><span class="nav-number">5.2.</span> <span class="nav-text">方法级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML-中使用"><span class="nav-number">5.3.</span> <span class="nav-text">XML 中使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#激活-profile"><span class="nav-number">5.4.</span> <span class="nav-text">激活 profile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">5.5.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件化的-Bean"><span class="nav-number">6.</span> <span class="nav-text">条件化的 Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一个示例"><span class="nav-number">6.1.</span> <span class="nav-text">一个示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Condition-接口"><span class="nav-number">6.2.</span> <span class="nav-text">Condition 接口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理自动装配的歧义性"><span class="nav-number">7.</span> <span class="nav-text">处理自动装配的歧义性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标示首选的-Bean"><span class="nav-number">7.1.</span> <span class="nav-text">标示首选的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#限定自动装配的-Bean"><span class="nav-number">7.2.</span> <span class="nav-text">限定自动装配的 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建自定义的限定符"><span class="nav-number">7.3.</span> <span class="nav-text">创建自定义的限定符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用自定义的限定符注解"><span class="nav-number">7.4.</span> <span class="nav-text">使用自定义的限定符注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean-的作用域"><span class="nav-number">8.</span> <span class="nav-text">Bean 的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四种作用域"><span class="nav-number">8.1.</span> <span class="nav-text">四种作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单例和原型作用域"><span class="nav-number">8.2.</span> <span class="nav-text">单例和原型作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话和请求作用域"><span class="nav-number">8.3.</span> <span class="nav-text">会话和请求作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xml-中声明作用域代理"><span class="nav-number">8.4.</span> <span class="nav-text">xml 中声明作用域代理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时值注入"><span class="nav-number">9.</span> <span class="nav-text">运行时值注入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注入外部的值"><span class="nav-number">9.1.</span> <span class="nav-text">注入外部的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析属性占位符"><span class="nav-number">9.2.</span> <span class="nav-text">解析属性占位符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Spring-表达式语言进行装配"><span class="nav-number">9.3.</span> <span class="nav-text">使用 Spring 表达式语言进行装配</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -589,7 +589,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -698,9 +698,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://www.xijinian.top/2017/05/10/Bean-%E7%9A%84%E8%A3%85%E9%85%8D/";
-    this.page.identifier = "2017/05/10/Bean-的装配/";
-    this.page.title = "Bean 的装配";
+    this.page.url = "https://www.xijinian.top/2018/05/11/Spring-Bean-IN-ACTION/";
+    this.page.identifier = "2018/05/11/Spring-Bean-IN-ACTION/";
+    this.page.title = "Spring Bean IN ACTION";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
