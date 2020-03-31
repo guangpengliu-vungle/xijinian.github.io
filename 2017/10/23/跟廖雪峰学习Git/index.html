@@ -1,4 +1,319 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 4.2.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css"><script id="hexo-configurations">var NexT=window.NexT||{},CONFIG={hostname:"www.xijinian.top",root:"/",scheme:"Gemini",version:"7.7.2",exturl:!1,sidebar:{position:"left",display:"post",padding:18,offset:12,onmobile:!1},copycode:{enable:!1,show_result:!1,style:null},back2top:{enable:!0,sidebar:!1,scrollpercent:!1},bookmark:{enable:!1,color:"#222",save:"auto"},fancybox:!1,mediumzoom:!1,lazyload:!0,pangu:!1,comments:{style:"tabs",active:null,storage:!0,lazyload:!0,nav:null},algolia:{hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}},localsearch:{enable:!0,trigger:"auto",top_n_per_article:1,unescape:!1,preload:!1},motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},path:"search.xml"}</script><meta name="description" content="git init &amp;#x2014;&amp;#x2014;&amp;#x521B;&amp;#x5EFA;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93;git add *** &amp;#x2014;&amp;#x2014;&amp;#x628A;&amp;#x6587;&amp;#x4EF6;&amp;#x6DFB;&amp;#x52A0;&amp;#x5230;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93;git commit -m &amp;quot"><meta property="og:type" content="article"><meta property="og:title" content="跟廖雪峰学习Git"><meta property="og:url" content="https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/index.html"><meta property="og:site_name" content="Adventures of xijinian"><meta property="og:description" content="git init &amp;#x2014;&amp;#x2014;&amp;#x521B;&amp;#x5EFA;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93;git add *** &amp;#x2014;&amp;#x2014;&amp;#x628A;&amp;#x6587;&amp;#x4EF6;&amp;#x6DFB;&amp;#x52A0;&amp;#x5230;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93;git commit -m &amp;quot"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2017-10-23T13:05:06.000Z"><meta property="article:modified_time" content="2018-03-17T13:17:22.000Z"><meta property="article:author" content="xijinian"><meta property="article:tag" content="Git"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/"><script id="page-configurations">CONFIG.page={sidebar:"",isHome:!1,isPost:!0,lang:"zh-CN"}</script><title>跟廖雪峰学习Git | Adventures of xijinian</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-header,.use-motion .comments,.use-motion .menu-item,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="container use-motion"><div class="headband"></div><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span><h1 class="site-title">Adventures of xijinian</h1><span class="logo-line-after"><i></i></span></a></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"><input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span></div><div id="search-result"><div id="no-result"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div></div></div></div></div></header><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><main class="main"><div class="main-inner"><div class="content-wrap"><div class="content post posts-expand"><article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="xijinian"><meta itemprop="description" content="放轻松，就像在漫游地球～"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Adventures of xijinian"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">跟廖雪峰学习Git</h1><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2017-10-23 21:05:06" itemprop="dateCreated datePublished" datetime="2017-10-23T21:05:06+08:00">2017-10-23</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i> </span><span class="post-meta-item-text">Disqus：</span> <a title="disqus" href="/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/#disqus_thread" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/10/23/跟廖雪峰学习Git/" itemprop="commentCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><ul><li><code>git init</code> &#x2014;&#x2014;&#x521B;&#x5EFA;&#x672C;&#x5730;&#x4ED3;&#x5E93;</li><li><code>git add ***</code> &#x2014;&#x2014;&#x628A;&#x6587;&#x4EF6;&#x6DFB;&#x52A0;&#x5230;&#x672C;&#x5730;&#x4ED3;&#x5E93;</li><li><code>git commit -m &quot;description&quot;</code> &#x2014;&#x2014;&#x628A;&#x6587;&#x4EF6;&#x63D0;&#x4EA4;&#x5230;&#x4ED3;&#x5E93;&#x5E76;&#x6DFB;&#x52A0;&#x63CF;&#x8FF0;</li><li><code>git commit</code> &#x2014;&#x2014;&#x66F4;&#x8BE6;&#x7EC6;&#x5730;&#x7EAA;&#x5F55;&#x4FE1;&#x606F;&#xFF0C;#&#x53F7;&#x4E0D;&#x5220;&#x9664;&#xFF0C;&#x5728;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#xFF0C;&#x6807;&#x9898;&#x548C;&#x6B63;&#x6587;&#x4E4B;&#x524D;&#x8981;&#x6709;&#x7A7A;&#x884C;</li><li><code>git status</code> &#x2014;&#x2014;&#x638C;&#x63E1;&#x5F53;&#x524D;&#x4ED3;&#x5E93;&#x72B6;&#x6001;</li><li><code>git diff</code> &#x2014;&#x2014;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x5DE5;&#x4F5C;&#x6811;&#x4E0E;&#x6682;&#x5B58;&#x533A;&#x7684;&#x5DEE;&#x522B;&#xFF08;&#x5DE5;&#x4F5C;&#x6811; add &#x5230;&#x6682;&#x5B58;&#x533A;&#x540E;&#x5B83;&#x4FE9;&#x5C31;&#x6CA1;&#x533A;&#x522B;&#xFF09;</li><li><code>git diff HEAD</code> &#x2014;&#x2014;&#x67E5;&#x770B;&#x5DE5;&#x4F5C;&#x6811;&#x548C;&#x6700;&#x65B0;&#x63D0;&#x4EA4;&#x7684;&#x5DEE;&#x522B;&#xFF0C;&#x53EF;&#x5728;&#x6267;&#x884C; <code>git add</code> &#x540E;&#x3001;&#x6267;&#x884C; <code>git commit</code> &#x524D;&#x6267;&#x884C;&#xFF0C;&#x7B49;&#x786E;&#x8BA4;&#x5B8C;&#x6BD5;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x63D0;&#x4EA4;&#xFF08;&#x8FD9;&#x91CC;&#x7684; <code>HEAD</code> &#x662F;&#x6307;&#x5411;&#x5F53;&#x524D;&#x5206;&#x652F;&#x4E2D;&#x6700;&#x65B0;&#x4E00;&#x6B21;&#x63D0;&#x4EA4;&#x7684;&#x6307;&#x9488;&#xFF09;</li><li><code>git log (&#x53EF;&#x52A0;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x540E;&#x9762;&#x540C;)</code> &#x2014;&#x2014;&#x663E;&#x793A;&#x4ECE;&#x6700;&#x8FD1;&#x5230;&#x6700;&#x8FDC;&#x7684;&#x63D0;&#x4EA4;&#x65E5;&#x5FD7;</li><li><code>git log --pretty=oneline</code> &#x2014;&#x2014;&#x67E5;&#x770B;&#x7B80;&#x7565;&#x7248;&#x7684;&#x63D0;&#x4EA4;&#x65E5;&#x5FD7;</li><li><code>git log -p</code> &#x2014;&#x2014;&#x663E;&#x793A;&#x6587;&#x4EF6;&#x7684;&#x6539;&#x52A8;</li><li><code>git reset --hard HEAD^</code> &#x2014;&#x2014;&#x56DE;&#x9000;&#x5230;&#x4E0A;&#x4E00;&#x4E2A;&#x7248;&#x672C;</li><li><code>git branch</code> &#x2014;&#x2014;&#x663E;&#x793A;&#x5206;&#x652F;&#x4E00;&#x89C8;&#x8868;&#xFF0C;&#x540C;&#x65F6;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x6240;&#x5728;&#x5206;&#x652F;</li><li><code>git checkout -b &quot;feature&quot;</code> &#x2014;&#x2014;&#x521B;&#x5EFA;&#x3001;&#x5207;&#x6362;&#x5206;&#x652F;&#x3002;&#x5728;&#x6B64;&#x5206;&#x652F;&#x4E0B;&#x505A;&#x4E8B;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230; master&#xFF0C;<code>-b</code>&#x5E94;&#x8BE5;&#x662F;&#x201C;&#x6CA1;&#x6709;&#x5C31;&#x521B;&#x5EFA;&#x201D;&#x7684;&#x610F;&#x601D;</li><li><code>git checkout -</code> &#x2014;&#x2014;<code>-</code> &#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x5206;&#x652F;&#x7684;&#x610F;&#x601D;</li><li><code>git merge --no-ff feature-A</code> &#x2014;&#x2014;&#x5408;&#x5E76;&#x5206;&#x652F;</li><li><code>git log --graph</code> &#x2014;&#x2014;&#x4EE5;&#x56FE;&#x5F62;&#x67E5;&#x770B;&#x65E5;&#x5FD7;</li><li><code>git reflog</code> &#x2014;&#x2014;&#x5982;&#x679C;&#x56DE;&#x9000;&#x4E86;&#xFF0C;&#x518D;&#x60F3;&#x56DE;&#x5230;&#x56DE;&#x9000;&#x4E4B;&#x524D;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x7528;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x56DE;&#x9000;&#x70B9;&#x540E;&#x7684; log</li><li>&#x5F53;&#x5206;&#x652F;&#x5408;&#x5E76;&#x51B2;&#x7A81;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x5904;&#x7406;&#x51B2;&#x7A81;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x518D; add&#xFF0C;&#x518D; commit&#x3002;</li><li><code>git commit --amend</code> &#x2014;&#x2014;&#x4FEE;&#x6539;&#x4E0A;&#x4E00;&#x6761;&#x63D0;&#x4EA4;&#x4FE1;&#x606F;</li><li><code>git rebase -i &#xFF08;&#x5982;HEAD~2&#xFF09;</code> &#x2014;&#x2014;&#x538B;&#x7F29;&#x5386;&#x53F2;&#xFF08;&#x5C06; pick &#x6539;&#x6210; fixup&#xFF09;</li><li><code>git commit -am &quot;balabala&quot;</code> &#x2014;&#x2014;&#x4E00;&#x6B21;&#x6027; add &#x548C; commit</li><li><code>git remote add &quot;&#x6807;&#x8BC6;&#x7B26;&quot; git@github.com:XIJINIAN/git-tutorial.git</code> &#x2014;&#x2014;&#x94FE;&#x63A5;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li><li><code>git push -u &quot;&#x6807;&#x8BC6;&#x7B26;&quot; master</code> &#x2014;&#x2014;&#x63A8;&#x9001;&#x672C;&#x5730;&#x4ED3;&#x5E93;&#x5230;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li><li><code>git push -u &quot;&#x6807;&#x8BC6;&#x7B26;&quot; feature-D</code>&#x2014;&#x2014;&#x63A8;&#x9001;&#x81F3; master &#x4EE5;&#x5916;&#x7684;&#x5206;&#x652F;&#x81F3;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li><li><code>git clone git@github.com:github-book/git-tutorial.git</code> &#x2014;&#x2014;&#x5C06; GitHub &#x4E0A;&#x7684;&#x4ED3;&#x5E93; clone &#x5230;&#x672C;&#x5730;&#xFF08;&#x9ED8;&#x8BA4; master &#x5206;&#x652F;&#xFF09;</li><li><code>git checkout -b feature-D &quot;&#x6807;&#x8BC6;&#x7B26;&quot;/feature-D</code> &#x2014;&#x2014;&#x5728;&#x672C;&#x5730;&#x65B0;&#x5EFA;&#x5206;&#x652F; feature-D &#x5E76;&#x83B7;&#x53D6;&#x8FDC;&#x7A0B;&#x7684; feature-D &#x5206;&#x652F;</li><li><code>git pull &quot;&#x6807;&#x8BC6;&#x7B26;&quot; feature-D</code> &#x2014;&#x2014;&#x83B7;&#x53D6;&#x8FDC;&#x7AEF;&#x6700;&#x65B0;&#x5206;&#x652F;&#x5185;&#x5BB9;&#x5230;&#x672C;&#x5730;&#x5DE5;&#x4F5C;&#x533A;</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Git/" rel="tag"># Git</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2017/10/19/%E9%92%88%E5%AF%B9Web%E7%9A%84%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/" rel="prev" title="针对Web的攻击技术"><i class="fa fa-chevron-left"></i> 针对Web的攻击技术</a></div><div class="post-nav-item"><a href="/2017/10/25/Tomcat-%E5%9F%BA%E7%A1%80%E5%B0%8F%E8%AE%B0/" rel="next" title="Tomcat 基础小记">Tomcat 基础小记 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript></div></div><script>window.addEventListener('tabs:register', () => {
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="git init                    &amp;#x2014;&amp;#x2014;&amp;#x521B;&amp;#x5EFA;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93; git add ***                 &amp;#x2014;&amp;#x2014;&amp;#x628A;&amp;#x6587;&amp;#x4EF6;&amp;#x6DFB;&amp;#x52A0;&amp;#x5230;&amp;#x672C;&amp;#x573">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跟廖雪峰学习Git">
+<meta property="og:url" content="https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="git init                    &amp;#x2014;&amp;#x2014;&amp;#x521B;&amp;#x5EFA;&amp;#x672C;&amp;#x5730;&amp;#x4ED3;&amp;#x5E93; git add ***                 &amp;#x2014;&amp;#x2014;&amp;#x628A;&amp;#x6587;&amp;#x4EF6;&amp;#x6DFB;&amp;#x52A0;&amp;#x5230;&amp;#x672C;&amp;#x573">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-23T13:05:06.000Z">
+<meta property="article:modified_time" content="2018-03-17T13:17:22.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>跟廖雪峰学习Git | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          跟廖雪峰学习Git
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-10-23 21:05:06" itemprop="dateCreated datePublished" datetime="2017-10-23T21:05:06+08:00">2017-10-23</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/10/23/跟廖雪峰学习Git/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><code>git init</code>                    &#x2014;&#x2014;&#x521B;&#x5EFA;&#x672C;&#x5730;&#x4ED3;&#x5E93;</li>
+<li><code>git add ***</code>                 &#x2014;&#x2014;&#x628A;&#x6587;&#x4EF6;&#x6DFB;&#x52A0;&#x5230;&#x672C;&#x5730;&#x4ED3;&#x5E93;</li>
+<li><code>git commit -m &quot;description&quot;</code> &#x2014;&#x2014;&#x628A;&#x6587;&#x4EF6;&#x63D0;&#x4EA4;&#x5230;&#x4ED3;&#x5E93;&#x5E76;&#x6DFB;&#x52A0;&#x63CF;&#x8FF0;</li>
+<li><code>git commit</code>                  &#x2014;&#x2014;&#x66F4;&#x8BE6;&#x7EC6;&#x5730;&#x7EAA;&#x5F55;&#x4FE1;&#x606F;&#xFF0C;#&#x53F7;&#x4E0D;&#x5220;&#x9664;&#xFF0C;&#x5728;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#xFF0C;&#x6807;&#x9898;&#x548C;&#x6B63;&#x6587;&#x4E4B;&#x524D;&#x8981;&#x6709;&#x7A7A;&#x884C;</li>
+<li><code>git status</code>                  &#x2014;&#x2014;&#x638C;&#x63E1;&#x5F53;&#x524D;&#x4ED3;&#x5E93;&#x72B6;&#x6001;</li>
+<li><code>git diff</code>                    &#x2014;&#x2014;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x5DE5;&#x4F5C;&#x6811;&#x4E0E;&#x6682;&#x5B58;&#x533A;&#x7684;&#x5DEE;&#x522B;&#xFF08;&#x5DE5;&#x4F5C;&#x6811; add &#x5230;&#x6682;&#x5B58;&#x533A;&#x540E;&#x5B83;&#x4FE9;&#x5C31;&#x6CA1;&#x533A;&#x522B;&#xFF09;</li>
+<li><code>git diff HEAD</code>               &#x2014;&#x2014;&#x67E5;&#x770B;&#x5DE5;&#x4F5C;&#x6811;&#x548C;&#x6700;&#x65B0;&#x63D0;&#x4EA4;&#x7684;&#x5DEE;&#x522B;&#xFF0C;&#x53EF;&#x5728;&#x6267;&#x884C; <code>git add</code> &#x540E;&#x3001;&#x6267;&#x884C; <code>git commit</code> &#x524D;&#x6267;&#x884C;&#xFF0C;&#x7B49;&#x786E;&#x8BA4;&#x5B8C;&#x6BD5;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x63D0;&#x4EA4;&#xFF08;&#x8FD9;&#x91CC;&#x7684; <code>HEAD</code> &#x662F;&#x6307;&#x5411;&#x5F53;&#x524D;&#x5206;&#x652F;&#x4E2D;&#x6700;&#x65B0;&#x4E00;&#x6B21;&#x63D0;&#x4EA4;&#x7684;&#x6307;&#x9488;&#xFF09;</li>
+<li><code>git log (&#x53EF;&#x52A0;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x540E;&#x9762;&#x540C;)</code>   &#x2014;&#x2014;&#x663E;&#x793A;&#x4ECE;&#x6700;&#x8FD1;&#x5230;&#x6700;&#x8FDC;&#x7684;&#x63D0;&#x4EA4;&#x65E5;&#x5FD7;</li>
+<li><code>git log --pretty=oneline</code>    &#x2014;&#x2014;&#x67E5;&#x770B;&#x7B80;&#x7565;&#x7248;&#x7684;&#x63D0;&#x4EA4;&#x65E5;&#x5FD7;</li>
+<li><code>git log -p</code>                  &#x2014;&#x2014;&#x663E;&#x793A;&#x6587;&#x4EF6;&#x7684;&#x6539;&#x52A8;</li>
+<li><code>git reset --hard HEAD^</code>      &#x2014;&#x2014;&#x56DE;&#x9000;&#x5230;&#x4E0A;&#x4E00;&#x4E2A;&#x7248;&#x672C;</li>
+<li><code>git branch</code>                  &#x2014;&#x2014;&#x663E;&#x793A;&#x5206;&#x652F;&#x4E00;&#x89C8;&#x8868;&#xFF0C;&#x540C;&#x65F6;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x6240;&#x5728;&#x5206;&#x652F;</li>
+<li><code>git checkout -b &quot;feature&quot;</code>   &#x2014;&#x2014;&#x521B;&#x5EFA;&#x3001;&#x5207;&#x6362;&#x5206;&#x652F;&#x3002;&#x5728;&#x6B64;&#x5206;&#x652F;&#x4E0B;&#x505A;&#x4E8B;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230; master&#xFF0C;<code>-b</code>&#x5E94;&#x8BE5;&#x662F;&#x201C;&#x6CA1;&#x6709;&#x5C31;&#x521B;&#x5EFA;&#x201D;&#x7684;&#x610F;&#x601D;</li>
+<li><code>git checkout -</code>              &#x2014;&#x2014;<code>-</code> &#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x5206;&#x652F;&#x7684;&#x610F;&#x601D;</li>
+<li><code>git merge --no-ff feature-A</code> &#x2014;&#x2014;&#x5408;&#x5E76;&#x5206;&#x652F;</li>
+<li><code>git log --graph</code>             &#x2014;&#x2014;&#x4EE5;&#x56FE;&#x5F62;&#x67E5;&#x770B;&#x65E5;&#x5FD7;</li>
+<li><code>git reflog</code>                  &#x2014;&#x2014;&#x5982;&#x679C;&#x56DE;&#x9000;&#x4E86;&#xFF0C;&#x518D;&#x60F3;&#x56DE;&#x5230;&#x56DE;&#x9000;&#x4E4B;&#x524D;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x7528;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x56DE;&#x9000;&#x70B9;&#x540E;&#x7684; log</li>
+<li>&#x5F53;&#x5206;&#x652F;&#x5408;&#x5E76;&#x51B2;&#x7A81;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x5904;&#x7406;&#x51B2;&#x7A81;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x518D; add&#xFF0C;&#x518D; commit&#x3002;</li>
+<li><code>git commit --amend</code>          &#x2014;&#x2014;&#x4FEE;&#x6539;&#x4E0A;&#x4E00;&#x6761;&#x63D0;&#x4EA4;&#x4FE1;&#x606F;</li>
+<li><code>git rebase -i &#xFF08;&#x5982;HEAD~2&#xFF09;</code>   &#x2014;&#x2014;&#x538B;&#x7F29;&#x5386;&#x53F2;&#xFF08;&#x5C06; pick &#x6539;&#x6210; fixup&#xFF09;</li>
+<li><code>git commit -am &quot;balabala&quot;</code>   &#x2014;&#x2014;&#x4E00;&#x6B21;&#x6027; add &#x548C; commit</li>
+<li><code>git remote add &quot;&#x6807;&#x8BC6;&#x7B26;&quot; git@github.com:XIJINIAN/git-tutorial.git</code>  &#x2014;&#x2014;&#x94FE;&#x63A5;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li>
+<li><code>git push -u &quot;&#x6807;&#x8BC6;&#x7B26;&quot; master</code>  &#x2014;&#x2014;&#x63A8;&#x9001;&#x672C;&#x5730;&#x4ED3;&#x5E93;&#x5230;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li>
+<li><code>git push -u &quot;&#x6807;&#x8BC6;&#x7B26;&quot; feature-D</code>&#x2014;&#x2014;&#x63A8;&#x9001;&#x81F3; master &#x4EE5;&#x5916;&#x7684;&#x5206;&#x652F;&#x81F3;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</li>
+<li><code>git clone git@github.com:github-book/git-tutorial.git</code>   &#x2014;&#x2014;&#x5C06; GitHub &#x4E0A;&#x7684;&#x4ED3;&#x5E93; clone &#x5230;&#x672C;&#x5730;&#xFF08;&#x9ED8;&#x8BA4; master &#x5206;&#x652F;&#xFF09;</li>
+<li><code>git checkout -b feature-D &quot;&#x6807;&#x8BC6;&#x7B26;&quot;/feature-D</code>  &#x2014;&#x2014;&#x5728;&#x672C;&#x5730;&#x65B0;&#x5EFA;&#x5206;&#x652F; feature-D &#x5E76;&#x83B7;&#x53D6;&#x8FDC;&#x7A0B;&#x7684; feature-D &#x5206;&#x652F;</li>
+<li><code>git pull &quot;&#x6807;&#x8BC6;&#x7B26;&quot; feature-D</code>  &#x2014;&#x2014;&#x83B7;&#x53D6;&#x8FDC;&#x7AEF;&#x6700;&#x65B0;&#x5206;&#x652F;&#x5185;&#x5BB9;&#x5230;&#x672C;&#x5730;&#x5DE5;&#x4F5C;&#x533A;</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/10/19/%E9%92%88%E5%AF%B9Web%E7%9A%84%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/" rel="prev" title="针对Web的攻击技术">
+      <i class="fa fa-chevron-left"></i> 针对Web的攻击技术
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/10/25/Tomcat-%E5%9F%BA%E7%A1%80%E5%B0%8F%E8%AE%B0/" rel="next" title="Tomcat 基础小记">
+      Tomcat 基础小记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -16,7 +331,164 @@
       let commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
-  }</script></div><div class="toggle sidebar-toggle"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div><aside class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="post-toc-wrap sidebar-panel"></div><div class="site-overview-wrap sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="xijinian" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">xijinian</p><div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div></div><div class="site-state-wrap motion-element"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">107</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">21</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a> </span><span class="links-of-author-item"><a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a></span></div></div></div></aside><div id="sidebar-dimmer"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2020</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">xijinian</span></div></div></footer></div><script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/pisces.js"></script><script src="/js/next-boot.js"></script><script src="/js/local-search.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css"><script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css"><script>function loadCount(){var d=document,n=d.createElement("script");n.src="https://xijinian.disqus.com/count.js",n.id="dsq-count-scr",(d.head||d.body).appendChild(n)}window.addEventListener("load",loadCount,!1)</script><script>var disqus_config = function() {
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
     this.page.url = "https://www.xijinian.top/2017/10/23/%E8%B7%9F%E5%BB%96%E9%9B%AA%E5%B3%B0%E5%AD%A6%E4%B9%A0Git/";
     this.page.identifier = "2017/10/23/跟廖雪峰学习Git/";
     this.page.title = "跟廖雪峰学习Git";
@@ -33,4 +505,8 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  });</script></body></html>
+  });
+</script>
+
+</body>
+</html>

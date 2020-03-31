@@ -1,4 +1,373 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 4.2.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css"><script id="hexo-configurations">var NexT=window.NexT||{},CONFIG={hostname:"www.xijinian.top",root:"/",scheme:"Gemini",version:"7.7.2",exturl:!1,sidebar:{position:"left",display:"post",padding:18,offset:12,onmobile:!1},copycode:{enable:!1,show_result:!1,style:null},back2top:{enable:!0,sidebar:!1,scrollpercent:!1},bookmark:{enable:!1,color:"#222",save:"auto"},fancybox:!1,mediumzoom:!1,lazyload:!0,pangu:!1,comments:{style:"tabs",active:null,storage:!0,lazyload:!0,nav:null},algolia:{hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}},localsearch:{enable:!0,trigger:"auto",top_n_per_article:1,unescape:!1,preload:!1},motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},path:"search.xml"}</script><meta name="description" content="使用MySQLSHOW DATABASES;USE staticSHOW TABLESSHOW COLUMNS FROM customers; &#x3D; DESC customers;SHOW STATUS;常用的SHOW命令：12345678910SHOW CREATE DATABASE db_name;SHOW CREATE EVENT event_name;SHOW CREATE FUNCTIO"><meta property="og:type" content="article"><meta property="og:title" content="MySQL必知必会（一）"><meta property="og:url" content="https://www.xijinian.top/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/index.html"><meta property="og:site_name" content="Adventures of xijinian"><meta property="og:description" content="使用MySQLSHOW DATABASES;USE staticSHOW TABLESSHOW COLUMNS FROM customers; &#x3D; DESC customers;SHOW STATUS;常用的SHOW命令：12345678910SHOW CREATE DATABASE db_name;SHOW CREATE EVENT event_name;SHOW CREATE FUNCTIO"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fj0oky0l66j30cu06jq39.jpg"><meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fj0oln8debj30cs03ndft.jpg"><meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fj0pfbms4oj30cw039dfp.jpg"><meta property="article:published_time" content="2017-08-23T03:17:27.000Z"><meta property="article:modified_time" content="2018-07-21T06:12:53.000Z"><meta property="article:author" content="xijinian"><meta property="article:tag" content="数据库"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fj0oky0l66j30cu06jq39.jpg"><link rel="canonical" href="https://www.xijinian.top/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/"><script id="page-configurations">CONFIG.page={sidebar:"",isHome:!1,isPost:!0,lang:"zh-CN"}</script><title>MySQL必知必会（一） | Adventures of xijinian</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-header,.use-motion .comments,.use-motion .menu-item,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="container use-motion"><div class="headband"></div><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span><h1 class="site-title">Adventures of xijinian</h1><span class="logo-line-after"><i></i></span></a></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"><input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span></div><div id="search-result"><div id="no-result"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div></div></div></div></div></header><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><main class="main"><div class="main-inner"><div class="content-wrap"><div class="content post posts-expand"><article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="xijinian"><meta itemprop="description" content="放轻松，就像在漫游地球～"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Adventures of xijinian"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">MySQL必知必会（一）</h1><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2017-08-23 11:17:27" itemprop="dateCreated datePublished" datetime="2017-08-23T11:17:27+08:00">2017-08-23</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i> </span><span class="post-meta-item-text">Disqus：</span> <a title="disqus" href="/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/23/MySQL必知必会（一）/" itemprop="commentCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h1 id="&#x4F7F;&#x7528;mysql"><a class="markdownIt-Anchor" href="#&#x4F7F;&#x7528;mysql"></a> &#x4F7F;&#x7528;MySQL</h1><ul><li><code>SHOW DATABASES;</code></li><li><code>USE static</code></li><li><code>SHOW TABLES</code></li><li><code>SHOW COLUMNS FROM customers;</code> = <code>DESC customers;</code></li><li><code>SHOW STATUS;</code></li><li>&#x5E38;&#x7528;&#x7684;SHOW&#x547D;&#x4EE4;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE DATABASE db_name;</span><br><span class="line">SHOW CREATE EVENT event_name;</span><br><span class="line">SHOW CREATE FUNCTION func_name;</span><br><span class="line">SHOW CREATE PROCEDURE proc_name;</span><br><span class="line">SHOW CREATE TABLE tbl_name;</span><br><span class="line">SHOW CREATE TRIGGER trigger_name;</span><br><span class="line">SHOW CREATE VIEW view_name;</span><br><span class="line">SHOW GRANTS;</span><br><span class="line">SHOW ERRORS;</span><br><span class="line">SHOW WARNINGS;</span><br></pre></td></tr></table></figure></li></ul><a id="more"></a><h1 id="&#x68C0;&#x7D22;&#x6570;&#x636E;"><a class="markdownIt-Anchor" href="#&#x68C0;&#x7D22;&#x6570;&#x636E;"></a> &#x68C0;&#x7D22;&#x6570;&#x636E;</h1><ul><li><code>SELECT prod_name FROM products;</code></li><li><code>SELECT prod_id, prod_name, prod_price FROM products;</code></li><li><code>SELECT * FROM products;</code></li><li><code>SELECT DISTINCT vend_id FROM products;</code>&#x2014;&#x2014;<strong>DISTINCT</strong>&#x8868;&#x793A;&#x53EA;&#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x7684;&#x503C;</li><li><code>SELECT prod_name FROM products LIMIT 5;</code></li><li><code>SELECT prod_name FROM products LIMIT 4,5;</code>&#x2014;&#x2014;&#x7B2C;&#x4E00;&#x4E2A;&#x6570;&#x662F;&#x5F00;&#x59CB;&#x7684;&#x884C;&#x53F7;&#xFF08;&#x884C;0&#x8D77;&#xFF09;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x6570;&#x662F;&#x884C;&#x6570;</li><li><code>SELECT prod_name FROM products LIMIT 5 OFFSET 4;</code>&#x2014;&#x2014;&#x7B49;&#x540C;&#x4E8E;&#x4E0A;&#x4E00;&#x6761;&#x8BED;&#x53E5;</li><li><code>SELECT products.prop_name FROM static.products;</code></li></ul><h1 id="&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;"><a class="markdownIt-Anchor" href="#&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;"></a> &#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;</h1><ul><li><code>SELECT prod_name FROM products ORDER BY prod_name;</code>&#x2014;&#x2014;ORDER BY&#x5B50;&#x53E5;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5217;&#x4E0D;&#x4E00;&#x5B9A;&#x662F;<strong>SELECT</strong>&#x7684;&#x5217;</li><li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price, prod_name;</code></li><li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price DESC;</code>&#x2014;&#x2014;<strong>DESC</strong>&#x6307;&#x5012;&#x5E8F;</li><li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price DESC, prod_name;</code></li><li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price DESC, prod_name LIMIT 1;</code></li></ul><h1 id="&#x4F7F;&#x7528;where&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;"><a class="markdownIt-Anchor" href="#&#x4F7F;&#x7528;where&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;"></a> &#x4F7F;&#x7528;WHERE&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;</h1><ul><li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price = 2.50;</code></p></li><li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price &lt; 10;</code></p></li><li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price BETWEEN 5 AND 10;</code></p></li><li><p><code>SELECT prod_name FROM products WHERE prod_price IS NULL;</code></p></li><li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price &lt; 10 AND vend_id = 1003;</code></p></li><li><p><code>SELECT prod_name, prod_price FROM products WHERE vend_id = 1002 OR vend_id = 1003;</code></p></li><li><p><code>SELECT prod_name, prod_price FROM products WHERE (vend_id = 1002 OR vend_id = 1003) AND prop_price &gt;= 10;</code></p></li><li><p><code>SELECT prod_name, prod_price FROM products WHERE vend_id IN (1002,1003) ORDER BY prod_name;</code></p></li><li><p><code>SELECT prod_name, prod_price FROM products WHERE vend_id NOT IN (1002,1003) ORDER BY prod_name;</code></p></li></ul><h1 id="&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;"><a class="markdownIt-Anchor" href="#&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;"></a> &#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;</h1><ul><li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;jet%&apos;;</code></li><li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;%anvil%&apos;;</code></li><li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;s%e&apos;;</code></li><li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;_e&apos;;</code></li></ul><h1 id="&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;"><a class="markdownIt-Anchor" href="#&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;"></a> &#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;</h1><ul><li><code>SELECT prod_name FROM products WHERE prod_name REGEXP &apos;.000&apos; ORDER BY prod_name;</code></li><li><code>SELECT prod_name FROM products WHERE prod_name REGEXP BINARY &apos;JetPack .000</code>//&#x5F3A;&#x5236;&#x5206;&#x5927;&#x5C0F;&#x5199;</li><li><code>SELECT prod_name FROM products WHERE prod_name REGEXP &apos;[123] Ton&apos; ORDER BY prod_name;</code>//&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;<code>[123]Ton</code>&#x4E3A;<code>[1|2|3]Ton</code>&#x7684;&#x7F29;&#x5199;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x7701;&#x7565;[]</li><li><code>[0-9]</code>=<code>[0123456789]</code></li><li><code>[^123]</code>&#x662F;<code>[123]</code>&#x7684;&#x53D6;&#x53CD;&#xFF0C;&#x8868;&#x793A;&#x5339;&#x914D;&#x8FD9;&#x4E9B;&#x5B57;&#x7B26;&#x4E4B;&#x5916;&#x7684;&#x5B57;&#x7B26;</li><li><code>.</code>&#x5728;REGEXP&#x4E2D;&#x662F;&#x901A;&#x914D;&#x7B26;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x5728;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x5C06;&#x5B83;&#x4EEC;&#x4F5C;&#x4E3A;&#x666E;&#x901A;&#x5B57;&#x7B26;&#x5904;&#x7406;&#xFF0C;&#x9700;&#x8981;&#x7528;<code>\\.</code>&#xFF0C;&#x5176;&#x4ED6;&#x7279;&#x6B8A;&#x7684;&#x8FD8;&#x6709;<code>\\f</code>&#x3001;<code>\\n</code>&#x3001;<code>\\r</code>&#x3001;<code>\\t</code>&#x3001;<code>\\v</code>&#x3001;<code>\\-</code>&#x3001;<code>\\\</code>&#x7B49;&#x7B49;</li><li>&#x4E3A;&#x66F4;&#x65B9;&#x4FBF;&#x5DE5;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x9884;&#x5B9A;&#x4E49;&#x7684;&#x5B57;&#x7B26;&#x96C6;&#xFF0C;&#x79F0;&#x4E3A;<strong>&#x5B57;&#x7B26;&#x7C7B;</strong>&#xFF1A;<br><img data-src="https://ws1.sinaimg.cn/large/006tKfTcly1fj0oky0l66j30cu06jq39.jpg" alt></li><li>&#x4E3A;&#x4E86;&#x5BF9;&#x5339;&#x914D;&#x6570;&#x76EE;&#x8FDB;&#x884C;&#x66F4;&#x5F3A;&#x7684;&#x63A7;&#x5236;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<strong>&#x91CD;&#x590D;&#x5143;&#x7D20;&#x7B26;</strong>&#xFF0C;&#x5B83;&#x5BF9;&#x5176;&#x524D;&#x4E00;&#x4F4D;&#x51FA;&#x73B0;&#x7684;&#x4EFB;&#x4F55;&#x5B57;&#x7B26;&#x8FDB;&#x884C;&#x6570;&#x91CF;&#x7B5B;&#x9009;&#xFF1A;<br><img data-src="https://ws2.sinaimg.cn/large/006tKfTcly1fj0oln8debj30cs03ndft.jpg" alt></li><li>&#x4F8B;&#x5B50;&#x2014;&#x2014;&#x5339;&#x914D;&#x8FDE;&#x5728;&#x4E00;&#x8D77;&#x7684;&#x56DB;&#x4F4D;&#x6570;&#x5B57;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;[[:digit:]]{4}&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure></li><li>&#x4E3A;&#x4E86;&#x5339;&#x914D;&#x7279;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684;&#x6587;&#x672C;&#x3002;&#x6211;&#x4EEC;&#x4F7F;&#x7528;<strong>&#x5B9A;&#x4F4D;&#x7B26;</strong>&#xFF1A;<br><img data-src="https://ws1.sinaimg.cn/large/006tKfTcly1fj0pfbms4oj30cw039dfp.jpg" alt></li><li>&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;^[0-9\\.]&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure></li><li>&#x7B80;&#x5355;&#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6D4B;&#x8BD5;&#x2014;&#x2014;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x4F7F;&#x7528;&#x6570;&#x636E;&#x8868;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x7528;SELECT&#x6765;&#x6D4B;&#x8BD5;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;REGEXP&#x68C0;&#x67E5;&#x8FD4;&#x56DE;0&#x8868;&#x793A;&#x6CA1;&#x6709;&#x5339;&#x914D;&#xFF0C;&#x8FD4;&#x56DE;1&#x4EE3;&#x8868;&#x5339;&#x914D;&#xFF0C;&#x4F8B;&#x5B50;&#xFF1A;<code>SELECT &apos;hello&apos; REGEXP &apos;[0-9]&apos;;</code></li></ul><h1 id="&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;"><a class="markdownIt-Anchor" href="#&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;"></a> &#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;</h1><ul><li>&#x62FC;&#x63A5;&#x5B57;&#x6BB5;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(vend_name, &apos; (&apos;, vend_country, &apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure></li><li>Trim&#x51FD;&#x6570;(&#x8FD8;&#x6709;LTrim&#x548C;RTrim)&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name), &apos; (&apos;, RTrim(vend_country), &apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure></li><li>&#x522B;&#x540D;&#xFF08;&#x53C8;&#x540D;&#x5BFC;&#x51FA;&#x5217;&#xFF0C;&#x8FD9;&#x4E2A;&#x4E1C;&#x897F;&#x53EF;&#x4EE5;&#x88AB;&#x5176;&#x5B83;&#x51FD;&#x6570;&#x76F4;&#x63A5;&#x7528;&#x522B;&#x540D;&#x5F15;&#x7528;&#xFF09;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name), &apos; (&apos;, RTrim(vend_country), &apos;)&apos;)</span><br><span class="line">AS vend_title</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure></li><li>&#x8BA1;&#x7B97;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,</span><br><span class="line">       quantity,</span><br><span class="line">       item_price,</span><br><span class="line">       quantity*item_price AS expanded_price</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure></li><li>&#x6D4B;&#x8BD5;&#x8BA1;&#x7B97;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 3*2;</span><br><span class="line">SELECT Trim(&apos; 123  &apos;);</span><br><span class="line">SELECT Now();</span><br></pre></td></tr></table></figure></li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2017/08/20/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="prev" title="多线程"><i class="fa fa-chevron-left"></i> 多线程</a></div><div class="post-nav-item"><a href="/2017/08/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="next" title="操作系统概述">操作系统概述 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript></div></div><script>window.addEventListener('tabs:register', () => {
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="使用MySQL SHOW DATABASES; USE static SHOW TABLES SHOW COLUMNS FROM customers; &#x3D; DESC customers; SHOW STATUS; 常用的SHOW命令：  12345678910SHOW CREATE DATABASE db_name;SHOW CREATE EVENT event_name;SHOW CREATE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL必知必会（一）">
+<meta property="og:url" content="https://www.xijinian.top/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="使用MySQL SHOW DATABASES; USE static SHOW TABLES SHOW COLUMNS FROM customers; &#x3D; DESC customers; SHOW STATUS; 常用的SHOW命令：  12345678910SHOW CREATE DATABASE db_name;SHOW CREATE EVENT event_name;SHOW CREATE">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fj0oky0l66j30cu06jq39.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fj0oln8debj30cs03ndft.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fj0pfbms4oj30cw039dfp.jpg">
+<meta property="article:published_time" content="2017-08-23T03:17:27.000Z">
+<meta property="article:modified_time" content="2018-07-21T06:12:53.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fj0oky0l66j30cu06jq39.jpg">
+
+<link rel="canonical" href="https://www.xijinian.top/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MySQL必知必会（一） | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL必知必会（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-23 11:17:27" itemprop="dateCreated datePublished" datetime="2017-08-23T11:17:27+08:00">2017-08-23</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/23/MySQL必知必会（一）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="&#x4F7F;&#x7528;MySQL"><a href="#&#x4F7F;&#x7528;MySQL" class="headerlink" title="&#x4F7F;&#x7528;MySQL"></a>&#x4F7F;&#x7528;MySQL</h1><ul>
+<li><code>SHOW DATABASES;</code></li>
+<li><code>USE static</code></li>
+<li><code>SHOW TABLES</code></li>
+<li><code>SHOW COLUMNS FROM customers;</code> = <code>DESC customers;</code></li>
+<li><code>SHOW STATUS;</code></li>
+<li>&#x5E38;&#x7528;&#x7684;SHOW&#x547D;&#x4EE4;&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE DATABASE db_name;</span><br><span class="line">SHOW CREATE EVENT event_name;</span><br><span class="line">SHOW CREATE FUNCTION func_name;</span><br><span class="line">SHOW CREATE PROCEDURE proc_name;</span><br><span class="line">SHOW CREATE TABLE tbl_name;</span><br><span class="line">SHOW CREATE TRIGGER trigger_name;</span><br><span class="line">SHOW CREATE VIEW view_name;</span><br><span class="line">SHOW GRANTS;</span><br><span class="line">SHOW ERRORS;</span><br><span class="line">SHOW WARNINGS;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+
+
+
+
+</li>
+</ul>
+<h1 id="&#x68C0;&#x7D22;&#x6570;&#x636E;"><a href="#&#x68C0;&#x7D22;&#x6570;&#x636E;" class="headerlink" title="&#x68C0;&#x7D22;&#x6570;&#x636E;"></a>&#x68C0;&#x7D22;&#x6570;&#x636E;</h1><ul>
+<li><code>SELECT prod_name FROM products;</code></li>
+<li><code>SELECT prod_id, prod_name, prod_price FROM products;</code></li>
+<li><code>SELECT * FROM products;</code></li>
+<li><code>SELECT DISTINCT vend_id FROM products;</code>&#x2014;&#x2014;<strong>DISTINCT</strong>&#x8868;&#x793A;&#x53EA;&#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x7684;&#x503C;</li>
+<li><code>SELECT prod_name FROM products LIMIT 5;</code></li>
+<li><code>SELECT prod_name FROM products LIMIT 4,5;</code>&#x2014;&#x2014;&#x7B2C;&#x4E00;&#x4E2A;&#x6570;&#x662F;&#x5F00;&#x59CB;&#x7684;&#x884C;&#x53F7;&#xFF08;&#x884C;0&#x8D77;&#xFF09;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x6570;&#x662F;&#x884C;&#x6570;</li>
+<li><code>SELECT prod_name FROM products LIMIT 5 OFFSET 4;</code>&#x2014;&#x2014;&#x7B49;&#x540C;&#x4E8E;&#x4E0A;&#x4E00;&#x6761;&#x8BED;&#x53E5;</li>
+<li><code>SELECT products.prop_name FROM static.products;</code></li>
+</ul>
+<h1 id="&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;"><a href="#&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;" class="headerlink" title="&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;"></a>&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;</h1><ul>
+<li><code>SELECT prod_name FROM products ORDER BY prod_name;</code>&#x2014;&#x2014;ORDER BY&#x5B50;&#x53E5;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5217;&#x4E0D;&#x4E00;&#x5B9A;&#x662F;<strong>SELECT</strong>&#x7684;&#x5217;</li>
+<li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price, prod_name;</code></li>
+<li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price DESC;</code>&#x2014;&#x2014;<strong>DESC</strong>&#x6307;&#x5012;&#x5E8F;</li>
+<li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price DESC, prod_name;</code></li>
+<li><code>SELECT prod_id, prod_price, prod_name FROM products ORDER BY prod_price DESC, prod_name LIMIT 1;</code></li>
+</ul>
+<h1 id="&#x4F7F;&#x7528;WHERE&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;"><a href="#&#x4F7F;&#x7528;WHERE&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;" class="headerlink" title="&#x4F7F;&#x7528;WHERE&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;"></a>&#x4F7F;&#x7528;WHERE&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;</h1><ul>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price = 2.50;</code></p>
+</li>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price &lt; 10;</code></p>
+</li>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price BETWEEN 5 AND 10;</code></p>
+</li>
+<li><p><code>SELECT prod_name FROM products WHERE prod_price IS NULL;</code></p>
+</li>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE prod_price &lt; 10 AND vend_id = 1003;</code></p>
+</li>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE vend_id = 1002 OR vend_id = 1003;</code></p>
+</li>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE (vend_id = 1002 OR vend_id = 1003) AND prop_price &gt;= 10;</code></p>
+</li>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE vend_id IN (1002,1003) ORDER BY prod_name;</code></p>
+</li>
+<li><p><code>SELECT prod_name, prod_price FROM products WHERE vend_id NOT IN (1002,1003) ORDER BY prod_name;</code></p>
+</li>
+</ul>
+<h1 id="&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;"><a href="#&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;" class="headerlink" title="&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;"></a>&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;</h1><ul>
+<li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;jet%&apos;;</code></li>
+<li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;%anvil%&apos;;</code></li>
+<li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;s%e&apos;;</code></li>
+<li><code>SELECT prod_name, prod_price FROM products WHERE prod_name LIKE &apos;_e&apos;;</code></li>
+</ul>
+<h1 id="&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;"><a href="#&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;" class="headerlink" title="&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;"></a>&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;</h1><ul>
+<li><code>SELECT prod_name FROM products WHERE prod_name REGEXP &apos;.000&apos; ORDER BY prod_name;</code></li>
+<li><code>SELECT prod_name FROM products WHERE prod_name REGEXP BINARY &apos;JetPack .000</code>//&#x5F3A;&#x5236;&#x5206;&#x5927;&#x5C0F;&#x5199;</li>
+<li><code>SELECT prod_name FROM products WHERE prod_name REGEXP &apos;[123] Ton&apos; ORDER BY prod_name;</code>//&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;<code>[123]Ton</code>&#x4E3A;<code>[1|2|3]Ton</code>&#x7684;&#x7F29;&#x5199;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x7701;&#x7565;[]</li>
+<li><code>[0-9]</code>=<code>[0123456789]</code></li>
+<li><code>[^123]</code>&#x662F;<code>[123]</code>&#x7684;&#x53D6;&#x53CD;&#xFF0C;&#x8868;&#x793A;&#x5339;&#x914D;&#x8FD9;&#x4E9B;&#x5B57;&#x7B26;&#x4E4B;&#x5916;&#x7684;&#x5B57;&#x7B26;</li>
+<li><code>.</code>&#x5728;REGEXP&#x4E2D;&#x662F;&#x901A;&#x914D;&#x7B26;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x5728;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x5C06;&#x5B83;&#x4EEC;&#x4F5C;&#x4E3A;&#x666E;&#x901A;&#x5B57;&#x7B26;&#x5904;&#x7406;&#xFF0C;&#x9700;&#x8981;&#x7528;<code>\\.</code>&#xFF0C;&#x5176;&#x4ED6;&#x7279;&#x6B8A;&#x7684;&#x8FD8;&#x6709;<code>\\f</code>&#x3001;<code>\\n</code>&#x3001;<code>\\r</code>&#x3001;<code>\\t</code>&#x3001;<code>\\v</code>&#x3001;<code>\\-</code>&#x3001;<code>\\\</code>&#x7B49;&#x7B49;</li>
+<li>&#x4E3A;&#x66F4;&#x65B9;&#x4FBF;&#x5DE5;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x9884;&#x5B9A;&#x4E49;&#x7684;&#x5B57;&#x7B26;&#x96C6;&#xFF0C;&#x79F0;&#x4E3A;<strong>&#x5B57;&#x7B26;&#x7C7B;</strong>&#xFF1A;<br><img data-src="https://ws1.sinaimg.cn/large/006tKfTcly1fj0oky0l66j30cu06jq39.jpg" alt></li>
+<li>&#x4E3A;&#x4E86;&#x5BF9;&#x5339;&#x914D;&#x6570;&#x76EE;&#x8FDB;&#x884C;&#x66F4;&#x5F3A;&#x7684;&#x63A7;&#x5236;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<strong>&#x91CD;&#x590D;&#x5143;&#x7D20;&#x7B26;</strong>&#xFF0C;&#x5B83;&#x5BF9;&#x5176;&#x524D;&#x4E00;&#x4F4D;&#x51FA;&#x73B0;&#x7684;&#x4EFB;&#x4F55;&#x5B57;&#x7B26;&#x8FDB;&#x884C;&#x6570;&#x91CF;&#x7B5B;&#x9009;&#xFF1A;<br><img data-src="https://ws2.sinaimg.cn/large/006tKfTcly1fj0oln8debj30cs03ndft.jpg" alt></li>
+<li>&#x4F8B;&#x5B50;&#x2014;&#x2014;&#x5339;&#x914D;&#x8FDE;&#x5728;&#x4E00;&#x8D77;&#x7684;&#x56DB;&#x4F4D;&#x6570;&#x5B57;&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;[[:digit:]]{4}&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure></li>
+<li>&#x4E3A;&#x4E86;&#x5339;&#x914D;&#x7279;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684;&#x6587;&#x672C;&#x3002;&#x6211;&#x4EEC;&#x4F7F;&#x7528;<strong>&#x5B9A;&#x4F4D;&#x7B26;</strong>&#xFF1A;<br><img data-src="https://ws1.sinaimg.cn/large/006tKfTcly1fj0pfbms4oj30cw039dfp.jpg" alt></li>
+<li>&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;^[0-9\\.]&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure></li>
+<li>&#x7B80;&#x5355;&#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6D4B;&#x8BD5;&#x2014;&#x2014;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x4F7F;&#x7528;&#x6570;&#x636E;&#x8868;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x7528;SELECT&#x6765;&#x6D4B;&#x8BD5;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;REGEXP&#x68C0;&#x67E5;&#x8FD4;&#x56DE;0&#x8868;&#x793A;&#x6CA1;&#x6709;&#x5339;&#x914D;&#xFF0C;&#x8FD4;&#x56DE;1&#x4EE3;&#x8868;&#x5339;&#x914D;&#xFF0C;&#x4F8B;&#x5B50;&#xFF1A;<code>SELECT &apos;hello&apos; REGEXP &apos;[0-9]&apos;;</code></li>
+</ul>
+<h1 id="&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;"><a href="#&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;" class="headerlink" title="&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;"></a>&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;</h1><ul>
+<li>&#x62FC;&#x63A5;&#x5B57;&#x6BB5;&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(vend_name, &apos; (&apos;, vend_country, &apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure></li>
+<li>Trim&#x51FD;&#x6570;(&#x8FD8;&#x6709;LTrim&#x548C;RTrim)&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name), &apos; (&apos;, RTrim(vend_country), &apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure></li>
+<li>&#x522B;&#x540D;&#xFF08;&#x53C8;&#x540D;&#x5BFC;&#x51FA;&#x5217;&#xFF0C;&#x8FD9;&#x4E2A;&#x4E1C;&#x897F;&#x53EF;&#x4EE5;&#x88AB;&#x5176;&#x5B83;&#x51FD;&#x6570;&#x76F4;&#x63A5;&#x7528;&#x522B;&#x540D;&#x5F15;&#x7528;&#xFF09;&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name), &apos; (&apos;, RTrim(vend_country), &apos;)&apos;)</span><br><span class="line">AS vend_title</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure></li>
+<li>&#x8BA1;&#x7B97;&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,</span><br><span class="line">       quantity,</span><br><span class="line">       item_price,</span><br><span class="line">       quantity*item_price AS expanded_price</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure></li>
+<li>&#x6D4B;&#x8BD5;&#x8BA1;&#x7B97;&#xFF1A;  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 3*2;</span><br><span class="line">SELECT Trim(&apos; 123  &apos;);</span><br><span class="line">SELECT Now();</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/08/20/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="prev" title="多线程">
+      <i class="fa fa-chevron-left"></i> 多线程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/08/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="next" title="操作系统概述">
+      操作系统概述 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -16,7 +385,165 @@
       let commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
-  }</script></div><div class="toggle sidebar-toggle"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div><aside class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="post-toc-wrap sidebar-panel"><div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x4F7F;&#x7528;mysql"><span class="nav-number">1.</span> <span class="nav-text">&amp;#x4F7F;&amp;#x7528;MySQL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x68C0;&#x7D22;&#x6570;&#x636E;"><span class="nav-number">2.</span> <span class="nav-text">&amp;#x68C0;&amp;#x7D22;&amp;#x6570;&amp;#x636E;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;"><span class="nav-number">3.</span> <span class="nav-text">&amp;#x6392;&amp;#x5E8F;&amp;#x68C0;&amp;#x6D4B;&amp;#x6570;&amp;#x636E;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x4F7F;&#x7528;where&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;"><span class="nav-number">4.</span> <span class="nav-text">&amp;#x4F7F;&amp;#x7528;WHERE&amp;#x5173;&amp;#x952E;&amp;#x5B57;&amp;#x8FC7;&amp;#x6EE4;&amp;#x6570;&amp;#x636E;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;"><span class="nav-number">5.</span> <span class="nav-text">&amp;#x7528;&amp;#x901A;&amp;#x914D;&amp;#x7B26;&amp;#x8FDB;&amp;#x884C;&amp;#x8FC7;&amp;#x6EE4;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;"><span class="nav-number">6.</span> <span class="nav-text">&amp;#x7528;&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x8FDB;&amp;#x884C;&amp;#x641C;&amp;#x7D22;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;"><span class="nav-number">7.</span> <span class="nav-text">&amp;#x521B;&amp;#x5EFA;&amp;#x8BA1;&amp;#x7B97;&amp;#x5B57;&amp;#x6BB5;</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="xijinian" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">xijinian</p><div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div></div><div class="site-state-wrap motion-element"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">107</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">21</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a> </span><span class="links-of-author-item"><a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a></span></div></div></div></aside><div id="sidebar-dimmer"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2020</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">xijinian</span></div></div></footer></div><script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/pisces.js"></script><script src="/js/next-boot.js"></script><script src="/js/local-search.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css"><script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css"><script>function loadCount(){var d=document,n=d.createElement("script");n.src="https://xijinian.disqus.com/count.js",n.id="dsq-count-scr",(d.head||d.body).appendChild(n)}window.addEventListener("load",loadCount,!1)</script><script>var disqus_config = function() {
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x4F7F;&#x7528;MySQL"><span class="nav-number">1.</span> <span class="nav-text">&amp;#x4F7F;&amp;#x7528;MySQL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x68C0;&#x7D22;&#x6570;&#x636E;"><span class="nav-number">2.</span> <span class="nav-text">&amp;#x68C0;&amp;#x7D22;&amp;#x6570;&amp;#x636E;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x6392;&#x5E8F;&#x68C0;&#x6D4B;&#x6570;&#x636E;"><span class="nav-number">3.</span> <span class="nav-text">&amp;#x6392;&amp;#x5E8F;&amp;#x68C0;&amp;#x6D4B;&amp;#x6570;&amp;#x636E;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x4F7F;&#x7528;WHERE&#x5173;&#x952E;&#x5B57;&#x8FC7;&#x6EE4;&#x6570;&#x636E;"><span class="nav-number">4.</span> <span class="nav-text">&amp;#x4F7F;&amp;#x7528;WHERE&amp;#x5173;&amp;#x952E;&amp;#x5B57;&amp;#x8FC7;&amp;#x6EE4;&amp;#x6570;&amp;#x636E;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x7528;&#x901A;&#x914D;&#x7B26;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;"><span class="nav-number">5.</span> <span class="nav-text">&amp;#x7528;&amp;#x901A;&amp;#x914D;&amp;#x7B26;&amp;#x8FDB;&amp;#x884C;&amp;#x8FC7;&amp;#x6EE4;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x641C;&#x7D22;"><span class="nav-number">6.</span> <span class="nav-text">&amp;#x7528;&amp;#x6B63;&amp;#x5219;&amp;#x8868;&amp;#x8FBE;&amp;#x5F0F;&amp;#x8FDB;&amp;#x884C;&amp;#x641C;&amp;#x7D22;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#&#x521B;&#x5EFA;&#x8BA1;&#x7B97;&#x5B57;&#x6BB5;"><span class="nav-number">7.</span> <span class="nav-text">&amp;#x521B;&amp;#x5EFA;&amp;#x8BA1;&amp;#x7B97;&amp;#x5B57;&amp;#x6BB5;</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
     this.page.url = "https://www.xijinian.top/2017/08/23/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89/";
     this.page.identifier = "2017/08/23/MySQL必知必会（一）/";
     this.page.title = "MySQL必知必会（一）";
@@ -33,4 +560,8 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  });</script></body></html>
+  });
+</script>
+
+</body>
+</html>

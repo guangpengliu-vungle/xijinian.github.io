@@ -1,4 +1,331 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 4.2.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css"><script id="hexo-configurations">var NexT=window.NexT||{},CONFIG={hostname:"www.xijinian.top",root:"/",scheme:"Gemini",version:"7.7.2",exturl:!1,sidebar:{position:"left",display:"post",padding:18,offset:12,onmobile:!1},copycode:{enable:!1,show_result:!1,style:null},back2top:{enable:!0,sidebar:!1,scrollpercent:!1},bookmark:{enable:!1,color:"#222",save:"auto"},fancybox:!1,mediumzoom:!1,lazyload:!0,pangu:!1,comments:{style:"tabs",active:null,storage:!0,lazyload:!0,nav:null},algolia:{hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}},localsearch:{enable:!0,trigger:"auto",top_n_per_article:1,unescape:!1,preload:!1},motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},path:"search.xml"}</script><meta name="description" content="数据抽象：思考一个问题，我们为什么会用private变量呢？大概是因为我们不想让其他使用者依赖这些变量：1这样我们可以在心血来潮时能自由修改其类型或实现。第二个问题是那么为什么还是有那么多的程序员给对象添加赋值器和取值器，这不仍然暴露了私有变量吗？123是的，虽然如此，但是我们可以：①隐藏实现——只是暴露抽象接口，以便用户无需了解数据的实现。②固定存取策略——譬如设定一个点的坐标，public方法"><meta property="og:type" content="article"><meta property="og:title" content="对象和数据结构"><meta property="og:url" content="https://www.xijinian.top/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html"><meta property="og:site_name" content="Adventures of xijinian"><meta property="og:description" content="数据抽象：思考一个问题，我们为什么会用private变量呢？大概是因为我们不想让其他使用者依赖这些变量：1这样我们可以在心血来潮时能自由修改其类型或实现。第二个问题是那么为什么还是有那么多的程序员给对象添加赋值器和取值器，这不仍然暴露了私有变量吗？123是的，虽然如此，但是我们可以：①隐藏实现——只是暴露抽象接口，以便用户无需了解数据的实现。②固定存取策略——譬如设定一个点的坐标，public方法"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2017-09-19T06:30:54.000Z"><meta property="article:modified_time" content="2017-10-05T15:51:28.000Z"><meta property="article:author" content="xijinian"><meta property="article:tag" content="Clean Code"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://www.xijinian.top/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><script id="page-configurations">CONFIG.page={sidebar:"",isHome:!1,isPost:!0,lang:"zh-CN"}</script><title>对象和数据结构 | Adventures of xijinian</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-header,.use-motion .comments,.use-motion .menu-item,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="container use-motion"><div class="headband"></div><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span><h1 class="site-title">Adventures of xijinian</h1><span class="logo-line-after"><i></i></span></a></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"><input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span></div><div id="search-result"><div id="no-result"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div></div></div></div></div></header><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><main class="main"><div class="main-inner"><div class="content-wrap"><div class="content post posts-expand"><article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="xijinian"><meta itemprop="description" content="放轻松，就像在漫游地球～"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Adventures of xijinian"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">对象和数据结构</h1><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2017-09-19 14:30:54" itemprop="dateCreated datePublished" datetime="2017-09-19T14:30:54+08:00">2017-09-19</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i> </span><span class="post-meta-item-text">Disqus：</span> <a title="disqus" href="/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/#disqus_thread" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/19/对象和数据结构/" itemprop="commentCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><p><strong>&#x6570;&#x636E;&#x62BD;&#x8C61;</strong>&#xFF1A;</p><ul><li>&#x601D;&#x8003;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x4E3A;&#x4EC0;&#x4E48;&#x4F1A;&#x7528;private&#x53D8;&#x91CF;&#x5462;&#xFF1F;&#x5927;&#x6982;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x4E0D;&#x60F3;&#x8BA9;&#x5176;&#x4ED6;&#x4F7F;&#x7528;&#x8005;&#x4F9D;&#x8D56;&#x8FD9;&#x4E9B;&#x53D8;&#x91CF;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x5FC3;&#x8840;&#x6765;&#x6F6E;&#x65F6;&#x80FD;&#x81EA;&#x7531;&#x4FEE;&#x6539;&#x5176;&#x7C7B;&#x578B;&#x6216;&#x5B9E;&#x73B0;&#x3002;</span><br></pre></td></tr></table></figure><ul><li>&#x7B2C;&#x4E8C;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x90A3;&#x4E48;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD8;&#x662F;&#x6709;&#x90A3;&#x4E48;&#x591A;&#x7684;&#x7A0B;&#x5E8F;&#x5458;&#x7ED9;&#x5BF9;&#x8C61;&#x6DFB;&#x52A0;&#x8D4B;&#x503C;&#x5668;&#x548C;&#x53D6;&#x503C;&#x5668;&#xFF0C;&#x8FD9;&#x4E0D;&#x4ECD;&#x7136;&#x66B4;&#x9732;&#x4E86;&#x79C1;&#x6709;&#x53D8;&#x91CF;&#x5417;&#xFF1F;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x662F;&#x7684;&#xFF0C;&#x867D;&#x7136;&#x5982;&#x6B64;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#xFF1A;</span><br><span class="line">&#x2460;&#x9690;&#x85CF;&#x5B9E;&#x73B0;&#x2014;&#x2014;&#x53EA;&#x662F;&#x66B4;&#x9732;&#x62BD;&#x8C61;&#x63A5;&#x53E3;&#xFF0C;&#x4EE5;&#x4FBF;&#x7528;&#x6237;&#x65E0;&#x9700;&#x4E86;&#x89E3;&#x6570;&#x636E;&#x7684;&#x5B9E;&#x73B0;&#x3002;</span><br><span class="line">&#x2461;&#x56FA;&#x5B9A;&#x5B58;&#x53D6;&#x7B56;&#x7565;&#x2014;&#x2014;&#x8B6C;&#x5982;&#x8BBE;&#x5B9A;&#x4E00;&#x4E2A;&#x70B9;&#x7684;&#x5750;&#x6807;&#xFF0C;public&#x65B9;&#x6CD5;&#x662F;&#x540C;&#x65F6;&#x8BBE;&#x7F6E;x&#x3001;y&#x7684;&#x5750;&#x6807;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#xFF0C;&#x80FD;&#x591F;&#x89C4;&#x907F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7B49;&#x95EE;&#x9898;&#x3002;</span><br></pre></td></tr></table></figure><a id="more"></a><ul><li>&#x6211;&#x4EEC;&#x4E0D;&#x5E94;&#x8BE5;&#x66B4;&#x9732;&#x6570;&#x636E;&#x7EC6;&#x8282;&#xFF0C;&#x800C;&#x662F;&#x5E94;&#x8BE5;&#x4EE5;&#x62BD;&#x8C61;&#x7684;&#x5F62;&#x6001;&#x8868;&#x8FF0;&#x6570;&#x636E;&#x3002;&#x8981;&#x4EE5;&#x6700;&#x597D;&#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73B0;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x5305;&#x542B;&#x7684;&#x6570;&#x636E;&#x9700;&#x8981;&#x505A;&#x4E25;&#x8083;&#x7684;&#x601D;&#x8003;&#xFF0C;&#x50BB;&#x4E50;&#x7740;&#x4E71;&#x52A0;&#x53D6;&#x503C;&#x5668;&#x548C;&#x8D4B;&#x503C;&#x5668;&#xFF0C;&#x662F;&#x6700;&#x574F;&#x7684;&#x9009;&#x62E9;&#x3002;</li></ul><p><strong>&#x6570;&#x636E;&#x3001;&#x5BF9;&#x8C61;&#x548C;&#x53CD;&#x5BF9;&#x79F0;&#x6027;</strong>&#xFF1A;</p><ul><li>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7CFB;&#x7EDF;&#x4E2D;&#x6DFB;&#x52A0;&#x65B0;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x6BD4;&#x6DFB;&#x52A0;&#x51FD;&#x6570;&#x66F4;&#x9891;&#x7E41;&#xFF08;&#x76F8;&#x5BF9;&#x4E8E;&#x6B63;&#x5E38;&#x7684;&#x6BD4;&#x4F8B;&#xFF0C;&#x5E76;&#x975E;&#x771F;&#x7684;&#x6307;&#x6B21;&#x6570;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x5E94;&#x8BE5;&#x7528;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x4E3A;&#x52A0;&#x5165;&#x65B0;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x8BDD;&#xFF0C;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x65B9;&#x6CD5;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x6539;&#x53D8;&#x5176;&#x4ED6;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x4EE3;&#x7801;&#x3002;</li><li>&#x53CD;&#x4E4B;&#xFF0C;&#x5982;&#x679C;&#x9891;&#x7E41;&#x589E;&#x52A0;&#x51FD;&#x6570;&#x800C;&#x4E0D;&#x662F;&#x9891;&#x7E41;&#x6DFB;&#x52A0;&#x65B0;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x5C31;&#x5E94;&#x8BE5;&#x7528;&#x9762;&#x5411;&#x8FC7;&#x7A0B;&#x7684;&#x7F16;&#x7A0B;&#x65B9;&#x6CD5;&#xFF0C;&#x7406;&#x7531;&#x2014;&#x2014;&#x9762;&#x5411;&#x8FC7;&#x7A0B;&#x7684;&#x65B9;&#x6CD5;&#x6DFB;&#x52A0;&#x51FD;&#x6570;&#x53EA;&#x9700;&#x8981;&#x5728;&#x4E00;&#x5904;&#x6DFB;&#x52A0;&#xFF0C;&#x800C;&#x4E0D;&#x7528;&#x53BB;&#x6BCF;&#x4E2A;&#x7C7B;&#x4E2D;&#x6DFB;&#x52A0;&#x3002;&#x201C;<strong>&#x4E00;&#x5207;&#x90FD;&#x662F;&#x5BF9;&#x8C61;</strong>&#x201D;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x4F20;&#x8BF4;&#xFF0C;&#x6709;&#x65F6;&#x5019;&#x4F60;&#x771F;&#x7684;&#x60F3;&#x8981;&#x5728;&#x7B80;&#x5355;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E0A;&#x505A;&#x4E00;&#x4E9B;&#x8FC7;&#x7A0B;&#x5F0F;&#x7684;&#x64CD;&#x4F5C;&#x3002;</li><li>&#x9762;&#x5411;&#x8FC7;&#x7A0B;&#x7684;&#x4EE3;&#x7801;&#x8303;&#x4F8B;&#xFF1A;</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Square</span> </span>{ </span><br><span class="line">    <span class="keyword">public</span> Point topLeft; <span class="keyword">public</span> <span class="keyword">double</span> side;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> </span>{ </span><br><span class="line">    <span class="keyword">public</span> Point topLeft; <span class="keyword">public</span> <span class="keyword">double</span> height; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> width;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>{ </span><br><span class="line">    <span class="keyword">public</span> Point center; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> radius;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Geometry</span> </span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.141592653589793</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">(Object shape)</span> <span class="keyword">throws</span> NoSuchShapeException </span>{</span><br><span class="line">        <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Square) { </span><br><span class="line">            Square s = (Square)shape; </span><br><span class="line">            <span class="keyword">return</span> s.side * s.side;</span><br><span class="line">        } <span class="keyword">else</span> <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Rectangle) { </span><br><span class="line">            Rectangle r = (Rectangle)shape; </span><br><span class="line">            <span class="keyword">return</span> r.height * r.width;</span><br><span class="line">        } <span class="keyword">else</span> <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Circle) {</span><br><span class="line">            Circle c = (Circle)shape;</span><br><span class="line">            <span class="keyword">return</span> PI * c.radius * c.radius; </span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchShapeException(); </span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure><ul><li>&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x4EE3;&#x7801;&#x8303;&#x4F8B;&#xFF1A;</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> Point topLeft;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> side;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>{ </span><br><span class="line">        <span class="keyword">return</span> side*side;</span><br><span class="line">    } </span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> Point topLeft;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> height;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> width;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>{ </span><br><span class="line">        <span class="keyword">return</span> height * width;</span><br><span class="line">    } </span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> Point center;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.141592653589793</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> PI * radius * radius;</span><br><span class="line">    } </span><br><span class="line">}</span><br></pre></td></tr></table></figure><p><strong>&#x5F97;&#x58A8;&#x5FD2;&#x8033;&#x5B9A;&#x5F8B;&#xFF08;Law of Demeter&#xFF0C;&#x7F29;&#x5199;LoD&#xFF09;</strong>&#xFF1A;</p><ul><li>&#x7C7B;C&#x7684;&#x65B9;&#x6CD5;f&#x53EA;&#x5E94;&#x8C03;&#x7528;&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2460;C&#x7C7B;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#xFF1B;</span><br><span class="line">&#x2461;&#x7531;f&#x6240;&#x521B;&#x5EFA;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF1B;</span><br><span class="line">&#x2462;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x7ED9;f&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF1B;</span><br><span class="line">&#x2463;&#x7531;C&#x7684;&#x5B9E;&#x4F53;&#x53D8;&#x91CF;&#x6301;&#x6709;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#x3002;</span><br><span class="line">&#x2014;&#x2014;&#x5373;&#xFF0C;&#x65B9;&#x6CD5;&#x4E0D;&#x5E94;&#x8C03;&#x7528;&#x4EFB;&#x4F55;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#x3002;</span><br></pre></td></tr></table></figure><ul><li>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#x5C31;&#x662F;&#x201C;&#x4EBA;&#x53EF;&#x4EE5;&#x8BA9;&#x72D7;&#x8D70;&#x8D77;&#x6765;&#xFF0C;&#x4F46;&#x662F;&#x4EBA;&#x4E0D;&#x5E94;&#x8BE5;&#x76F4;&#x63A5;&#x63A7;&#x5236;&#x72D7;&#x7684;&#x817F;&#x201D;&#x3002;</li></ul><p><strong>&#x6570;&#x636E;&#x4F20;&#x9001;&#x5BF9;&#x8C61;</strong>&#xFF1A;</p><ul><li>&#x6700;&#x7CBE;&#x70BC;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5E94;&#x8BE5;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x53EA;&#x6709;&#x516C;&#x5171;&#x53D8;&#x91CF;&#x800C;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x51FD;&#x6570;&#x7684;&#x7C7B;&#xFF0C;&#x5728;&#x8FD9;&#x4E9B;&#x7EAF;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E2D;&#x52A0;&#x5165;&#x51FD;&#x6570;&#x662F;&#x4E0D;&#x667A;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x8FD9;&#x4F1A;&#x5BFC;&#x81F4;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x5BF9;&#x8C61;&#x7684;&#x6DF7;&#x6742;&#x4F53;&#x3002;</li><li>&#x597D;&#x7684;&#x529E;&#x6CD5;&#x662F;&#x628A;<strong>Active Record</strong>&#x5F53;&#x505A;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5E76;&#x521B;&#x5EFA;&#x5305;&#x542B;&#x4E1A;&#x52A1;&#x89C4;&#x5219;&#x3001;&#x9690;&#x85CF;&#x5185;&#x90E8;&#x6570;&#x636E;&#xFF08;&#x53EF;&#x80FD;&#x5C31;&#x662F;Active Record&#x5B9E;&#x4F53;&#xFF09;&#x7684;&#x72EC;&#x7ACB;&#x5BF9;&#x8C61;&#x3002;</li><li>Active Record&#x5C31;&#x662F;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x5BF9;&#x8C61;&#xFF08;DTO&#xFF09;&#xFF0C;&#x5B83;&#x4EEC;&#x662F;&#x62E5;&#x6709;&#x516C;&#x5171;&#xFF08;&#x6216;&#x53EF;&#x8C46;&#x5F0F;&#x8BBF;&#x95EE;&#x7684;&#xFF09;&#x53D8;&#x91CF;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x4F46;&#x901A;&#x5E38;&#x4E5F;&#x4F1A;&#x6709;&#x7C7B;&#x4F3C;save()&#x3001;find()&#x8FD9;&#x6837;&#x7684;&#x53EF;&#x6D4F;&#x89C8;&#x65B9;&#x6CD5;&#x3002;&#x5B83;&#x4E00;&#x822C;&#x662F;&#x5BF9;&#x6570;&#x636E;&#x6E90;&#x7684;&#x76F4;&#x63A5;&#x7FFB;&#x8BD1;&#x3002;</li></ul><p><strong>&#x603B;&#x7ED3;</strong>&#xFF1A;</p><ul><li>&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x628A;&#x516C;&#x5171;&#x8BBF;&#x95EE;&#x5668;&#x3001;&#x6539;&#x503C;&#x5668;&#x4E0E;&#x6267;&#x884C;&#x64CD;&#x4F5C;&#x7684;&#x51FD;&#x6570;&#x653E;&#x5728;&#x4E00;&#x8D77;&#x3002;</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Clean-Code/" rel="tag"># Clean Code</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2017/09/17/union-find%E7%AE%97%E6%B3%95/" rel="prev" title="union-find算法"><i class="fa fa-chevron-left"></i> union-find算法</a></div><div class="post-nav-item"><a href="/2017/09/20/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" rel="next" title="错误处理">错误处理 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript></div></div><script>window.addEventListener('tabs:register', () => {
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="数据抽象：  思考一个问题，我们为什么会用private变量呢？大概是因为我们不想让其他使用者依赖这些变量：1这样我们可以在心血来潮时能自由修改其类型或实现。  第二个问题是那么为什么还是有那么多的程序员给对象添加赋值器和取值器，这不仍然暴露了私有变量吗？123是的，虽然如此，但是我们可以：①隐藏实现——只是暴露抽象接口，以便用户无需了解数据的实现。②固定存取策略——譬如设定一个点的坐标，publ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对象和数据结构">
+<meta property="og:url" content="https://www.xijinian.top/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="数据抽象：  思考一个问题，我们为什么会用private变量呢？大概是因为我们不想让其他使用者依赖这些变量：1这样我们可以在心血来潮时能自由修改其类型或实现。  第二个问题是那么为什么还是有那么多的程序员给对象添加赋值器和取值器，这不仍然暴露了私有变量吗？123是的，虽然如此，但是我们可以：①隐藏实现——只是暴露抽象接口，以便用户无需了解数据的实现。②固定存取策略——譬如设定一个点的坐标，publ">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-09-19T06:30:54.000Z">
+<meta property="article:modified_time" content="2017-10-05T15:51:28.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="Clean Code">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.xijinian.top/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>对象和数据结构 | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对象和数据结构
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-19 14:30:54" itemprop="dateCreated datePublished" datetime="2017-09-19T14:30:54+08:00">2017-09-19</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/19/对象和数据结构/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>&#x6570;&#x636E;&#x62BD;&#x8C61;</strong>&#xFF1A;</p>
+<ul>
+<li>&#x601D;&#x8003;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x4E3A;&#x4EC0;&#x4E48;&#x4F1A;&#x7528;private&#x53D8;&#x91CF;&#x5462;&#xFF1F;&#x5927;&#x6982;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x4E0D;&#x60F3;&#x8BA9;&#x5176;&#x4ED6;&#x4F7F;&#x7528;&#x8005;&#x4F9D;&#x8D56;&#x8FD9;&#x4E9B;&#x53D8;&#x91CF;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x5FC3;&#x8840;&#x6765;&#x6F6E;&#x65F6;&#x80FD;&#x81EA;&#x7531;&#x4FEE;&#x6539;&#x5176;&#x7C7B;&#x578B;&#x6216;&#x5B9E;&#x73B0;&#x3002;</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x7B2C;&#x4E8C;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x90A3;&#x4E48;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD8;&#x662F;&#x6709;&#x90A3;&#x4E48;&#x591A;&#x7684;&#x7A0B;&#x5E8F;&#x5458;&#x7ED9;&#x5BF9;&#x8C61;&#x6DFB;&#x52A0;&#x8D4B;&#x503C;&#x5668;&#x548C;&#x53D6;&#x503C;&#x5668;&#xFF0C;&#x8FD9;&#x4E0D;&#x4ECD;&#x7136;&#x66B4;&#x9732;&#x4E86;&#x79C1;&#x6709;&#x53D8;&#x91CF;&#x5417;&#xFF1F;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x662F;&#x7684;&#xFF0C;&#x867D;&#x7136;&#x5982;&#x6B64;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#xFF1A;</span><br><span class="line">&#x2460;&#x9690;&#x85CF;&#x5B9E;&#x73B0;&#x2014;&#x2014;&#x53EA;&#x662F;&#x66B4;&#x9732;&#x62BD;&#x8C61;&#x63A5;&#x53E3;&#xFF0C;&#x4EE5;&#x4FBF;&#x7528;&#x6237;&#x65E0;&#x9700;&#x4E86;&#x89E3;&#x6570;&#x636E;&#x7684;&#x5B9E;&#x73B0;&#x3002;</span><br><span class="line">&#x2461;&#x56FA;&#x5B9A;&#x5B58;&#x53D6;&#x7B56;&#x7565;&#x2014;&#x2014;&#x8B6C;&#x5982;&#x8BBE;&#x5B9A;&#x4E00;&#x4E2A;&#x70B9;&#x7684;&#x5750;&#x6807;&#xFF0C;public&#x65B9;&#x6CD5;&#x662F;&#x540C;&#x65F6;&#x8BBE;&#x7F6E;x&#x3001;y&#x7684;&#x5750;&#x6807;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#xFF0C;&#x80FD;&#x591F;&#x89C4;&#x907F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7B49;&#x95EE;&#x9898;&#x3002;</span><br></pre></td></tr></table></figure>
+<a id="more"></a></li>
+<li>&#x6211;&#x4EEC;&#x4E0D;&#x5E94;&#x8BE5;&#x66B4;&#x9732;&#x6570;&#x636E;&#x7EC6;&#x8282;&#xFF0C;&#x800C;&#x662F;&#x5E94;&#x8BE5;&#x4EE5;&#x62BD;&#x8C61;&#x7684;&#x5F62;&#x6001;&#x8868;&#x8FF0;&#x6570;&#x636E;&#x3002;&#x8981;&#x4EE5;&#x6700;&#x597D;&#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73B0;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x5305;&#x542B;&#x7684;&#x6570;&#x636E;&#x9700;&#x8981;&#x505A;&#x4E25;&#x8083;&#x7684;&#x601D;&#x8003;&#xFF0C;&#x50BB;&#x4E50;&#x7740;&#x4E71;&#x52A0;&#x53D6;&#x503C;&#x5668;&#x548C;&#x8D4B;&#x503C;&#x5668;&#xFF0C;&#x662F;&#x6700;&#x574F;&#x7684;&#x9009;&#x62E9;&#x3002;</li>
+</ul>
+<p><strong>&#x6570;&#x636E;&#x3001;&#x5BF9;&#x8C61;&#x548C;&#x53CD;&#x5BF9;&#x79F0;&#x6027;</strong>&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7CFB;&#x7EDF;&#x4E2D;&#x6DFB;&#x52A0;&#x65B0;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x6BD4;&#x6DFB;&#x52A0;&#x51FD;&#x6570;&#x66F4;&#x9891;&#x7E41;&#xFF08;&#x76F8;&#x5BF9;&#x4E8E;&#x6B63;&#x5E38;&#x7684;&#x6BD4;&#x4F8B;&#xFF0C;&#x5E76;&#x975E;&#x771F;&#x7684;&#x6307;&#x6B21;&#x6570;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x5E94;&#x8BE5;&#x7528;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x4E3A;&#x52A0;&#x5165;&#x65B0;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x8BDD;&#xFF0C;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x65B9;&#x6CD5;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x6539;&#x53D8;&#x5176;&#x4ED6;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x4EE3;&#x7801;&#x3002;</li>
+<li>&#x53CD;&#x4E4B;&#xFF0C;&#x5982;&#x679C;&#x9891;&#x7E41;&#x589E;&#x52A0;&#x51FD;&#x6570;&#x800C;&#x4E0D;&#x662F;&#x9891;&#x7E41;&#x6DFB;&#x52A0;&#x65B0;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x5C31;&#x5E94;&#x8BE5;&#x7528;&#x9762;&#x5411;&#x8FC7;&#x7A0B;&#x7684;&#x7F16;&#x7A0B;&#x65B9;&#x6CD5;&#xFF0C;&#x7406;&#x7531;&#x2014;&#x2014;&#x9762;&#x5411;&#x8FC7;&#x7A0B;&#x7684;&#x65B9;&#x6CD5;&#x6DFB;&#x52A0;&#x51FD;&#x6570;&#x53EA;&#x9700;&#x8981;&#x5728;&#x4E00;&#x5904;&#x6DFB;&#x52A0;&#xFF0C;&#x800C;&#x4E0D;&#x7528;&#x53BB;&#x6BCF;&#x4E2A;&#x7C7B;&#x4E2D;&#x6DFB;&#x52A0;&#x3002;&#x201C;<strong>&#x4E00;&#x5207;&#x90FD;&#x662F;&#x5BF9;&#x8C61;</strong>&#x201D;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x4F20;&#x8BF4;&#xFF0C;&#x6709;&#x65F6;&#x5019;&#x4F60;&#x771F;&#x7684;&#x60F3;&#x8981;&#x5728;&#x7B80;&#x5355;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E0A;&#x505A;&#x4E00;&#x4E9B;&#x8FC7;&#x7A0B;&#x5F0F;&#x7684;&#x64CD;&#x4F5C;&#x3002;</li>
+<li>&#x9762;&#x5411;&#x8FC7;&#x7A0B;&#x7684;&#x4EE3;&#x7801;&#x8303;&#x4F8B;&#xFF1A;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Square</span> </span>{ </span><br><span class="line">    <span class="keyword">public</span> Point topLeft; <span class="keyword">public</span> <span class="keyword">double</span> side;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> </span>{ </span><br><span class="line">    <span class="keyword">public</span> Point topLeft; <span class="keyword">public</span> <span class="keyword">double</span> height; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> width;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>{ </span><br><span class="line">    <span class="keyword">public</span> Point center; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> radius;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Geometry</span> </span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.141592653589793</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">(Object shape)</span> <span class="keyword">throws</span> NoSuchShapeException </span>{</span><br><span class="line">        <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Square) { </span><br><span class="line">            Square s = (Square)shape; </span><br><span class="line">            <span class="keyword">return</span> s.side * s.side;</span><br><span class="line">        } <span class="keyword">else</span> <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Rectangle) { </span><br><span class="line">            Rectangle r = (Rectangle)shape; </span><br><span class="line">            <span class="keyword">return</span> r.height * r.width;</span><br><span class="line">        } <span class="keyword">else</span> <span class="keyword">if</span> (shape <span class="keyword">instanceof</span> Circle) {</span><br><span class="line">            Circle c = (Circle)shape;</span><br><span class="line">            <span class="keyword">return</span> PI * c.radius * c.radius; </span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchShapeException(); </span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x4EE3;&#x7801;&#x8303;&#x4F8B;&#xFF1A;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> Point topLeft;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> side;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>{ </span><br><span class="line">        <span class="keyword">return</span> side*side;</span><br><span class="line">    } </span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> Point topLeft;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> height;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> width;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>{ </span><br><span class="line">        <span class="keyword">return</span> height * width;</span><br><span class="line">    } </span><br><span class="line">}</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>{ </span><br><span class="line">    <span class="keyword">private</span> Point center;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> radius;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.141592653589793</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">area</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> PI * radius * radius;</span><br><span class="line">    } </span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<!--lalala-->
+
+
+
+
+
+
+
+</li>
+</ul>
+<p><strong>&#x5F97;&#x58A8;&#x5FD2;&#x8033;&#x5B9A;&#x5F8B;&#xFF08;Law of Demeter&#xFF0C;&#x7F29;&#x5199;LoD&#xFF09;</strong>&#xFF1A;</p>
+<ul>
+<li>&#x7C7B;C&#x7684;&#x65B9;&#x6CD5;f&#x53EA;&#x5E94;&#x8C03;&#x7528;&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2460;C&#x7C7B;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#xFF1B;</span><br><span class="line">&#x2461;&#x7531;f&#x6240;&#x521B;&#x5EFA;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF1B;</span><br><span class="line">&#x2462;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x7ED9;f&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF1B;</span><br><span class="line">&#x2463;&#x7531;C&#x7684;&#x5B9E;&#x4F53;&#x53D8;&#x91CF;&#x6301;&#x6709;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#x3002;</span><br><span class="line">&#x2014;&#x2014;&#x5373;&#xFF0C;&#x65B9;&#x6CD5;&#x4E0D;&#x5E94;&#x8C03;&#x7528;&#x4EFB;&#x4F55;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#x3002;</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#x5C31;&#x662F;&#x201C;&#x4EBA;&#x53EF;&#x4EE5;&#x8BA9;&#x72D7;&#x8D70;&#x8D77;&#x6765;&#xFF0C;&#x4F46;&#x662F;&#x4EBA;&#x4E0D;&#x5E94;&#x8BE5;&#x76F4;&#x63A5;&#x63A7;&#x5236;&#x72D7;&#x7684;&#x817F;&#x201D;&#x3002;</li>
+</ul>
+<p><strong>&#x6570;&#x636E;&#x4F20;&#x9001;&#x5BF9;&#x8C61;</strong>&#xFF1A;</p>
+<ul>
+<li>&#x6700;&#x7CBE;&#x70BC;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5E94;&#x8BE5;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x53EA;&#x6709;&#x516C;&#x5171;&#x53D8;&#x91CF;&#x800C;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x51FD;&#x6570;&#x7684;&#x7C7B;&#xFF0C;&#x5728;&#x8FD9;&#x4E9B;&#x7EAF;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E2D;&#x52A0;&#x5165;&#x51FD;&#x6570;&#x662F;&#x4E0D;&#x667A;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x8FD9;&#x4F1A;&#x5BFC;&#x81F4;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x5BF9;&#x8C61;&#x7684;&#x6DF7;&#x6742;&#x4F53;&#x3002;</li>
+<li>&#x597D;&#x7684;&#x529E;&#x6CD5;&#x662F;&#x628A;<strong>Active Record</strong>&#x5F53;&#x505A;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5E76;&#x521B;&#x5EFA;&#x5305;&#x542B;&#x4E1A;&#x52A1;&#x89C4;&#x5219;&#x3001;&#x9690;&#x85CF;&#x5185;&#x90E8;&#x6570;&#x636E;&#xFF08;&#x53EF;&#x80FD;&#x5C31;&#x662F;Active Record&#x5B9E;&#x4F53;&#xFF09;&#x7684;&#x72EC;&#x7ACB;&#x5BF9;&#x8C61;&#x3002;</li>
+<li>Active Record&#x5C31;&#x662F;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x5BF9;&#x8C61;&#xFF08;DTO&#xFF09;&#xFF0C;&#x5B83;&#x4EEC;&#x662F;&#x62E5;&#x6709;&#x516C;&#x5171;&#xFF08;&#x6216;&#x53EF;&#x8C46;&#x5F0F;&#x8BBF;&#x95EE;&#x7684;&#xFF09;&#x53D8;&#x91CF;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x4F46;&#x901A;&#x5E38;&#x4E5F;&#x4F1A;&#x6709;&#x7C7B;&#x4F3C;save()&#x3001;find()&#x8FD9;&#x6837;&#x7684;&#x53EF;&#x6D4F;&#x89C8;&#x65B9;&#x6CD5;&#x3002;&#x5B83;&#x4E00;&#x822C;&#x662F;&#x5BF9;&#x6570;&#x636E;&#x6E90;&#x7684;&#x76F4;&#x63A5;&#x7FFB;&#x8BD1;&#x3002;</li>
+</ul>
+<p><strong>&#x603B;&#x7ED3;</strong>&#xFF1A;</p>
+<ul>
+<li>&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x628A;&#x516C;&#x5171;&#x8BBF;&#x95EE;&#x5668;&#x3001;&#x6539;&#x503C;&#x5668;&#x4E0E;&#x6267;&#x884C;&#x64CD;&#x4F5C;&#x7684;&#x51FD;&#x6570;&#x653E;&#x5728;&#x4E00;&#x8D77;&#x3002;</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Clean-Code/" rel="tag"># Clean Code</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/09/17/union-find%E7%AE%97%E6%B3%95/" rel="prev" title="union-find算法">
+      <i class="fa fa-chevron-left"></i> union-find算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/20/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" rel="next" title="错误处理">
+      错误处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -16,7 +343,164 @@
       let commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
-  }</script></div><div class="toggle sidebar-toggle"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div><aside class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="post-toc-wrap sidebar-panel"></div><div class="site-overview-wrap sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="xijinian" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">xijinian</p><div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div></div><div class="site-state-wrap motion-element"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">107</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">21</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a> </span><span class="links-of-author-item"><a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a></span></div></div></div></aside><div id="sidebar-dimmer"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2020</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">xijinian</span></div></div></footer></div><script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/pisces.js"></script><script src="/js/next-boot.js"></script><script src="/js/local-search.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css"><script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css"><script>function loadCount(){var d=document,n=d.createElement("script");n.src="https://xijinian.disqus.com/count.js",n.id="dsq-count-scr",(d.head||d.body).appendChild(n)}window.addEventListener("load",loadCount,!1)</script><script>var disqus_config = function() {
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
     this.page.url = "https://www.xijinian.top/2017/09/19/%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/";
     this.page.identifier = "2017/09/19/对象和数据结构/";
     this.page.title = "对象和数据结构";
@@ -33,4 +517,8 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  });</script></body></html>
+  });
+</script>
+
+</body>
+</html>

@@ -1,4 +1,324 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 4.2.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css"><script id="hexo-configurations">var NexT=window.NexT||{},CONFIG={hostname:"www.xijinian.top",root:"/",scheme:"Gemini",version:"7.7.2",exturl:!1,sidebar:{position:"left",display:"post",padding:18,offset:12,onmobile:!1},copycode:{enable:!1,show_result:!1,style:null},back2top:{enable:!0,sidebar:!1,scrollpercent:!1},bookmark:{enable:!1,color:"#222",save:"auto"},fancybox:!1,mediumzoom:!1,lazyload:!0,pangu:!1,comments:{style:"tabs",active:null,storage:!0,lazyload:!0,nav:null},algolia:{hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}},localsearch:{enable:!0,trigger:"auto",top_n_per_article:1,unescape:!1,preload:!1},motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},path:"search.xml"}</script><meta name="description" content="函数应该短小、每个函数应该只做一件事，举例子：123456public static String renderPageWithSetupsAndTeardowns(    PageData pageData, boolean isSuite) throws Exception &amp;#123;    if (isTestPage(pageData))        includeSetupAndTe"><meta property="og:type" content="article"><meta property="og:title" content="函数"><meta property="og:url" content="https://www.xijinian.top/2017/09/16/%E5%87%BD%E6%95%B0/index.html"><meta property="og:site_name" content="Adventures of xijinian"><meta property="og:description" content="函数应该短小、每个函数应该只做一件事，举例子：123456public static String renderPageWithSetupsAndTeardowns(    PageData pageData, boolean isSuite) throws Exception &amp;#123;    if (isTestPage(pageData))        includeSetupAndTe"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2017-09-16T02:52:18.000Z"><meta property="article:modified_time" content="2017-10-05T15:50:35.000Z"><meta property="article:author" content="xijinian"><meta property="article:tag" content="Clean Code"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://www.xijinian.top/2017/09/16/%E5%87%BD%E6%95%B0/"><script id="page-configurations">CONFIG.page={sidebar:"",isHome:!1,isPost:!0,lang:"zh-CN"}</script><title>函数 | Adventures of xijinian</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-header,.use-motion .comments,.use-motion .menu-item,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="container use-motion"><div class="headband"></div><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span><h1 class="site-title">Adventures of xijinian</h1><span class="logo-line-after"><i></i></span></a></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"><input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span></div><div id="search-result"><div id="no-result"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div></div></div></div></div></header><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><main class="main"><div class="main-inner"><div class="content-wrap"><div class="content post posts-expand"><article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/09/16/%E5%87%BD%E6%95%B0/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="xijinian"><meta itemprop="description" content="放轻松，就像在漫游地球～"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Adventures of xijinian"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">函数</h1><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2017-09-16 10:52:18" itemprop="dateCreated datePublished" datetime="2017-09-16T10:52:18+08:00">2017-09-16</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i> </span><span class="post-meta-item-text">Disqus：</span> <a title="disqus" href="/2017/09/16/%E5%87%BD%E6%95%B0/#disqus_thread" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/16/函数/" itemprop="commentCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><ul><li>&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x77ED;&#x5C0F;&#x3001;&#x6BCF;&#x4E2A;&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#xFF0C;&#x4E3E;&#x4F8B;&#x5B50;&#xFF1A;</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">renderPageWithSetupsAndTeardowns</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    PageData pageData, <span class="keyword">boolean</span> isSuite)</span> <span class="keyword">throws</span> Exception </span>{</span><br><span class="line">    <span class="keyword">if</span> (isTestPage(pageData))</span><br><span class="line">        includeSetupAndTeardownPages(pagedata, isSuite);</span><br><span class="line">    <span class="keyword">return</span> pageData.getHtml();</span><br><span class="line">}</span><br></pre></td></tr></table></figure><a id="more"></a><ul><li>&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#x7684;&#x8BF4;&#x660E;&#xFF1A;&#x5982;&#x679C;&#x51FD;&#x6570;&#x53EA;&#x662F;&#x505A;&#x4E86;&#x8BE5;&#x51FD;&#x6570;&#x540D;&#x4E0B;&#x540C;&#x4E00;&#x62BD;&#x8C61;&#x5C42;&#x7EA7;&#x4E0A;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x5219;&#x51FD;&#x6570;&#x8FD8;&#x662F;&#x53EA;&#x505A;&#x4E86;&#x4E00;&#x4EF6;&#x4E8B;&#xFF0C;&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#x7684;&#x51FD;&#x6570;&#x65E0;&#x6CD5;&#x88AB;&#x5408;&#x7406;&#x5730;&#x5207;&#x5206;&#x4E3A;&#x591A;&#x4E2A;&#x533A;&#x6BB5;&#x3002;</li><li>&#x6240;&#x8C13;&#x540C;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x5C42;&#x7EA7;&#x7684;&#x8BF4;&#x660E;&#xFF1A;&#x5B57;&#x7B26;&#x4E32;&#x62FC;&#x63A5;&#x5C31;&#x662F;&#x76F8;&#x5F53;&#x4F4E;&#x7684;&#x5C42;&#x7EA7;&#xFF0C;&#x800C;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x5C31;&#x7B97;&#x6BD4;&#x8F83;&#x9AD8;&#x7684;&#x5C42;&#x7EA7;&#xFF0C;&#x51FD;&#x6570;&#x4E2D;&#x6DF7;&#x6742;&#x7684;&#x5C42;&#x7EA7;&#x4F1A;&#x4F7F;&#x8BFB;&#x8005;&#x96BE;&#x4EE5;&#x533A;&#x5206;&#x662F;&#x57FA;&#x7840;&#x6982;&#x5FF5;&#x8FD8;&#x662F;&#x7EC6;&#x8282;&#x3002;</li><li>switch&#x8BED;&#x53E5;&#xFF1A;</li><li>&#x4F7F;&#x7528;&#x63CF;&#x8FF0;&#x6027;&#x540D;&#x79F0;&#xFF1A;&#x957F;&#x800C;&#x5177;&#x6709;&#x63CF;&#x8FF0;&#x6027;&#x7684;&#x540D;&#x79F0;&#x8981;&#x6BD4;&#x77ED;&#x800C;&#x4EE4;&#x4EBA;&#x8D39;&#x89E3;&#x7684;&#x540D;&#x79F0;&#x597D;&#x3002;&#x957F;&#x800C;&#x5177;&#x6709;&#x63CF;&#x8FF0;&#x6027;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x8981;&#x6BD4;&#x63CF;&#x8FF0;&#x6027;&#x7684;&#x957F;&#x6CE8;&#x91CA;&#x597D;&#x3002;&#x547D;&#x540D;&#x65B9;&#x5F0F;&#x5305;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF0C;&#x4F7F;&#x7528;&#x4E0E;&#x6A21;&#x5757;&#x4E00;&#x8109;&#x76F8;&#x627F;&#x7684;&#x77ED;&#x8BED;&#x3001;&#x540D;&#x8BCD;&#x548C;&#x52A8;&#x8BCD;&#x7ED9;&#x51FD;&#x6570;&#x547D;&#x540D;&#x3002;</li><li>&#x51FD;&#x6570;&#x53C2;&#x6570;&#xFF1A;<ul><li>&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x5C3D;&#x91CF;&#x5C11;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x56E0;&#x4E3A;&#x51FD;&#x6570;&#x548C;&#x53C2;&#x6570;&#x662F;&#x5C5E;&#x4E8E;&#x4E0D;&#x540C;&#x62BD;&#x8C61;&#x5C42;&#x7EA7;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x5B83;&#x8981;&#x6C42;&#x9605;&#x8BFB;&#x51FD;&#x6570;&#x7684;&#x4EE3;&#x7801;&#x7684;&#x4EBA;&#x4E0D;&#x5F97;&#x4E0D;&#x53BB;&#x4E86;&#x89E3;&#x5728;&#x5F53;&#x524D;&#x4E0D;&#x592A;&#x91CD;&#x8981;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x5C42;&#x7EA7;&#x7684;&#x7EC6;&#x8282;&#x3002;</li><li>&#x5BF9;&#x4E8E;&#x8F6C;&#x6362;&#xFF0C;&#x4F7F;&#x7528;&#x8F93;&#x51FA;&#x53C2;&#x6570;&#x800C;&#x4E0D;&#x4F7F;&#x7528;&#x8FD4;&#x56DE;&#x503C;&#x662F;&#x4EE4;&#x4EBA;&#x8FF7;&#x60D1;&#x7684;&#x3002;&#x5982;&#x679C;&#x51FD;&#x6570;&#x5BF9;&#x8F93;&#x5165;&#x53C2;&#x6570;&#x8981;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#xFF0C;&#x90A3;&#x4E48;&#x64CD;&#x4F5C;&#x7684;&#x7ED3;&#x679C;&#x5C31;&#x5E94;&#x8BE5;&#x4EE5;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x5F62;&#x5F0F;&#x4F53;&#x73B0;&#x3002;</li><li>&#x5982;&#x679C;&#x51FD;&#x6570;&#x53EA;&#x6709;&#x8F93;&#x5165;&#x53C2;&#x6570;&#x800C;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5C31;&#x5E94;&#x8BE5;&#x662F;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#xFF0C;&#x901A;&#x8FC7;&#x8F93;&#x5165;&#x7684;&#x53C2;&#x6570;&#x503C;&#x6765;&#x6539;&#x53D8;&#x7CFB;&#x7EDF;&#x7684;&#x67D0;&#x79CD;&#x72B6;&#x6001;&#xFF08;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x8BA9;&#x8BFB;&#x8005;&#x5F88;&#x6E05;&#x695A;&#x5730;&#x4E86;&#x89E3;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#xFF0C;&#x8981;&#x8C28;&#x614E;&#x5730;&#x9009;&#x62E9;&#x540D;&#x79F0;&#x548C;&#x4E0A;&#x4E0B;&#x6587;&#xFF09;&#xFF0C;&#x5426;&#x5219;&#x4E00;&#x5B9A;&#x8981;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#x3002;</li><li>&#x5411;&#x51FD;&#x6570;&#x4F20;&#x5165;&#x5E03;&#x5C14;&#x503C;&#x7B80;&#x76F4;&#x662F;&#x9A87;&#x4EBA;&#x542C;&#x95FB;&#x7684;&#x505A;&#x6CD5;&#xFF0C;&#x8FD9;&#x6837;&#x505A;&#xFF0C;&#x65B9;&#x6CD5;&#x7684;&#x7B7E;&#x540D;&#x7ACB;&#x9A6C;&#x5C31;&#x590D;&#x6742;&#x4E86;&#x8D77;&#x6765;&#xFF0C;&#x4F1A;&#x8BA9;&#x53EF;&#x601C;&#x7684;&#x8BFB;&#x8005;&#x6478;&#x4E0D;&#x7740;&#x5934;&#x8111;&#x3002;</li><li>&#x4E8C;&#x5143;&#x51FD;&#x6570;&#x4E5F;&#x662F;&#x6709;&#x98CE;&#x9669;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5F88;&#x591A;&#x65F6;&#x5019;&#xFF0C;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x987A;&#x5E8F;&#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x79CD;&#x7EA6;&#x5B9A;&#xFF0C;&#x5E76;&#x4E0D;&#x7B26;&#x5408;&#x81EA;&#x7136;&#x89C4;&#x5F8B;&#xFF0C;&#x9700;&#x8981;&#x7279;&#x610F;&#x53BB;&#x8FA8;&#x522B;&#xFF0C;&#x5C24;&#x5176;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FDE;IDEA&#x4E5F;&#x65E0;&#x6CD5;&#x4E8B;&#x5148;&#x63D0;&#x793A;&#x4F60;&#x54EA;&#x5199;&#x9519;&#x4E86;&#x3002;</li><li>&#x4E09;&#x5143;&#x51FD;&#x6570;&#x66F4;&#x662F;&#x8981;&#x96BE;&#x61C2;&#x5F97;&#x591A;&#xFF0C;&#x80FD;&#x4E0D;&#x7528;&#x5C31;&#x4E0D;&#x7528;&#x3002;</li><li>&#x56DB;&#x5143;&#x53CA;&#x56DB;&#x5143;&#x4EE5;&#x4E0A;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x9664;&#x975E;&#x6709;&#x8DB3;&#x591F;&#x8DB3;&#x591F;&#x7684;&#x7406;&#x7531;&#xFF0C;&#x5426;&#x5219;&#x5343;&#x4E07;&#x4E0D;&#x8981;&#x7528;&#xFF01;&#x5982;&#x679C;&#x51FD;&#x6570;&#x770B;&#x8D77;&#x6765;&#x9700;&#x8981;&#x4E24;&#x4E2A;&#x3001;&#x4E09;&#x4E2A;&#x6216;&#x8005;&#x4E4B;&#x4E0A;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5C31;&#x8BF4;&#x660E;&#x5176;&#x4E2D;&#x4E00;&#x4E9B;&#x53C2;&#x6570;&#x5E94;&#x8BE5;&#x5C01;&#x88C5;&#x4E3A;&#x7C7B;&#x4E86;&#x3002;</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Cicle <span class="title">makeCicle</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y, <span class="keyword">double</span> radius)</span></span>;</span><br><span class="line"></span><br><span class="line">&#x2193;</span><br><span class="line"></span><br><span class="line"><span class="function">Cicle <span class="title">makeCicle</span><span class="params">(Point center, <span class="keyword">double</span> radius)</span></span>;</span><br></pre></td></tr></table></figure><ul><li>&#x6709;&#x53EF;&#x53D8;&#x53C2;&#x6570;&#x7684;&#x51FD;&#x6570;&#x4ECD;&#x53EF;&#x80FD;&#x662F;&#x4E09;&#x5143;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x662F;&#x80FD;&#x591F;&#x52C9;&#x5F3A;&#x5BB9;&#x5FCD;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8981;&#x8D85;&#x8FC7;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5C31;&#x6709;&#x70B9;&#x4E0D;&#x592A;&#x5999;&#x4E86;&#xFF0C;&#x5BB9;&#x6613;&#x51FA;&#x9519;&#x3002;</li></ul></li><li>&#x597D;&#x7684;&#x51FD;&#x6570;&#x6700;&#x597D;&#x65E0;&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x6709;&#xFF0C;&#x5E94;&#x8BE5;&#x5728;&#x51FD;&#x6570;&#x7684;&#x547D;&#x540D;&#x4E2D;&#x8BF4;&#x660E;&#xFF0C;&#x867D;&#x7136;&#x8FD9;&#x6837;&#x53EF;&#x80FD;&#x8FD8;&#x662F;&#x8FDD;&#x80CC;&#x4E86;&#x201C;&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#x7684;&#x539F;&#x5219;&#x201D;&#x3002;</li><li>&#x5728;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x4E4B;&#x524D;&#x7684;&#x5C81;&#x6708;&#x91CC;&#xFF0C;&#x6709;&#x65F6;&#x7684;&#x786E;&#x9700;&#x8981;&#x8F93;&#x51FA;&#x53C2;&#x6570;&#xFF0C;&#x4F46;&#x662F;&#x73B0;&#x5728;&#xFF0C;&#x5927;&#x6982;&#x5DF2;&#x7ECF;&#x4E0D;&#x592A;&#x9700;&#x8981;&#x4E86;&#x5427;&#xFF0C;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;<code>public void appendFooter(StringBuffer report)</code>&#xFF0C;&#x4F46;&#x662F;&#x53EA;&#x8C03;&#x7528;<code>appendFooter(s)</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD9;&#x662F;&#x4EE4;&#x4EBA;&#x8FF7;&#x60D1;&#x7684;&#xFF0C;&#x8FD8;&#x5F97;&#x7279;&#x610F;&#x770B;&#x4E00;&#x4E0B;&#x51FD;&#x6570;&#x7684;&#x7B7E;&#x540D;&#xFF0C;&#x8FD9;&#x5BB9;&#x6613;&#x6253;&#x65AD;&#x7F16;&#x7A0B;&#x601D;&#x8DEF;&#x3002;&#x666E;&#x904D;&#x800C;&#x8A00;&#xFF0C;&#x6211;&#x4EEC;&#x603B;&#x662F;&#x8BA4;&#x4E3A;&#x53C2;&#x6570;&#x662F;&#x8F93;&#x5165;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x628A;&#x8F93;&#x51FA;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x3002;</li><li>&#x5206;&#x5272;&#x6307;&#x4EE4;&#x4E0E;&#x8BE2;&#x95EE;&#xFF1A;&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x4F1A;&#x9047;&#x5230;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x51FD;&#x6570;&#x2014;&#x2014;<code>public boolean set(String attribute, String value)</code>&#xFF0C;&#x987A;&#x52BF;&#x800C;&#x751F;&#x7684;&#x662F;&#x8FD9;&#x53E5;&#x2014;&#x2014;<code>if (set(&quot;username&quot;, &quot;xijinian&quot;)) ...</code>&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x662F;&#x4EC0;&#x4E48;&#x610F;&#x601D;&#x5462;&#xFF0C;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x8FD4;&#x56DE;false&#x5462;&#xFF1F;&#x662F;&#x6CA1;&#x6709;&#x6743;&#x9650;&#x8BBE;&#x7F6E;&#x7684;&#x65F6;&#x5019;&#x8FD8;&#x662F;username&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x65F6;&#x5019;&#x6216;&#x8005;&#x662F;&#x56E0;&#x4E3A;&#x67D0;&#x4E9B;&#x539F;&#x56E0;&#x8BBE;&#x7F6E;&#x5931;&#x8D25;&#x7684;&#x65F6;&#x5019;&#xFF1F;&#x4F7F;&#x7528;&#x8005;&#x9664;&#x975E;&#x53BB;&#x627E;&#x5B9E;&#x73B0;&#x4EE3;&#x7801;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x53EA;&#x80FD;&#x9760;&#x81C6;&#x6D4B;&#xFF01;&#x660E;&#x786E;&#x7684;&#x4EE3;&#x7801;&#x5E94;&#x8BE5;&#x8FD9;&#x6837;&#x5199;&#xFF1A;</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attributeExists(<span class="string">&quot;username&quot;</span>)) {</span><br><span class="line">    setAttribute(<span class="string">&quot;Username&quot;</span>, <span class="string">&quot;xijinian&quot;</span>);</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure><ul><li>&#x4F7F;&#x7528;&#x5F02;&#x5E38;&#x6765;&#x4EE3;&#x66FF;&#x8FD4;&#x56DE;&#x9519;&#x8BEF;&#x7801;&#xFF08;&#x9664;&#x975E;&#x4F60;&#x53EA;&#x662F;&#x505A;&#x4E2A;&#x63D0;&#x793A;&#xFF0C;&#x800C;&#x4E0D;&#x6253;&#x7B97;&#x5904;&#x7406;&#xFF0C;&#x90A3;&#x4F60;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Log4j&#x4E86;- -&#xFF09;&#xFF1A;&#x5982;&#x679C;&#x4F60;&#x4F7F;&#x7528;&#x4E86;&#x9519;&#x8BEF;&#x7801;&#xFF0C;&#x5C31;&#x4F1A;&#x8981;&#x6C42;&#x4F60;&#x73B0;&#x573A;&#x5904;&#x7406;&#x9519;&#x8BEF;&#xFF0C;&#x8FD9;&#x4F1A;&#x5BFC;&#x81F4;&#x6DF1;&#x5C42;&#x6B21;&#x7684;&#x4E0D;&#x4F18;&#x96C5;&#x7684;&#x5D4C;&#x5957;&#x7ED3;&#x6784;&#xFF0C;&#x800C;&#x5F02;&#x5E38;&#x5462;&#xFF0C;&#x4F60;&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x7ED9;&#x5B83;&#x5148;&#x629B;&#x51FA;&#x6765;&#x540E;&#x5904;&#x7406;&#xFF0C;&#x66F4;&#x5927;&#x7684;&#x597D;&#x5904;&#x662F;&#x2014;&#x2014;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x4E0E;&#x4E3B;&#x4E1A;&#x52A1;&#x4EE3;&#x7801;&#x5206;&#x79BB;&#xFF0C;&#x7A0B;&#x5E8F;&#x7684;&#x7ED3;&#x6784;&#x4F1A;&#x66F4;&#x52A0;&#x6E05;&#x6670;&#x3002;<ul><li>&#x62BD;&#x79BB;Try/Catch&#x4EE3;&#x7801;&#x5757;&#xFF1A;&#x5B83;&#x4EEC;&#x4F7F;&#x4EE3;&#x7801;&#x4E11;&#x964B;&#x4E0D;&#x582A;&#xFF01;&#x641E;&#x4E71;&#x4E86;&#x4EE3;&#x7801;&#x7684;&#x7ED3;&#x6784;&#xFF01;&#x628A;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x548C;&#x6B63;&#x5E38;&#x6D41;&#x7A0B;&#x6DF7;&#x4E3A;&#x4E00;&#x8C08;&#xFF0C;&#x6700;&#x597D;&#x628A;try&#x548C;catch&#x4EE3;&#x7801;&#x5757;&#x7684;&#x4E3B;&#x4F53;&#x90E8;&#x5206;&#x62BD;&#x79BB;&#x51FA;&#x6765;&#xFF0C;&#x53E6;&#x5916;&#x5F62;&#x6210;&#x51FD;&#x6570; &#x3002;&#x5728;&#x4E0B;&#x4F8B;&#x4E2D;&#xFF0C;delete&#x51FD;&#x6570;&#x81F3;&#x4E8E;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x6709;&#x5173;&#xFF0C;&#x5F88;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#x540E;&#x5FFD;&#x7565;&#x6389;&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x5FC3;&#x65E0;&#x65C1;&#x9A9B;&#x5F97;&#x770B;deletePageAndAllReference&#x51FD;&#x6570;&#x7684;&#x5B9E;&#x73B0;&#x903B;&#x8F91;&#x4E86;&#xFF1A;</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(Page page)</span> </span>{</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        deletePageAndAllReference(page);</span><br><span class="line">    } <span class="keyword">catch</span> (Exception e){</span><br><span class="line">        logError(e);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deletePageAndAllReference</span><span class="params">(Page page)</span> <span class="keyword">throws</span> Exception </span>{</span><br><span class="line">    deletePage(page);</span><br><span class="line">    registry.deleteReference(page.name);</span><br><span class="line">    configKeys.deleteKey(page.name.makeKey());</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">logError</span><span class="params">(Exception e)</span> </span>{</span><br><span class="line">    logger.log(e.getMessage());</span><br><span class="line">}</span><br></pre></td></tr></table></figure><ul><li>&#x9519;&#x8BEF;&#x5904;&#x7406;&#x5C31;&#x662F;&#x4E00;&#x4EF6;&#x4E8B;&#xFF0C;&#x56E0;&#x6B64;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x7684;&#x51FD;&#x6570;&#x4E0D;&#x5E94;&#x8BE5;&#x518D;&#x505A;&#x5176;&#x4ED6;&#x7684;&#x4E8B;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5982;&#x679C;try&#x5728;&#x67D0;&#x4E2A;&#x51FD;&#x6570;&#x4E2D;&#x5B58;&#x5728;&#xFF0C;&#x5B83;&#x5C31;&#x5E94;&#x8BE5;&#x662F;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x7684;&#x7B2C;&#x4E00;&#x5355;&#x8BCD;&#xFF0C;&#x4E14;catch&#xFF08;&#x6216;&#x8005;finally&#xFF09;&#x540E;&#x9762;&#x4E0D;&#x5E94;&#x8BE5;&#x518D;&#x6709;&#x5176;&#x4ED6;&#x53E5;&#x5B50;&#xFF08;&#x5982;&#x4E0A;&#x4F8B;&#xFF09;&#x3002;</li><li>Error.java&#x505A;&#x6210;&#x679A;&#x4E3E;&#x662F;&#x6B20;&#x59A5;&#x7684;&#xFF1A;&#x5F53;Error&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x4FEE;&#x6539;&#x65F6;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x5BFC;&#x5165;&#x8FD9;&#x4E2A;&#x679A;&#x4E3E;&#x7684;&#x7C7B;&#x4E5F;&#x88AB;&#x8FEB;&#x4FEE;&#x6539;&#x4E86;&#xFF0C;&#x6240;&#x6709;&#x8FD9;&#x4E9B;&#x5176;&#x4ED6;&#x7684;&#x7C7B;&#x90FD;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x548C;&#x90E8;&#x7F72;&#xFF08;&#x90A3;&#x4E9B;&#x4EE5;&#x4E3A;&#x53EF;&#x4EE5;&#x4E0D;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x90E8;&#x7F72;&#x7684;&#x4EBA;&#x6700;&#x7EC8;&#x90FD;&#x81EA;&#x5C1D;&#x6076;&#x679C;&#xFF09;&#xFF0C;&#x4EE3;&#x4EF7;&#x5F88;&#x5927;&#x3002;&#x4F7F;&#x7528;&#x5F02;&#x5E38;&#x4EE3;&#x66FF;&#x9519;&#x8BEF;&#x7801;&#xFF0C;&#x65B0;&#x7684;&#x5F02;&#x5E38;&#x5C31;&#x53EF;&#x4EE5;&#x4ECE;&#x5F02;&#x5E38;&#x7C7B;&#x6D3E;&#x751F;&#x800C;&#x51FA;&#xFF0C;&#x6E90;&#x6E90;&#x4E0D;&#x65AD;&#xFF0C;&#x4E0D;&#x5FC5;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x548C;&#x6B65;&#x9AA4;&#xFF08;&#x5F00;&#x653E;&#x95ED;&#x5408;&#x539F;&#x5219;OCP&#x7684;&#x4E00;&#x4E2A;&#x8303;&#x4F8B;&#xFF09;&#x3002;</li></ul></li><li>&#x6D88;&#x706D;&#x91CD;&#x590D;&#x4EE3;&#x7801;&#xFF0C;&#x8FD9;&#x53EF;&#x662F;&#x4EE3;&#x7801;&#x4F18;&#x5316;&#x7684;&#x7EC8;&#x6781;&#x76EE;&#x6807;&#x4E4B;&#x4E00;&#x54C8;~</li><li>&#x53EA;&#x8981;&#x51FD;&#x6570;&#x4FDD;&#x6301;&#x77ED;&#x5C0F;&#xFF0C;Dijkstra&#x7684;&#x90A3;&#x5957;&#x7ED3;&#x6784;&#x5316;&#x7F16;&#x7A0B;&#x89C4;&#x5219;&#x610F;&#x4E49;&#x4E0D;&#x5927;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x5927;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x624D;&#x8981;&#x907F;&#x514D;&#x5728;&#x5FAA;&#x73AF;&#x4E2D;&#x4F7F;&#x7528;break&#x3001;continue&#x4EE5;&#x53CA;&#x591A;&#x4E2A;return&#xFF0C;&#x5F53;&#x7136;goto&#x80FD;&#x7981;&#x6B62;&#x5C31;&#x7981;&#x6B62;&#x5427;&#xFF0C;&#x4E0D;&#x662F;&#x5565;&#x597D;&#x4E1C;&#x897F;&#xFF08;Java&#x4E2D;&#x6CA1;&#x6709;goto&#x563F;&#x563F;&#xFF09;&#x3002;</li><li>&#x5982;&#x4F55;&#x5199;&#x51FA;&#x8FD9;&#x6837;&#x77ED;&#x5C0F;&#x7684;&#xFF0C;&#x7F8E;&#x4E3D;&#x7684;&#x51FD;&#x6570;&#xFF1A;&#x4E71;&#x5199;&#x4E4B;&#x540E;&#x6162;&#x6162;&#x91CD;&#x6784;&#x3001;&#x6253;&#x78E8;&#xFF0C;&#x4E0D;&#x592A;&#x4F1A;&#x6709;&#x4EBA;&#x4E00;&#x5F00;&#x59CB;&#x5C31;&#x6309;&#x7167;&#x4E0A;&#x8BC9;&#x7684;&#x89C4;&#x5219;&#x5199;&#x51FD;&#x6570;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x5F88;&#x7E41;&#x7410;&#x3002;</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Clean-Code/" rel="tag"># Clean Code</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2017/09/15/Redis/" rel="prev" title="Redis"><i class="fa fa-chevron-left"></i> Redis</a></div><div class="post-nav-item"><a href="/2017/09/17/%E6%B3%A8%E9%87%8A/" rel="next" title="注释">注释 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript></div></div><script>window.addEventListener('tabs:register', () => {
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="函数应该短小、每个函数应该只做一件事，举例子：123456public static String renderPageWithSetupsAndTeardowns(    PageData pageData, boolean isSuite) throws Exception &amp;#123;    if (isTestPage(pageData))        includeSetupAndT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数">
+<meta property="og:url" content="https://www.xijinian.top/2017/09/16/%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="函数应该短小、每个函数应该只做一件事，举例子：123456public static String renderPageWithSetupsAndTeardowns(    PageData pageData, boolean isSuite) throws Exception &amp;#123;    if (isTestPage(pageData))        includeSetupAndT">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-09-16T02:52:18.000Z">
+<meta property="article:modified_time" content="2017-10-05T15:50:35.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="Clean Code">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.xijinian.top/2017/09/16/%E5%87%BD%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>函数 | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/09/16/%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          函数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-16 10:52:18" itemprop="dateCreated datePublished" datetime="2017-09-16T10:52:18+08:00">2017-09-16</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/09/16/%E5%87%BD%E6%95%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/16/函数/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x77ED;&#x5C0F;&#x3001;&#x6BCF;&#x4E2A;&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#xFF0C;&#x4E3E;&#x4F8B;&#x5B50;&#xFF1A;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">renderPageWithSetupsAndTeardowns</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    PageData pageData, <span class="keyword">boolean</span> isSuite)</span> <span class="keyword">throws</span> Exception </span>{</span><br><span class="line">    <span class="keyword">if</span> (isTestPage(pageData))</span><br><span class="line">        includeSetupAndTeardownPages(pagedata, isSuite);</span><br><span class="line">    <span class="keyword">return</span> pageData.getHtml();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<a id="more"></a></li>
+<li>&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#x7684;&#x8BF4;&#x660E;&#xFF1A;&#x5982;&#x679C;&#x51FD;&#x6570;&#x53EA;&#x662F;&#x505A;&#x4E86;&#x8BE5;&#x51FD;&#x6570;&#x540D;&#x4E0B;&#x540C;&#x4E00;&#x62BD;&#x8C61;&#x5C42;&#x7EA7;&#x4E0A;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x5219;&#x51FD;&#x6570;&#x8FD8;&#x662F;&#x53EA;&#x505A;&#x4E86;&#x4E00;&#x4EF6;&#x4E8B;&#xFF0C;&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#x7684;&#x51FD;&#x6570;&#x65E0;&#x6CD5;&#x88AB;&#x5408;&#x7406;&#x5730;&#x5207;&#x5206;&#x4E3A;&#x591A;&#x4E2A;&#x533A;&#x6BB5;&#x3002;</li>
+<li>&#x6240;&#x8C13;&#x540C;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x5C42;&#x7EA7;&#x7684;&#x8BF4;&#x660E;&#xFF1A;&#x5B57;&#x7B26;&#x4E32;&#x62FC;&#x63A5;&#x5C31;&#x662F;&#x76F8;&#x5F53;&#x4F4E;&#x7684;&#x5C42;&#x7EA7;&#xFF0C;&#x800C;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x5C31;&#x7B97;&#x6BD4;&#x8F83;&#x9AD8;&#x7684;&#x5C42;&#x7EA7;&#xFF0C;&#x51FD;&#x6570;&#x4E2D;&#x6DF7;&#x6742;&#x7684;&#x5C42;&#x7EA7;&#x4F1A;&#x4F7F;&#x8BFB;&#x8005;&#x96BE;&#x4EE5;&#x533A;&#x5206;&#x662F;&#x57FA;&#x7840;&#x6982;&#x5FF5;&#x8FD8;&#x662F;&#x7EC6;&#x8282;&#x3002;</li>
+<li>switch&#x8BED;&#x53E5;&#xFF1A;</li>
+<li>&#x4F7F;&#x7528;&#x63CF;&#x8FF0;&#x6027;&#x540D;&#x79F0;&#xFF1A;&#x957F;&#x800C;&#x5177;&#x6709;&#x63CF;&#x8FF0;&#x6027;&#x7684;&#x540D;&#x79F0;&#x8981;&#x6BD4;&#x77ED;&#x800C;&#x4EE4;&#x4EBA;&#x8D39;&#x89E3;&#x7684;&#x540D;&#x79F0;&#x597D;&#x3002;&#x957F;&#x800C;&#x5177;&#x6709;&#x63CF;&#x8FF0;&#x6027;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x8981;&#x6BD4;&#x63CF;&#x8FF0;&#x6027;&#x7684;&#x957F;&#x6CE8;&#x91CA;&#x597D;&#x3002;&#x547D;&#x540D;&#x65B9;&#x5F0F;&#x5305;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF0C;&#x4F7F;&#x7528;&#x4E0E;&#x6A21;&#x5757;&#x4E00;&#x8109;&#x76F8;&#x627F;&#x7684;&#x77ED;&#x8BED;&#x3001;&#x540D;&#x8BCD;&#x548C;&#x52A8;&#x8BCD;&#x7ED9;&#x51FD;&#x6570;&#x547D;&#x540D;&#x3002;</li>
+<li>&#x51FD;&#x6570;&#x53C2;&#x6570;&#xFF1A;<ul>
+<li>&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x5C3D;&#x91CF;&#x5C11;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x56E0;&#x4E3A;&#x51FD;&#x6570;&#x548C;&#x53C2;&#x6570;&#x662F;&#x5C5E;&#x4E8E;&#x4E0D;&#x540C;&#x62BD;&#x8C61;&#x5C42;&#x7EA7;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x5B83;&#x8981;&#x6C42;&#x9605;&#x8BFB;&#x51FD;&#x6570;&#x7684;&#x4EE3;&#x7801;&#x7684;&#x4EBA;&#x4E0D;&#x5F97;&#x4E0D;&#x53BB;&#x4E86;&#x89E3;&#x5728;&#x5F53;&#x524D;&#x4E0D;&#x592A;&#x91CD;&#x8981;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x5C42;&#x7EA7;&#x7684;&#x7EC6;&#x8282;&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x8F6C;&#x6362;&#xFF0C;&#x4F7F;&#x7528;&#x8F93;&#x51FA;&#x53C2;&#x6570;&#x800C;&#x4E0D;&#x4F7F;&#x7528;&#x8FD4;&#x56DE;&#x503C;&#x662F;&#x4EE4;&#x4EBA;&#x8FF7;&#x60D1;&#x7684;&#x3002;&#x5982;&#x679C;&#x51FD;&#x6570;&#x5BF9;&#x8F93;&#x5165;&#x53C2;&#x6570;&#x8981;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#xFF0C;&#x90A3;&#x4E48;&#x64CD;&#x4F5C;&#x7684;&#x7ED3;&#x679C;&#x5C31;&#x5E94;&#x8BE5;&#x4EE5;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x5F62;&#x5F0F;&#x4F53;&#x73B0;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x51FD;&#x6570;&#x53EA;&#x6709;&#x8F93;&#x5165;&#x53C2;&#x6570;&#x800C;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5C31;&#x5E94;&#x8BE5;&#x662F;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#xFF0C;&#x901A;&#x8FC7;&#x8F93;&#x5165;&#x7684;&#x53C2;&#x6570;&#x503C;&#x6765;&#x6539;&#x53D8;&#x7CFB;&#x7EDF;&#x7684;&#x67D0;&#x79CD;&#x72B6;&#x6001;&#xFF08;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x8BA9;&#x8BFB;&#x8005;&#x5F88;&#x6E05;&#x695A;&#x5730;&#x4E86;&#x89E3;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#xFF0C;&#x8981;&#x8C28;&#x614E;&#x5730;&#x9009;&#x62E9;&#x540D;&#x79F0;&#x548C;&#x4E0A;&#x4E0B;&#x6587;&#xFF09;&#xFF0C;&#x5426;&#x5219;&#x4E00;&#x5B9A;&#x8981;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#x3002;</li>
+<li>&#x5411;&#x51FD;&#x6570;&#x4F20;&#x5165;&#x5E03;&#x5C14;&#x503C;&#x7B80;&#x76F4;&#x662F;&#x9A87;&#x4EBA;&#x542C;&#x95FB;&#x7684;&#x505A;&#x6CD5;&#xFF0C;&#x8FD9;&#x6837;&#x505A;&#xFF0C;&#x65B9;&#x6CD5;&#x7684;&#x7B7E;&#x540D;&#x7ACB;&#x9A6C;&#x5C31;&#x590D;&#x6742;&#x4E86;&#x8D77;&#x6765;&#xFF0C;&#x4F1A;&#x8BA9;&#x53EF;&#x601C;&#x7684;&#x8BFB;&#x8005;&#x6478;&#x4E0D;&#x7740;&#x5934;&#x8111;&#x3002;</li>
+<li>&#x4E8C;&#x5143;&#x51FD;&#x6570;&#x4E5F;&#x662F;&#x6709;&#x98CE;&#x9669;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5F88;&#x591A;&#x65F6;&#x5019;&#xFF0C;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x987A;&#x5E8F;&#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x79CD;&#x7EA6;&#x5B9A;&#xFF0C;&#x5E76;&#x4E0D;&#x7B26;&#x5408;&#x81EA;&#x7136;&#x89C4;&#x5F8B;&#xFF0C;&#x9700;&#x8981;&#x7279;&#x610F;&#x53BB;&#x8FA8;&#x522B;&#xFF0C;&#x5C24;&#x5176;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FDE;IDEA&#x4E5F;&#x65E0;&#x6CD5;&#x4E8B;&#x5148;&#x63D0;&#x793A;&#x4F60;&#x54EA;&#x5199;&#x9519;&#x4E86;&#x3002;</li>
+<li>&#x4E09;&#x5143;&#x51FD;&#x6570;&#x66F4;&#x662F;&#x8981;&#x96BE;&#x61C2;&#x5F97;&#x591A;&#xFF0C;&#x80FD;&#x4E0D;&#x7528;&#x5C31;&#x4E0D;&#x7528;&#x3002;</li>
+<li>&#x56DB;&#x5143;&#x53CA;&#x56DB;&#x5143;&#x4EE5;&#x4E0A;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x9664;&#x975E;&#x6709;&#x8DB3;&#x591F;&#x8DB3;&#x591F;&#x7684;&#x7406;&#x7531;&#xFF0C;&#x5426;&#x5219;&#x5343;&#x4E07;&#x4E0D;&#x8981;&#x7528;&#xFF01;&#x5982;&#x679C;&#x51FD;&#x6570;&#x770B;&#x8D77;&#x6765;&#x9700;&#x8981;&#x4E24;&#x4E2A;&#x3001;&#x4E09;&#x4E2A;&#x6216;&#x8005;&#x4E4B;&#x4E0A;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5C31;&#x8BF4;&#x660E;&#x5176;&#x4E2D;&#x4E00;&#x4E9B;&#x53C2;&#x6570;&#x5E94;&#x8BE5;&#x5C01;&#x88C5;&#x4E3A;&#x7C7B;&#x4E86;&#x3002;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Cicle <span class="title">makeCicle</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y, <span class="keyword">double</span> radius)</span></span>;</span><br><span class="line"></span><br><span class="line">&#x2193;</span><br><span class="line"></span><br><span class="line"><span class="function">Cicle <span class="title">makeCicle</span><span class="params">(Point center, <span class="keyword">double</span> radius)</span></span>;</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x6709;&#x53EF;&#x53D8;&#x53C2;&#x6570;&#x7684;&#x51FD;&#x6570;&#x4ECD;&#x53EF;&#x80FD;&#x662F;&#x4E09;&#x5143;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x662F;&#x80FD;&#x591F;&#x52C9;&#x5F3A;&#x5BB9;&#x5FCD;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8981;&#x8D85;&#x8FC7;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5C31;&#x6709;&#x70B9;&#x4E0D;&#x592A;&#x5999;&#x4E86;&#xFF0C;&#x5BB9;&#x6613;&#x51FA;&#x9519;&#x3002;</li>
+</ul>
+</li>
+<li>&#x597D;&#x7684;&#x51FD;&#x6570;&#x6700;&#x597D;&#x65E0;&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x6709;&#xFF0C;&#x5E94;&#x8BE5;&#x5728;&#x51FD;&#x6570;&#x7684;&#x547D;&#x540D;&#x4E2D;&#x8BF4;&#x660E;&#xFF0C;&#x867D;&#x7136;&#x8FD9;&#x6837;&#x53EF;&#x80FD;&#x8FD8;&#x662F;&#x8FDD;&#x80CC;&#x4E86;&#x201C;&#x53EA;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#x7684;&#x539F;&#x5219;&#x201D;&#x3002;</li>
+<li>&#x5728;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x4E4B;&#x524D;&#x7684;&#x5C81;&#x6708;&#x91CC;&#xFF0C;&#x6709;&#x65F6;&#x7684;&#x786E;&#x9700;&#x8981;&#x8F93;&#x51FA;&#x53C2;&#x6570;&#xFF0C;&#x4F46;&#x662F;&#x73B0;&#x5728;&#xFF0C;&#x5927;&#x6982;&#x5DF2;&#x7ECF;&#x4E0D;&#x592A;&#x9700;&#x8981;&#x4E86;&#x5427;&#xFF0C;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;<code>public void appendFooter(StringBuffer report)</code>&#xFF0C;&#x4F46;&#x662F;&#x53EA;&#x8C03;&#x7528;<code>appendFooter(s)</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD9;&#x662F;&#x4EE4;&#x4EBA;&#x8FF7;&#x60D1;&#x7684;&#xFF0C;&#x8FD8;&#x5F97;&#x7279;&#x610F;&#x770B;&#x4E00;&#x4E0B;&#x51FD;&#x6570;&#x7684;&#x7B7E;&#x540D;&#xFF0C;&#x8FD9;&#x5BB9;&#x6613;&#x6253;&#x65AD;&#x7F16;&#x7A0B;&#x601D;&#x8DEF;&#x3002;&#x666E;&#x904D;&#x800C;&#x8A00;&#xFF0C;&#x6211;&#x4EEC;&#x603B;&#x662F;&#x8BA4;&#x4E3A;&#x53C2;&#x6570;&#x662F;&#x8F93;&#x5165;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x628A;&#x8F93;&#x51FA;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x3002;</li>
+<li>&#x5206;&#x5272;&#x6307;&#x4EE4;&#x4E0E;&#x8BE2;&#x95EE;&#xFF1A;&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x4F1A;&#x9047;&#x5230;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x51FD;&#x6570;&#x2014;&#x2014;<code>public boolean set(String attribute, String value)</code>&#xFF0C;&#x987A;&#x52BF;&#x800C;&#x751F;&#x7684;&#x662F;&#x8FD9;&#x53E5;&#x2014;&#x2014;<code>if (set(&quot;username&quot;, &quot;xijinian&quot;)) ...</code>&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x662F;&#x4EC0;&#x4E48;&#x610F;&#x601D;&#x5462;&#xFF0C;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x8FD4;&#x56DE;false&#x5462;&#xFF1F;&#x662F;&#x6CA1;&#x6709;&#x6743;&#x9650;&#x8BBE;&#x7F6E;&#x7684;&#x65F6;&#x5019;&#x8FD8;&#x662F;username&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x65F6;&#x5019;&#x6216;&#x8005;&#x662F;&#x56E0;&#x4E3A;&#x67D0;&#x4E9B;&#x539F;&#x56E0;&#x8BBE;&#x7F6E;&#x5931;&#x8D25;&#x7684;&#x65F6;&#x5019;&#xFF1F;&#x4F7F;&#x7528;&#x8005;&#x9664;&#x975E;&#x53BB;&#x627E;&#x5B9E;&#x73B0;&#x4EE3;&#x7801;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x53EA;&#x80FD;&#x9760;&#x81C6;&#x6D4B;&#xFF01;&#x660E;&#x786E;&#x7684;&#x4EE3;&#x7801;&#x5E94;&#x8BE5;&#x8FD9;&#x6837;&#x5199;&#xFF1A;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attributeExists(<span class="string">&quot;username&quot;</span>)) {</span><br><span class="line">    setAttribute(<span class="string">&quot;Username&quot;</span>, <span class="string">&quot;xijinian&quot;</span>);</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x4F7F;&#x7528;&#x5F02;&#x5E38;&#x6765;&#x4EE3;&#x66FF;&#x8FD4;&#x56DE;&#x9519;&#x8BEF;&#x7801;&#xFF08;&#x9664;&#x975E;&#x4F60;&#x53EA;&#x662F;&#x505A;&#x4E2A;&#x63D0;&#x793A;&#xFF0C;&#x800C;&#x4E0D;&#x6253;&#x7B97;&#x5904;&#x7406;&#xFF0C;&#x90A3;&#x4F60;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Log4j&#x4E86;- -&#xFF09;&#xFF1A;&#x5982;&#x679C;&#x4F60;&#x4F7F;&#x7528;&#x4E86;&#x9519;&#x8BEF;&#x7801;&#xFF0C;&#x5C31;&#x4F1A;&#x8981;&#x6C42;&#x4F60;&#x73B0;&#x573A;&#x5904;&#x7406;&#x9519;&#x8BEF;&#xFF0C;&#x8FD9;&#x4F1A;&#x5BFC;&#x81F4;&#x6DF1;&#x5C42;&#x6B21;&#x7684;&#x4E0D;&#x4F18;&#x96C5;&#x7684;&#x5D4C;&#x5957;&#x7ED3;&#x6784;&#xFF0C;&#x800C;&#x5F02;&#x5E38;&#x5462;&#xFF0C;&#x4F60;&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x7ED9;&#x5B83;&#x5148;&#x629B;&#x51FA;&#x6765;&#x540E;&#x5904;&#x7406;&#xFF0C;&#x66F4;&#x5927;&#x7684;&#x597D;&#x5904;&#x662F;&#x2014;&#x2014;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x4E0E;&#x4E3B;&#x4E1A;&#x52A1;&#x4EE3;&#x7801;&#x5206;&#x79BB;&#xFF0C;&#x7A0B;&#x5E8F;&#x7684;&#x7ED3;&#x6784;&#x4F1A;&#x66F4;&#x52A0;&#x6E05;&#x6670;&#x3002;<ul>
+<li>&#x62BD;&#x79BB;Try/Catch&#x4EE3;&#x7801;&#x5757;&#xFF1A;&#x5B83;&#x4EEC;&#x4F7F;&#x4EE3;&#x7801;&#x4E11;&#x964B;&#x4E0D;&#x582A;&#xFF01;&#x641E;&#x4E71;&#x4E86;&#x4EE3;&#x7801;&#x7684;&#x7ED3;&#x6784;&#xFF01;&#x628A;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x548C;&#x6B63;&#x5E38;&#x6D41;&#x7A0B;&#x6DF7;&#x4E3A;&#x4E00;&#x8C08;&#xFF0C;&#x6700;&#x597D;&#x628A;try&#x548C;catch&#x4EE3;&#x7801;&#x5757;&#x7684;&#x4E3B;&#x4F53;&#x90E8;&#x5206;&#x62BD;&#x79BB;&#x51FA;&#x6765;&#xFF0C;&#x53E6;&#x5916;&#x5F62;&#x6210;&#x51FD;&#x6570;  &#x3002;&#x5728;&#x4E0B;&#x4F8B;&#x4E2D;&#xFF0C;delete&#x51FD;&#x6570;&#x81F3;&#x4E8E;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x6709;&#x5173;&#xFF0C;&#x5F88;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#x540E;&#x5FFD;&#x7565;&#x6389;&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x5FC3;&#x65E0;&#x65C1;&#x9A9B;&#x5F97;&#x770B;deletePageAndAllReference&#x51FD;&#x6570;&#x7684;&#x5B9E;&#x73B0;&#x903B;&#x8F91;&#x4E86;&#xFF1A;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(Page page)</span> </span>{</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        deletePageAndAllReference(page);</span><br><span class="line">    } <span class="keyword">catch</span> (Exception e){</span><br><span class="line">        logError(e);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deletePageAndAllReference</span><span class="params">(Page page)</span> <span class="keyword">throws</span> Exception </span>{</span><br><span class="line">    deletePage(page);</span><br><span class="line">    registry.deleteReference(page.name);</span><br><span class="line">    configKeys.deleteKey(page.name.makeKey());</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">logError</span><span class="params">(Exception e)</span> </span>{</span><br><span class="line">    logger.log(e.getMessage());</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x9519;&#x8BEF;&#x5904;&#x7406;&#x5C31;&#x662F;&#x4E00;&#x4EF6;&#x4E8B;&#xFF0C;&#x56E0;&#x6B64;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x7684;&#x51FD;&#x6570;&#x4E0D;&#x5E94;&#x8BE5;&#x518D;&#x505A;&#x5176;&#x4ED6;&#x7684;&#x4E8B;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5982;&#x679C;try&#x5728;&#x67D0;&#x4E2A;&#x51FD;&#x6570;&#x4E2D;&#x5B58;&#x5728;&#xFF0C;&#x5B83;&#x5C31;&#x5E94;&#x8BE5;&#x662F;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x7684;&#x7B2C;&#x4E00;&#x5355;&#x8BCD;&#xFF0C;&#x4E14;catch&#xFF08;&#x6216;&#x8005;finally&#xFF09;&#x540E;&#x9762;&#x4E0D;&#x5E94;&#x8BE5;&#x518D;&#x6709;&#x5176;&#x4ED6;&#x53E5;&#x5B50;&#xFF08;&#x5982;&#x4E0A;&#x4F8B;&#xFF09;&#x3002;</li>
+<li>Error.java&#x505A;&#x6210;&#x679A;&#x4E3E;&#x662F;&#x6B20;&#x59A5;&#x7684;&#xFF1A;&#x5F53;Error&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x4FEE;&#x6539;&#x65F6;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x5BFC;&#x5165;&#x8FD9;&#x4E2A;&#x679A;&#x4E3E;&#x7684;&#x7C7B;&#x4E5F;&#x88AB;&#x8FEB;&#x4FEE;&#x6539;&#x4E86;&#xFF0C;&#x6240;&#x6709;&#x8FD9;&#x4E9B;&#x5176;&#x4ED6;&#x7684;&#x7C7B;&#x90FD;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x548C;&#x90E8;&#x7F72;&#xFF08;&#x90A3;&#x4E9B;&#x4EE5;&#x4E3A;&#x53EF;&#x4EE5;&#x4E0D;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x90E8;&#x7F72;&#x7684;&#x4EBA;&#x6700;&#x7EC8;&#x90FD;&#x81EA;&#x5C1D;&#x6076;&#x679C;&#xFF09;&#xFF0C;&#x4EE3;&#x4EF7;&#x5F88;&#x5927;&#x3002;&#x4F7F;&#x7528;&#x5F02;&#x5E38;&#x4EE3;&#x66FF;&#x9519;&#x8BEF;&#x7801;&#xFF0C;&#x65B0;&#x7684;&#x5F02;&#x5E38;&#x5C31;&#x53EF;&#x4EE5;&#x4ECE;&#x5F02;&#x5E38;&#x7C7B;&#x6D3E;&#x751F;&#x800C;&#x51FA;&#xFF0C;&#x6E90;&#x6E90;&#x4E0D;&#x65AD;&#xFF0C;&#x4E0D;&#x5FC5;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x548C;&#x6B65;&#x9AA4;&#xFF08;&#x5F00;&#x653E;&#x95ED;&#x5408;&#x539F;&#x5219;OCP&#x7684;&#x4E00;&#x4E2A;&#x8303;&#x4F8B;&#xFF09;&#x3002;</li>
+</ul>
+</li>
+<li>&#x6D88;&#x706D;&#x91CD;&#x590D;&#x4EE3;&#x7801;&#xFF0C;&#x8FD9;&#x53EF;&#x662F;&#x4EE3;&#x7801;&#x4F18;&#x5316;&#x7684;&#x7EC8;&#x6781;&#x76EE;&#x6807;&#x4E4B;&#x4E00;&#x54C8;~</li>
+<li>&#x53EA;&#x8981;&#x51FD;&#x6570;&#x4FDD;&#x6301;&#x77ED;&#x5C0F;&#xFF0C;Dijkstra&#x7684;&#x90A3;&#x5957;&#x7ED3;&#x6784;&#x5316;&#x7F16;&#x7A0B;&#x89C4;&#x5219;&#x610F;&#x4E49;&#x4E0D;&#x5927;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x5927;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x624D;&#x8981;&#x907F;&#x514D;&#x5728;&#x5FAA;&#x73AF;&#x4E2D;&#x4F7F;&#x7528;break&#x3001;continue&#x4EE5;&#x53CA;&#x591A;&#x4E2A;return&#xFF0C;&#x5F53;&#x7136;goto&#x80FD;&#x7981;&#x6B62;&#x5C31;&#x7981;&#x6B62;&#x5427;&#xFF0C;&#x4E0D;&#x662F;&#x5565;&#x597D;&#x4E1C;&#x897F;&#xFF08;Java&#x4E2D;&#x6CA1;&#x6709;goto&#x563F;&#x563F;&#xFF09;&#x3002;</li>
+<li>&#x5982;&#x4F55;&#x5199;&#x51FA;&#x8FD9;&#x6837;&#x77ED;&#x5C0F;&#x7684;&#xFF0C;&#x7F8E;&#x4E3D;&#x7684;&#x51FD;&#x6570;&#xFF1A;&#x4E71;&#x5199;&#x4E4B;&#x540E;&#x6162;&#x6162;&#x91CD;&#x6784;&#x3001;&#x6253;&#x78E8;&#xFF0C;&#x4E0D;&#x592A;&#x4F1A;&#x6709;&#x4EBA;&#x4E00;&#x5F00;&#x59CB;&#x5C31;&#x6309;&#x7167;&#x4E0A;&#x8BC9;&#x7684;&#x89C4;&#x5219;&#x5199;&#x51FD;&#x6570;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x5F88;&#x7E41;&#x7410;&#x3002;</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Clean-Code/" rel="tag"># Clean Code</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/09/15/Redis/" rel="prev" title="Redis">
+      <i class="fa fa-chevron-left"></i> Redis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/09/17/%E6%B3%A8%E9%87%8A/" rel="next" title="注释">
+      注释 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -16,7 +336,164 @@
       let commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
-  }</script></div><div class="toggle sidebar-toggle"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div><aside class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="post-toc-wrap sidebar-panel"></div><div class="site-overview-wrap sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="xijinian" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">xijinian</p><div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div></div><div class="site-state-wrap motion-element"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">107</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">21</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a> </span><span class="links-of-author-item"><a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a></span></div></div></div></aside><div id="sidebar-dimmer"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2020</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">xijinian</span></div></div></footer></div><script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/pisces.js"></script><script src="/js/next-boot.js"></script><script src="/js/local-search.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css"><script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css"><script>function loadCount(){var d=document,n=d.createElement("script");n.src="https://xijinian.disqus.com/count.js",n.id="dsq-count-scr",(d.head||d.body).appendChild(n)}window.addEventListener("load",loadCount,!1)</script><script>var disqus_config = function() {
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
     this.page.url = "https://www.xijinian.top/2017/09/16/%E5%87%BD%E6%95%B0/";
     this.page.identifier = "2017/09/16/函数/";
     this.page.title = "函数";
@@ -33,4 +510,8 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  });</script></body></html>
+  });
+</script>
+
+</body>
+</html>

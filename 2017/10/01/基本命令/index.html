@@ -1,4 +1,425 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 4.2.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css"><script id="hexo-configurations">var NexT=window.NexT||{},CONFIG={hostname:"www.xijinian.top",root:"/",scheme:"Gemini",version:"7.7.2",exturl:!1,sidebar:{position:"left",display:"post",padding:18,offset:12,onmobile:!1},copycode:{enable:!1,show_result:!1,style:null},back2top:{enable:!0,sidebar:!1,scrollpercent:!1},bookmark:{enable:!1,color:"#222",save:"auto"},fancybox:!1,mediumzoom:!1,lazyload:!0,pangu:!1,comments:{style:"tabs",active:null,storage:!0,lazyload:!0,nav:null},algolia:{hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}},localsearch:{enable:!0,trigger:"auto",top_n_per_article:1,unescape:!1,preload:!1},motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},path:"search.xml"}</script><meta name="description" content="to be continued…闲杂命令：date——当前时间cal——日历df——磁盘状态free——内存状态exit——退出pwd——返回当前路径cd——打开"><meta property="og:type" content="article"><meta property="og:title" content="基本命令"><meta property="og:url" content="https://www.xijinian.top/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/index.html"><meta property="og:site_name" content="Adventures of xijinian"><meta property="og:description" content="to be continued…闲杂命令：date——当前时间cal——日历df——磁盘状态free——内存状态exit——退出pwd——返回当前路径cd——打开"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2017-10-01T11:34:56.000Z"><meta property="article:modified_time" content="2017-11-22T14:37:53.000Z"><meta property="article:author" content="xijinian"><meta property="article:tag" content="Linux 命令行"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://www.xijinian.top/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/"><script id="page-configurations">CONFIG.page={sidebar:"",isHome:!1,isPost:!0,lang:"zh-CN"}</script><title>基本命令 | Adventures of xijinian</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-header,.use-motion .comments,.use-motion .menu-item,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="container use-motion"><div class="headband"></div><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span><h1 class="site-title">Adventures of xijinian</h1><span class="logo-line-after"><i></i></span></a></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"><input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span></div><div id="search-result"><div id="no-result"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div></div></div></div></div></header><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span>0%</span></div><div class="reading-progress-bar"></div><a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><main class="main"><div class="main-inner"><div class="content-wrap"><div class="content post posts-expand"><article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="xijinian"><meta itemprop="description" content="放轻松，就像在漫游地球～"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Adventures of xijinian"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">基本命令</h1><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2017-10-01 19:34:56" itemprop="dateCreated datePublished" datetime="2017-10-01T19:34:56+08:00">2017-10-01</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i> </span><span class="post-meta-item-text">Disqus：</span> <a title="disqus" href="/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/#disqus_thread" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/10/01/基本命令/" itemprop="commentCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><p>to be continued&#x2026;</p><ul><li><p><strong>&#x95F2;&#x6742;&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li><code>date</code>&#x2014;&#x2014;&#x5F53;&#x524D;&#x65F6;&#x95F4;</li><li><code>cal</code>&#x2014;&#x2014;&#x65E5;&#x5386;</li><li><code>df</code>&#x2014;&#x2014;&#x78C1;&#x76D8;&#x72B6;&#x6001;</li><li><code>free</code>&#x2014;&#x2014;&#x5185;&#x5B58;&#x72B6;&#x6001;</li><li><code>exit</code>&#x2014;&#x2014;&#x9000;&#x51FA;</li><li><code>pwd</code>&#x2014;&#x2014;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x8DEF;&#x5F84;</li><li><code>cd</code>&#x2014;&#x2014;&#x6253;&#x5F00;<a id="more"></a></li></ul></li><li><p><strong>ls&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li><code>ls</code>&#x2014;&#x2014;&#x5217;&#x51FA;&#x5F53;&#x524D;&#x8DEF;&#x5F84;&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;</li><li><code>.</code>&#x2014;&#x2014;&#x4E0B;</li><li><code>..</code>&#x2014;&#x2014;&#x4E0A;</li><li><code>cd -</code>&#x2014;&#x2014;&#x6253;&#x5F00;&#x4E4B;&#x524D;&#x6253;&#x5F00;&#x7684;&#x8DEF;&#x5F84;</li><li><code>cd ~user_name</code>=<code>cd ~</code>&#x2014;&#x2014;&#x6253;&#x5F00;&#x7528;&#x6237;&#x6839;&#x76EE;&#x5F55;</li><li><code>ls -a</code>&#x2014;&#x2014;&#x5217;&#x51FA;&#x5F53;&#x524D;&#x8DEF;&#x5F84;&#x4E0B;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;</li><li>&#x4E0D;&#x8981;&#x5728;&#x6587;&#x4EF6;&#x540D;&#x4E2D;&#x4F7F;&#x7528;&#x7A7A;&#x683C;&#xFF0C;&#x5982;&#x679C;&#x975E;&#x8981;&#x7A7A;&#x683C;&#xFF0C;&#x5C31;&#x7528;&#x4E0B;&#x5212;&#x7EBF;&#x66FF;&#x4EE3;&#x3002;</li><li><code>ls /usr</code>&#x2014;&#x2014;ls&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x6307;&#x5B9A;&#x60F3;&#x8981;&#x6267;&#x884C;ls&#x7684;&#x8DEF;&#x5F84;</li><li><code>ls ~ /usr</code>&#x2014;&#x2014;ls&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x53C2;&#x6570;</li><li><code>ls -l</code>&#x2014;&#x2014;&#x8FD4;&#x56DE;&#x957F;&#x6A21;&#x5F0F;</li><li><code>ls -li</code>&#x2014;&#x2014;&#x5C55;&#x793A;&#x7D22;&#x5F15;&#x70B9;&#xFF08;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x786C;&#x94FE;&#x63A5;&#x7684;&#x7D22;&#x5F15;&#x8282;&#x70B9;&#x53F7;&#x4E00;&#x81F4;&#xFF09;</li><li><code>command -options arguments</code>&#x2014;&#x2014;&#x5E38;&#x89C1;&#x7684;&#x547D;&#x4EE4;&#x6A21;&#x677F;</li><li><code>ls -lt</code>&#x2014;&#x2014;ls&#x4EE5;&#x957F;&#x6A21;&#x5F0F;&#x5C55;&#x73B0;&#xFF0C;&#x4EE5;&#x4FEE;&#x6539;&#x65F6;&#x95F4;&#x6392;&#x5E8F;</li><li><code>ls -lt --reverse</code>&#x2014;&#x2014;&#x4E0A;&#x4E00;&#x6761;&#x7684;&#x9006;&#x5E8F;</li><li><code>ls</code>&#x547D;&#x4EE4;&#x7684;&#x6709;&#x7528;&#x9009;&#x9879;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-a = --all</span><br><span class="line">-d = --directory        &#x2014;&#x2014;&#x5728;`ls`&#x547D;&#x4EE4;&#x540E;&#xFF0C;&#x7ED3;&#x5408;`l`&#x547D;&#x4EE4;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#xFF08;&#x76EE;&#x5F55;&#x672C;&#x8EAB;&#x800C;&#x4E0D;&#x662F;&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x5185;&#x5BB9;&#xFF09;</span><br><span class="line">-F = --classify         &#x2014;&#x2014;&#x5728;&#x8DEF;&#x5F84;&#x7684;&#x672B;&#x5C3E;&#x6DFB;&#x52A0;`/`&#x7B26;&#x53F7;</span><br><span class="line">-h = --human-readable   &#x2014;&#x2014;&#x4EE5;&#x5BF9;&#x4EBA;&#x7C7B;&#x53CB;&#x597D;&#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73B0;&#xFF0C;&#x5982;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x7684;&#x5355;&#x4F4D;</span><br><span class="line">-r = --reverse          &#x2014;&#x2014;&#x53CD;&#x5411;</span><br><span class="line">-S                      &#x2014;&#x2014;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6309;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x6392;&#x5E8F;</span><br></pre></td></tr></table></figure></li><li><p><strong>&#x7EE7;&#x7EED;&#x95F2;&#x6742;&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li><code>file filename</code>&#x2014;&#x2014;&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x7684;&#x7C7B;&#x578B;</li><li><code>less filename</code>&#x2192;<code>q</code>&#x2014;&#x2014;&#x5FEB;&#x901F;&#x6D4F;&#x89C8;&#x6587;&#x672C;&#x683C;&#x5F0F;&#x6587;&#x6863;&#x7684;&#x5185;&#x5BB9;&#xFF0C;<code>q</code>&#x9000;&#x51FA;&#x6D4F;&#x89C8;&#x6A21;&#x5F0F;</li><li><code>mkdir directory...</code></li></ul></li><li><p><strong>cp&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li><code>cp item1 item2</code></li><li><code>cp item... directory</code></li><li><code>cp dir1/* dir2</code></li><li><code>cp</code>&#x547D;&#x4EE4;&#x7684;&#x6709;&#x7528;&#x9009;&#x9879;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-a = --archive          &#x2014;&#x2014;&#x590D;&#x5236;&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#xFF0C;&#x4EE5;&#x53CA;&#x5B83;&#x4EEC;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x5305;&#x62EC;&#x6240;&#x6709;&#x6743;&#x548C;&#x6743;&#x9650;</span><br><span class="line">-i = --interactive      &#x2014;&#x2014;&#x5728;&#x91CD;&#x5199;&#x5DF2;&#x5B58;&#x5728;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#xFF0C;&#x63D0;&#x793A;&#x7528;&#x6237;&#x786E;&#x8BA4;&#x3002;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x4E0D;&#x6307;&#x5B9A;&#xFF0C;cp&#x547D;&#x4EE4;&#x4F1A;&#x9ED8;&#x8BA4;&#x91CD;&#x5199;&#x6587;&#x4EF6;</span><br><span class="line">-r = --recursive        &#x2014;&#x2014;&#x9012;&#x5F52;&#x5730;&#x590D;&#x5236;&#x76EE;&#x5F55;&#x53CA;&#x76EE;&#x5F55;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x3002;&#x5F53;&#x590D;&#x5236;&#x76EE;&#x5F55;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#xFF08;&#x6216;&#x8005;-a&#x9009;&#x9879;&#xFF09;</span><br><span class="line">-u = --update           &#x2014;&#x2014;&#x5F53;&#x628A;&#x6587;&#x4EF6;&#x4ECE;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x590D;&#x5236;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x65F6;&#xFF0C;&#x4EC5;&#x590D;&#x5236;&#x65B0;&#x6761;&#x76EE;&#x6216;&#x8005;&#x66F4;&#x65B0;</span><br><span class="line">-v = --verbose          &#x2014;&#x2014;&#x663E;&#x793A;&#x7FD4;&#x5B9E;&#x7684;&#x547D;&#x4EE4;&#x64CD;&#x4F5C;&#x4FE1;&#x606F;</span><br></pre></td></tr></table></figure><ul><li><code>cp -r dir1 dir2</code></li></ul></li><li><p><strong>&#x901A;&#x914D;&#x7B26;&#x76F8;&#x5173;&#x7684;&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li>&#x901A;&#x914D;&#x7B26;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">?</span><br><span class="line">[character]</span><br><span class="line">[!character]</span><br><span class="line">[[:class:]]</span><br></pre></td></tr></table></figure><ul><li>&#x666E;&#x904D;&#x4F7F;&#x7528;&#x7684;&#x5B57;&#x7B26;&#x7C7B;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[:alnum:]</span><br><span class="line">[:alpha:]</span><br><span class="line">[:digit:]</span><br><span class="line">[:lower:]</span><br><span class="line">[:upper:]</span><br></pre></td></tr></table></figure><ul><li>&#x901A;&#x914D;&#x7B26;&#x8303;&#x4F8B;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">g*</span><br><span class="line">b*.txt</span><br><span class="line">Data???</span><br><span class="line">[abc]*</span><br><span class="line">BACKUP.[0-9][0-9][0-9]</span><br><span class="line">[[:upper:]*]</span><br><span class="line">[[:digit:]*]</span><br><span class="line">*[[:lower:]123]         &#x2014;&#x2014;&#x6587;&#x4EF6;&#x540D;&#x4EE5;&#x5C0F;&#x5199;&#x5B57;&#x6BCD;&#x7ED3;&#x5C3E;&#xFF0C;&#x6216;&#x4EE5; &#x201C;1&#x201D;&#xFF0C;&#x201C;2&#x201D;&#xFF0C;&#x6216; &#x201C;3&#x201D; &#x7ED3;&#x5C3E;&#x7684;&#x6587;&#x4EF6;</span><br></pre></td></tr></table></figure></li><li><p><strong>mv&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li><code>mv item1 item2</code></li><li><code>mv item... directory</code></li><li><code>mv</code>&#x547D;&#x4EE4;&#x6709;&#x7528;&#x7684;&#x9009;&#x9879;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-i = --interactive      &#x2014;&#x2014;&#x5728;&#x91CD;&#x5199;&#x5DF2;&#x5B58;&#x5728;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#xFF0C;&#x63D0;&#x793A;&#x7528;&#x6237;&#x786E;&#x8BA4;&#x3002;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x4E0D;&#x6307;&#x5B9A;&#xFF0C;cp&#x547D;&#x4EE4;&#x4F1A;&#x9ED8;&#x8BA4;&#x91CD;&#x5199;&#x6587;&#x4EF6;</span><br><span class="line">-u = --update           &#x2014;&#x2014;&#x5F53;&#x628A;&#x6587;&#x4EF6;&#x4ECE;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x590D;&#x5236;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x65F6;&#xFF0C;&#x4EC5;&#x590D;&#x5236;&#x65B0;&#x6761;&#x76EE;&#x6216;&#x8005;&#x66F4;&#x65B0;</span><br><span class="line">-v = --verbose          &#x2014;&#x2014;&#x663E;&#x793A;&#x7FD4;&#x5B9E;&#x7684;&#x547D;&#x4EE4;&#x64CD;&#x4F5C;&#x4FE1;&#x606F;</span><br></pre></td></tr></table></figure></li><li><p><strong>rm&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li><code>rm item...</code></li><li><code>rm</code>&#x547D;&#x4EE4;&#x6709;&#x7528;&#x7684;&#x9009;&#x9879;&#xFF1A;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-i = --interactive      &#x2014;&#x2014;&#x5728;&#x5220;&#x9664;&#x5DF2;&#x5B58;&#x5728;&#x7684;&#x6587;&#x4EF6;&#x524D;&#xFF0C;&#x63D0;&#x793A;&#x7528;&#x6237;&#x786E;&#x8BA4;&#x4FE1;&#x606F;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#xFF0C;rm&#x4F1A;&#x9ED8;&#x9ED8;&#x5730;&#x5220;&#x9664;&#x6587;&#x4EF6;</span><br><span class="line">-r = --recursive        &#x2014;&#x2014;&#x9012;&#x5F52;&#x5730;&#x5220;&#x9664;&#x6587;&#x4EF6;&#xFF0C;&#x8981;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x5FC5;&#x987B;&#x6307;&#x5B9A;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x3002;</span><br><span class="line">-f = --force            &#x2014;&#x2014;&#x5FFD;&#x89C6;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4E0D;&#x663E;&#x793A;&#x63D0;&#x793A;&#x4FE1;&#x606F;&#x3002;&#x8FD9;&#x9009;&#x9879;&#x98A0;&#x8986;&#x4E86;&#x201C;--interactive&#x201D;&#x9009;&#x9879;&#x3002;</span><br><span class="line">-v = --verbose          &#x2014;&#x2014;&#x5728;&#x6267;&#x884C; rm &#x547D;&#x4EE4;&#x65F6;&#xFF0C;&#x663E;&#x793A;&#x7FD4;&#x5B9E;&#x7684;&#x64CD;&#x4F5C;&#x4FE1;&#x606F;&#x3002;</span><br></pre></td></tr></table></figure><ul><li><code>rm -rf *</code></li></ul></li><li><p><strong>ln&#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li><code>ln file link</code>&#x2014;&#x2014;&#x5EFA;&#x7ACB;&#x786C;&#x94FE;&#x63A5;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x4E86;&#x6587;&#x4EF6;&#x7684;&#x786C;&#x94FE;&#x63A5;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x7ED9;&#x6587;&#x4EF6;&#x6DFB;&#x52A0;&#x4E86;&#x989D;&#x5916;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x8FD9;&#x4E9B;&#x540D;&#x5B57;&#x90FD;&#x6D89;&#x53CA;&#x4E00;&#x6837;&#x7684;&#x6570;&#x636E;&#x5185;&#x5BB9;&#x3002;</li><li><code>ln -s item link</code>&#x2014;&#x2014;&#x5EFA;&#x7ACB;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x7684;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x514B;&#x670D;&#x786C;&#x94FE;&#x63A5;&#x7684;&#x4E24;&#x4E2A;&#x7F3A;&#x70B9;&#xFF1A;&#x786C;&#x94FE;&#x63A5;&#x4E0D;&#x80FD;&#x8DE8;&#x8D8A;&#x7269;&#x7406;&#x8BBE;&#x5907;&#xFF0C;&#x786C;&#x94FE;&#x63A5;&#x4E0D;&#x80FD;&#x5173;&#x8054;&#x76EE;&#x5F55;&#xFF0C;&#x53EA;&#x80FD;&#x662F;&#x6587;&#x4EF6;&#x3002;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x662F;&#x6587;&#x4EF6;&#x7684;&#x7279;&#x6B8A;&#x7C7B;&#x578B;&#xFF0C;&#x5B83;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x6307;&#x5411;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x7684;&#x6587;&#x672C;&#x6307;&#x9488;&#x3002;</li><li><code>ln -s /home/me/playground/fun dir1/fun-sym</code>&#x2014;&#x2014;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#x3002;</li><li><code>ln -s ..fun dir/fun-sys</code>&#x2014;&#x2014;&#x76F8;&#x5BF9;&#x8DEF;&#x5F84;&#x3002;</li><li><code>ls -li</code>&#x2014;&#x2014;ls &#x547D;&#x4EE4;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x6765;&#x5C55;&#x793A;&#xFF08;&#x6587;&#x4EF6;&#x7D22;&#x5F15;&#x8282;&#x70B9;&#xFF09;&#x7684;&#x4FE1;&#x606F;&#x3002;</li></ul></li><li><p><strong>&#x547D;&#x4EE4;&#x6982;&#x8FF0;</strong>&#xFF1A;</p><ul><li>&#x4F55;&#x4E3A;&#x547D;&#x4EE4;&#xFF0C;&#x5B83;&#x53EF;&#x80FD;&#x662F;&#xFF1A;<ul><li>&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#xFF0C;&#x5982;<code>javac</code>&#x3002;</li><li>&#x4E00;&#x4E2A;&#x5185;&#x5EFA;&#x4E8E; shell &#x81EA;&#x8EAB;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x5982;<code>cd</code>&#x3002;</li><li>&#x4E00;&#x4E2A; shell &#x51FD;&#x6570;&#x3002;</li><li>&#x4E00;&#x4E2A;&#x547D;&#x4EE4;&#x522B;&#x540D;&#x2014;&#x2014;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x81EA;&#x5DF1;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x5EFA;&#x7ACB;&#x5728;&#x5176;&#x5B83;&#x547D;&#x4EE4;&#x4E4B;&#x4E0A;&#x3002;</li></ul></li><li><strong>&#x5224;&#x65AD;&#x547D;&#x4EE4;</strong>&#x7684;&#x7C7B;&#x578B;&#x7528;<code>type command</code>&#xFF1A;<code>type cd</code>&#x3001;<code>type ls</code>&#x3002;</li><li><strong>&#x663E;&#x793A;&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x7684;&#x4F4D;&#x7F6E;</strong>&#x7528;<code>which</code>&#xFF08;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x53EA;&#x5BF9;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x6709;&#x6548;&#xFF09;&#xFF1A;<code>which javac</code>&#x3002;</li><li><strong>&#x5F97;&#x5230; shell &#x5185;&#x90E8;&#x547D;&#x4EE4;&#x7684;&#x5E2E;&#x52A9;&#x6587;&#x6863;</strong>&#x7528;<code>help</code>&#xFF1A;<code>help cd</code>&#x6216;&#x8005;<code>cd --help</code>&#x3002;</li><li><strong>&#x663E;&#x793A;&#x7A0B;&#x5E8F;&#x624B;&#x518C;&#x9875;</strong>&#x7528;<code>man</code>&#xFF0C;&#x5B83;&#x662F;&#x6709;&#x56FA;&#x5B9A;&#x683C;&#x5F0F;&#x7684;&#xFF08;&#x2460;&#x7528;&#x6237;&#x547D;&#x4EE4;&#x3001;&#x2461;&#x7A0B;&#x5E8F;&#x63A5;&#x53E3;&#x5185;&#x6838;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x3001;&#x2462;C &#x5E93;&#x51FD;&#x6570;&#x7A0B;&#x5E8F;&#x63A5;&#x53E3;&#x3001;&#x2463;&#x7279;&#x6B8A;&#x6587;&#x4EF6;&#xFF0C;&#x8BF4;&#x8BBE;&#x5907;&#x7ED3;&#x70B9;&#x548C;&#x9A71;&#x52A8;&#x7A0B;&#x5E8F;&#x3001;&#x2464;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x3001;&#x2465;&#x6E38;&#x620F;&#x5A31;&#x4E50;&#xFF0C;&#x5982;&#x5C4F;&#x5E55;&#x4FDD;&#x62A4;&#x7A0B;&#x5E8F;&#x3001;&#x2466;&#x5176;&#x4ED6;&#x65B9;&#x9762;&#x3001;&#x2467;&#x7CFB;&#x7EDF;&#x7BA1;&#x7406;&#x5458;&#x547D;&#x4EE4;&#xFF09;&#xFF1A;&#x6B63;&#x5E38;&#x7684;&#x547D;&#x4EE4;&#x5F62;&#x5F0F;&#x5982;&#x4E0B;&#x2014;&#x2014;<code>man passwd</code>&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x4F60;&#x60F3;&#x770B;&#x7279;&#x5B9A;&#x4FE1;&#x606F;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x7CBE;&#x786E;&#x5B9A;&#x4F4D;&#x2014;&#x2014;<code>man 5 passwd</code></li><li><strong>&#x641C;&#x7D22;&#x9002;&#x5F53;&#x7684;&#x547D;&#x4EE4;</strong>&#x7528;<code>apropos xxx</code>&#x6216;&#x8005;<code>man -k xxx</code>&#xFF0C;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6BCF;&#x884C;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5B57;&#x6BB5;&#x662F;&#x624B;&#x518C;&#x9875;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5B57;&#x6BB5;&#x5C55;&#x793A;&#x7AE0;&#x8282;&#x3002;</li><li><strong>&#x663E;&#x793A;&#x975E;&#x5E38;&#x7B80;&#x6D01;&#x7684;&#x547D;&#x4EE4;&#x8BF4;&#x660E;</strong>&#x7528;<code>whatis</code>&#xFF1A;<code>whatis javac</code>&#x3002;</li><li><strong>&#x663E;&#x793A;&#x7A0B;&#x5E8F; Info &#x6761;&#x76EE;</strong>&#x7528;<code>info</code>&#xFF08;GUN &#x63D0;&#x4F9B;&#x7684;&#x547D;&#x4EE4;&#x624B;&#x518C;&#x9875;&#x7684;&#x66FF;&#x4EE3;&#x7269;&#xFF09;&#xFF1A;<code>info ls</code>&#x3002;&#x5F53;&#x4F7F;&#x7528; info &#x547D;&#x4EE4;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x6765;&#x63A7;&#x5236; info &#x7684;&#x9605;&#x8BFB;&#x5668;&#xFF1A;&#x2460;<code>?</code>&#x663E;&#x793A;&#x547D;&#x4EE4;&#x5E2E;&#x52A9;&#x3001;&#x2461;<code>PgUp or Backspace</code>&#x663E;&#x793A;&#x4E0A;&#x4E00;&#x9875;&#x3001;&#x2462;<code>PgDn or Space</code>&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x9875;&#x3001;&#x2463;<code>n</code>&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x3001;&#x2464;<code>p</code>&#x663E;&#x793A;&#x4E0A;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x3001;&#x2465;<code>u</code>=<code>Up</code>&#x663E;&#x793A;&#x5F53;&#x524D;&#x6240;&#x663E;&#x793A;&#x7ED3;&#x70B9;&#x7684;&#x7236;&#x7ED3;&#x70B9;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x4E2A;&#x83DC;&#x5355;&#x3001;&#x2466;<code>Enter</code>&#x6FC0;&#x6D3B;&#x5149;&#x6807;&#x4F4D;&#x7F6E;&#x4E0B;&#x7684;&#x8D85;&#x7EA7;&#x94FE;&#x63A5;&#x3001;&#x2467;<code>q</code>&#x9000;&#x51FA;&#x3002;</li><li>&#x53EF;&#x4EE5;&#x628A;&#x591A;&#x4E2A;&#x547D;&#x4EE4;&#x653E;&#x5728;&#x540C;&#x4E00;&#x884C;&#x4E0A;&#xFF0C;&#x547D;&#x4EE4;&#x4E4B;&#x95F4;&#x7528;&#x201C;;&#x201D;&#x5206;&#x5F00;&#x3002;</li></ul></li><li><p><strong>alias &#x547D;&#x4EE4;</strong>&#xFF1A;</p><ul><li>&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5C0F;&#x4F8B;&#x5B50;&#xFF1A;</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias foo=&apos;cd /usr; ls; cd -&apos;</span><br><span class="line">unalias foo</span><br></pre></td></tr></table></figure><ul><li>&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x5B9A;&#x4E49;&#x522B;&#x540D;&#x6709;&#x70B9;&#x513F;&#x5C0F;&#x95EE;&#x9898;&#xFF0C;&#x5F53;&#x4F60;&#x7684; shell &#x4F1A;&#x8BDD;&#x7ED3;&#x675F;&#x65F6;&#xFF0C;&#x5B83;&#x4EEC;&#x4F1A;&#x6D88;&#x5931;&#x3002;</li></ul></li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Linux-%E5%91%BD%E4%BB%A4%E8%A1%8C/" rel="tag"># Linux 命令行</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2017/09/28/%E5%91%B3%E9%81%93%E5%92%8C%E5%90%AF%E5%8F%91/" rel="prev" title="味道和启发"><i class="fa fa-chevron-left"></i> 味道和启发</a></div><div class="post-nav-item"><a href="/2017/10/04/IntelliJ-IDEA%E7%9A%84Debug%E5%8A%9F%E8%83%BD/" rel="next" title="IntelliJ IDEA的Debug功能">IntelliJ IDEA的Debug功能 <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript></div></div><script>window.addEventListener('tabs:register', () => {
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="to be continued…  闲杂命令： date——当前时间 cal——日历 df——磁盘状态 free——内存状态 exit——退出 pwd——返回当前路径 cd——打开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基本命令">
+<meta property="og:url" content="https://www.xijinian.top/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="to be continued…  闲杂命令： date——当前时间 cal——日历 df——磁盘状态 free——内存状态 exit——退出 pwd——返回当前路径 cd——打开">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-01T11:34:56.000Z">
+<meta property="article:modified_time" content="2017-11-22T14:37:53.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="Linux 命令行">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.xijinian.top/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基本命令 | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基本命令
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-10-01 19:34:56" itemprop="dateCreated datePublished" datetime="2017-10-01T19:34:56+08:00">2017-10-01</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/10/01/基本命令/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>to be continued&#x2026;</p>
+<ul>
+<li><strong>&#x95F2;&#x6742;&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li><code>date</code>&#x2014;&#x2014;&#x5F53;&#x524D;&#x65F6;&#x95F4;</li>
+<li><code>cal</code>&#x2014;&#x2014;&#x65E5;&#x5386;</li>
+<li><code>df</code>&#x2014;&#x2014;&#x78C1;&#x76D8;&#x72B6;&#x6001;</li>
+<li><code>free</code>&#x2014;&#x2014;&#x5185;&#x5B58;&#x72B6;&#x6001;</li>
+<li><code>exit</code>&#x2014;&#x2014;&#x9000;&#x51FA;</li>
+<li><code>pwd</code>&#x2014;&#x2014;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x8DEF;&#x5F84;</li>
+<li><code>cd</code>&#x2014;&#x2014;&#x6253;&#x5F00;<a id="more"></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>ls&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li><code>ls</code>&#x2014;&#x2014;&#x5217;&#x51FA;&#x5F53;&#x524D;&#x8DEF;&#x5F84;&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;</li>
+<li><code>.</code>&#x2014;&#x2014;&#x4E0B;</li>
+<li><code>..</code>&#x2014;&#x2014;&#x4E0A;</li>
+<li><code>cd -</code>&#x2014;&#x2014;&#x6253;&#x5F00;&#x4E4B;&#x524D;&#x6253;&#x5F00;&#x7684;&#x8DEF;&#x5F84;</li>
+<li><code>cd ~user_name</code>=<code>cd ~</code>&#x2014;&#x2014;&#x6253;&#x5F00;&#x7528;&#x6237;&#x6839;&#x76EE;&#x5F55;</li>
+<li><code>ls -a</code>&#x2014;&#x2014;&#x5217;&#x51FA;&#x5F53;&#x524D;&#x8DEF;&#x5F84;&#x4E0B;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;</li>
+<li>&#x4E0D;&#x8981;&#x5728;&#x6587;&#x4EF6;&#x540D;&#x4E2D;&#x4F7F;&#x7528;&#x7A7A;&#x683C;&#xFF0C;&#x5982;&#x679C;&#x975E;&#x8981;&#x7A7A;&#x683C;&#xFF0C;&#x5C31;&#x7528;&#x4E0B;&#x5212;&#x7EBF;&#x66FF;&#x4EE3;&#x3002;</li>
+<li><code>ls /usr</code>&#x2014;&#x2014;ls&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x6307;&#x5B9A;&#x60F3;&#x8981;&#x6267;&#x884C;ls&#x7684;&#x8DEF;&#x5F84;</li>
+<li><code>ls ~ /usr</code>&#x2014;&#x2014;ls&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x53C2;&#x6570;</li>
+<li><code>ls -l</code>&#x2014;&#x2014;&#x8FD4;&#x56DE;&#x957F;&#x6A21;&#x5F0F;</li>
+<li><code>ls -li</code>&#x2014;&#x2014;&#x5C55;&#x793A;&#x7D22;&#x5F15;&#x70B9;&#xFF08;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x786C;&#x94FE;&#x63A5;&#x7684;&#x7D22;&#x5F15;&#x8282;&#x70B9;&#x53F7;&#x4E00;&#x81F4;&#xFF09;</li>
+<li><code>command -options arguments</code>&#x2014;&#x2014;&#x5E38;&#x89C1;&#x7684;&#x547D;&#x4EE4;&#x6A21;&#x677F;</li>
+<li><code>ls -lt</code>&#x2014;&#x2014;ls&#x4EE5;&#x957F;&#x6A21;&#x5F0F;&#x5C55;&#x73B0;&#xFF0C;&#x4EE5;&#x4FEE;&#x6539;&#x65F6;&#x95F4;&#x6392;&#x5E8F;</li>
+<li><code>ls -lt --reverse</code>&#x2014;&#x2014;&#x4E0A;&#x4E00;&#x6761;&#x7684;&#x9006;&#x5E8F;</li>
+<li><code>ls</code>&#x547D;&#x4EE4;&#x7684;&#x6709;&#x7528;&#x9009;&#x9879;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-a = --all</span><br><span class="line">-d = --directory        &#x2014;&#x2014;&#x5728;`ls`&#x547D;&#x4EE4;&#x540E;&#xFF0C;&#x7ED3;&#x5408;`l`&#x547D;&#x4EE4;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#xFF08;&#x76EE;&#x5F55;&#x672C;&#x8EAB;&#x800C;&#x4E0D;&#x662F;&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x5185;&#x5BB9;&#xFF09;</span><br><span class="line">-F = --classify         &#x2014;&#x2014;&#x5728;&#x8DEF;&#x5F84;&#x7684;&#x672B;&#x5C3E;&#x6DFB;&#x52A0;`/`&#x7B26;&#x53F7;</span><br><span class="line">-h = --human-readable   &#x2014;&#x2014;&#x4EE5;&#x5BF9;&#x4EBA;&#x7C7B;&#x53CB;&#x597D;&#x7684;&#x65B9;&#x5F0F;&#x5448;&#x73B0;&#xFF0C;&#x5982;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x7684;&#x5355;&#x4F4D;</span><br><span class="line">-r = --reverse          &#x2014;&#x2014;&#x53CD;&#x5411;</span><br><span class="line">-S                      &#x2014;&#x2014;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6309;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x6392;&#x5E8F;</span><br></pre></td></tr></table></figure>
+<!--lalala-->
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>&#x7EE7;&#x7EED;&#x95F2;&#x6742;&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li><code>file filename</code>&#x2014;&#x2014;&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x7684;&#x7C7B;&#x578B;</li>
+<li><code>less filename</code>&#x2192;<code>q</code>&#x2014;&#x2014;&#x5FEB;&#x901F;&#x6D4F;&#x89C8;&#x6587;&#x672C;&#x683C;&#x5F0F;&#x6587;&#x6863;&#x7684;&#x5185;&#x5BB9;&#xFF0C;<code>q</code>&#x9000;&#x51FA;&#x6D4F;&#x89C8;&#x6A21;&#x5F0F;</li>
+<li><code>mkdir directory...</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>cp&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li><code>cp item1 item2</code></li>
+<li><code>cp item... directory</code></li>
+<li><code>cp dir1/* dir2</code></li>
+<li><code>cp</code>&#x547D;&#x4EE4;&#x7684;&#x6709;&#x7528;&#x9009;&#x9879;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-a = --archive          &#x2014;&#x2014;&#x590D;&#x5236;&#x6587;&#x4EF6;&#x548C;&#x76EE;&#x5F55;&#xFF0C;&#x4EE5;&#x53CA;&#x5B83;&#x4EEC;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x5305;&#x62EC;&#x6240;&#x6709;&#x6743;&#x548C;&#x6743;&#x9650;</span><br><span class="line">-i = --interactive      &#x2014;&#x2014;&#x5728;&#x91CD;&#x5199;&#x5DF2;&#x5B58;&#x5728;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#xFF0C;&#x63D0;&#x793A;&#x7528;&#x6237;&#x786E;&#x8BA4;&#x3002;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x4E0D;&#x6307;&#x5B9A;&#xFF0C;cp&#x547D;&#x4EE4;&#x4F1A;&#x9ED8;&#x8BA4;&#x91CD;&#x5199;&#x6587;&#x4EF6;</span><br><span class="line">-r = --recursive        &#x2014;&#x2014;&#x9012;&#x5F52;&#x5730;&#x590D;&#x5236;&#x76EE;&#x5F55;&#x53CA;&#x76EE;&#x5F55;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x3002;&#x5F53;&#x590D;&#x5236;&#x76EE;&#x5F55;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#xFF08;&#x6216;&#x8005;-a&#x9009;&#x9879;&#xFF09;</span><br><span class="line">-u = --update           &#x2014;&#x2014;&#x5F53;&#x628A;&#x6587;&#x4EF6;&#x4ECE;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x590D;&#x5236;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x65F6;&#xFF0C;&#x4EC5;&#x590D;&#x5236;&#x65B0;&#x6761;&#x76EE;&#x6216;&#x8005;&#x66F4;&#x65B0;</span><br><span class="line">-v = --verbose          &#x2014;&#x2014;&#x663E;&#x793A;&#x7FD4;&#x5B9E;&#x7684;&#x547D;&#x4EE4;&#x64CD;&#x4F5C;&#x4FE1;&#x606F;</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li><code>cp -r dir1 dir2</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>&#x901A;&#x914D;&#x7B26;&#x76F8;&#x5173;&#x7684;&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li>&#x901A;&#x914D;&#x7B26;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">?</span><br><span class="line">[character]</span><br><span class="line">[!character]</span><br><span class="line">[[:class:]]</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x666E;&#x904D;&#x4F7F;&#x7528;&#x7684;&#x5B57;&#x7B26;&#x7C7B;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[:alnum:]</span><br><span class="line">[:alpha:]</span><br><span class="line">[:digit:]</span><br><span class="line">[:lower:]</span><br><span class="line">[:upper:]</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x901A;&#x914D;&#x7B26;&#x8303;&#x4F8B;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">g*</span><br><span class="line">b*.txt</span><br><span class="line">Data???</span><br><span class="line">[abc]*</span><br><span class="line">BACKUP.[0-9][0-9][0-9]</span><br><span class="line">[[:upper:]*]</span><br><span class="line">[[:digit:]*]</span><br><span class="line">*[[:lower:]123]         &#x2014;&#x2014;&#x6587;&#x4EF6;&#x540D;&#x4EE5;&#x5C0F;&#x5199;&#x5B57;&#x6BCD;&#x7ED3;&#x5C3E;&#xFF0C;&#x6216;&#x4EE5; &#x201C;1&#x201D;&#xFF0C;&#x201C;2&#x201D;&#xFF0C;&#x6216; &#x201C;3&#x201D; &#x7ED3;&#x5C3E;&#x7684;&#x6587;&#x4EF6;</span><br></pre></td></tr></table></figure>
+<!--lalala-->
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>mv&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li><code>mv item1 item2</code></li>
+<li><code>mv item... directory</code></li>
+<li><code>mv</code>&#x547D;&#x4EE4;&#x6709;&#x7528;&#x7684;&#x9009;&#x9879;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-i = --interactive      &#x2014;&#x2014;&#x5728;&#x91CD;&#x5199;&#x5DF2;&#x5B58;&#x5728;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#xFF0C;&#x63D0;&#x793A;&#x7528;&#x6237;&#x786E;&#x8BA4;&#x3002;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x4E0D;&#x6307;&#x5B9A;&#xFF0C;cp&#x547D;&#x4EE4;&#x4F1A;&#x9ED8;&#x8BA4;&#x91CD;&#x5199;&#x6587;&#x4EF6;</span><br><span class="line">-u = --update           &#x2014;&#x2014;&#x5F53;&#x628A;&#x6587;&#x4EF6;&#x4ECE;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x590D;&#x5236;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x65F6;&#xFF0C;&#x4EC5;&#x590D;&#x5236;&#x65B0;&#x6761;&#x76EE;&#x6216;&#x8005;&#x66F4;&#x65B0;</span><br><span class="line">-v = --verbose          &#x2014;&#x2014;&#x663E;&#x793A;&#x7FD4;&#x5B9E;&#x7684;&#x547D;&#x4EE4;&#x64CD;&#x4F5C;&#x4FE1;&#x606F;</span><br></pre></td></tr></table></figure>
+<!--lalala-->
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>rm&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li><code>rm item...</code></li>
+<li><code>rm</code>&#x547D;&#x4EE4;&#x6709;&#x7528;&#x7684;&#x9009;&#x9879;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-i = --interactive      &#x2014;&#x2014;&#x5728;&#x5220;&#x9664;&#x5DF2;&#x5B58;&#x5728;&#x7684;&#x6587;&#x4EF6;&#x524D;&#xFF0C;&#x63D0;&#x793A;&#x7528;&#x6237;&#x786E;&#x8BA4;&#x4FE1;&#x606F;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x6307;&#x5B9A;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#xFF0C;rm&#x4F1A;&#x9ED8;&#x9ED8;&#x5730;&#x5220;&#x9664;&#x6587;&#x4EF6;</span><br><span class="line">-r = --recursive        &#x2014;&#x2014;&#x9012;&#x5F52;&#x5730;&#x5220;&#x9664;&#x6587;&#x4EF6;&#xFF0C;&#x8981;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x5FC5;&#x987B;&#x6307;&#x5B9A;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x3002;</span><br><span class="line">-f = --force            &#x2014;&#x2014;&#x5FFD;&#x89C6;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4E0D;&#x663E;&#x793A;&#x63D0;&#x793A;&#x4FE1;&#x606F;&#x3002;&#x8FD9;&#x9009;&#x9879;&#x98A0;&#x8986;&#x4E86;&#x201C;--interactive&#x201D;&#x9009;&#x9879;&#x3002;</span><br><span class="line">-v = --verbose          &#x2014;&#x2014;&#x5728;&#x6267;&#x884C; rm &#x547D;&#x4EE4;&#x65F6;&#xFF0C;&#x663E;&#x793A;&#x7FD4;&#x5B9E;&#x7684;&#x64CD;&#x4F5C;&#x4FE1;&#x606F;&#x3002;</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li><code>rm -rf *</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>ln&#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li><code>ln file link</code>&#x2014;&#x2014;&#x5EFA;&#x7ACB;&#x786C;&#x94FE;&#x63A5;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x4E86;&#x6587;&#x4EF6;&#x7684;&#x786C;&#x94FE;&#x63A5;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x7ED9;&#x6587;&#x4EF6;&#x6DFB;&#x52A0;&#x4E86;&#x989D;&#x5916;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x8FD9;&#x4E9B;&#x540D;&#x5B57;&#x90FD;&#x6D89;&#x53CA;&#x4E00;&#x6837;&#x7684;&#x6570;&#x636E;&#x5185;&#x5BB9;&#x3002; </li>
+<li><code>ln -s item link</code>&#x2014;&#x2014;&#x5EFA;&#x7ACB;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x7684;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x514B;&#x670D;&#x786C;&#x94FE;&#x63A5;&#x7684;&#x4E24;&#x4E2A;&#x7F3A;&#x70B9;&#xFF1A;&#x786C;&#x94FE;&#x63A5;&#x4E0D;&#x80FD;&#x8DE8;&#x8D8A;&#x7269;&#x7406;&#x8BBE;&#x5907;&#xFF0C;&#x786C;&#x94FE;&#x63A5;&#x4E0D;&#x80FD;&#x5173;&#x8054;&#x76EE;&#x5F55;&#xFF0C;&#x53EA;&#x80FD;&#x662F;&#x6587;&#x4EF6;&#x3002;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x662F;&#x6587;&#x4EF6;&#x7684;&#x7279;&#x6B8A;&#x7C7B;&#x578B;&#xFF0C;&#x5B83;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x6307;&#x5411;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x7684;&#x6587;&#x672C;&#x6307;&#x9488;&#x3002;</li>
+<li><code>ln -s /home/me/playground/fun dir1/fun-sym</code>&#x2014;&#x2014;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#x3002;</li>
+<li><code>ln -s ..fun dir/fun-sys</code>&#x2014;&#x2014;&#x76F8;&#x5BF9;&#x8DEF;&#x5F84;&#x3002;</li>
+<li><code>ls -li</code>&#x2014;&#x2014;ls &#x547D;&#x4EE4;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x6765;&#x5C55;&#x793A;&#xFF08;&#x6587;&#x4EF6;&#x7D22;&#x5F15;&#x8282;&#x70B9;&#xFF09;&#x7684;&#x4FE1;&#x606F;&#x3002;</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>&#x547D;&#x4EE4;&#x6982;&#x8FF0;</strong>&#xFF1A;<ul>
+<li>&#x4F55;&#x4E3A;&#x547D;&#x4EE4;&#xFF0C;&#x5B83;&#x53EF;&#x80FD;&#x662F;&#xFF1A;<ul>
+<li>&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#xFF0C;&#x5982;<code>javac</code>&#x3002;</li>
+<li>&#x4E00;&#x4E2A;&#x5185;&#x5EFA;&#x4E8E; shell &#x81EA;&#x8EAB;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x5982;<code>cd</code>&#x3002;</li>
+<li>&#x4E00;&#x4E2A; shell &#x51FD;&#x6570;&#x3002;</li>
+<li>&#x4E00;&#x4E2A;&#x547D;&#x4EE4;&#x522B;&#x540D;&#x2014;&#x2014;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x81EA;&#x5DF1;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x5EFA;&#x7ACB;&#x5728;&#x5176;&#x5B83;&#x547D;&#x4EE4;&#x4E4B;&#x4E0A;&#x3002;</li>
+</ul>
+</li>
+<li><strong>&#x5224;&#x65AD;&#x547D;&#x4EE4;</strong>&#x7684;&#x7C7B;&#x578B;&#x7528;<code>type command</code>&#xFF1A;<code>type cd</code>&#x3001;<code>type ls</code>&#x3002;</li>
+<li><strong>&#x663E;&#x793A;&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x7684;&#x4F4D;&#x7F6E;</strong>&#x7528;<code>which</code>&#xFF08;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x53EA;&#x5BF9;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x6709;&#x6548;&#xFF09;&#xFF1A;<code>which javac</code>&#x3002;</li>
+<li><strong>&#x5F97;&#x5230; shell &#x5185;&#x90E8;&#x547D;&#x4EE4;&#x7684;&#x5E2E;&#x52A9;&#x6587;&#x6863;</strong>&#x7528;<code>help</code>&#xFF1A;<code>help cd</code>&#x6216;&#x8005;<code>cd --help</code>&#x3002;</li>
+<li><strong>&#x663E;&#x793A;&#x7A0B;&#x5E8F;&#x624B;&#x518C;&#x9875;</strong>&#x7528;<code>man</code>&#xFF0C;&#x5B83;&#x662F;&#x6709;&#x56FA;&#x5B9A;&#x683C;&#x5F0F;&#x7684;&#xFF08;&#x2460;&#x7528;&#x6237;&#x547D;&#x4EE4;&#x3001;&#x2461;&#x7A0B;&#x5E8F;&#x63A5;&#x53E3;&#x5185;&#x6838;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x3001;&#x2462;C &#x5E93;&#x51FD;&#x6570;&#x7A0B;&#x5E8F;&#x63A5;&#x53E3;&#x3001;&#x2463;&#x7279;&#x6B8A;&#x6587;&#x4EF6;&#xFF0C;&#x8BF4;&#x8BBE;&#x5907;&#x7ED3;&#x70B9;&#x548C;&#x9A71;&#x52A8;&#x7A0B;&#x5E8F;&#x3001;&#x2464;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x3001;&#x2465;&#x6E38;&#x620F;&#x5A31;&#x4E50;&#xFF0C;&#x5982;&#x5C4F;&#x5E55;&#x4FDD;&#x62A4;&#x7A0B;&#x5E8F;&#x3001;&#x2466;&#x5176;&#x4ED6;&#x65B9;&#x9762;&#x3001;&#x2467;&#x7CFB;&#x7EDF;&#x7BA1;&#x7406;&#x5458;&#x547D;&#x4EE4;&#xFF09;&#xFF1A;&#x6B63;&#x5E38;&#x7684;&#x547D;&#x4EE4;&#x5F62;&#x5F0F;&#x5982;&#x4E0B;&#x2014;&#x2014;<code>man passwd</code>&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x4F60;&#x60F3;&#x770B;&#x7279;&#x5B9A;&#x4FE1;&#x606F;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x7CBE;&#x786E;&#x5B9A;&#x4F4D;&#x2014;&#x2014;<code>man 5 passwd</code></li>
+<li><strong>&#x641C;&#x7D22;&#x9002;&#x5F53;&#x7684;&#x547D;&#x4EE4;</strong>&#x7528;<code>apropos xxx</code>&#x6216;&#x8005;<code>man -k xxx</code>&#xFF0C;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6BCF;&#x884C;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5B57;&#x6BB5;&#x662F;&#x624B;&#x518C;&#x9875;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5B57;&#x6BB5;&#x5C55;&#x793A;&#x7AE0;&#x8282;&#x3002;</li>
+<li><strong>&#x663E;&#x793A;&#x975E;&#x5E38;&#x7B80;&#x6D01;&#x7684;&#x547D;&#x4EE4;&#x8BF4;&#x660E;</strong>&#x7528;<code>whatis</code>&#xFF1A;<code>whatis javac</code>&#x3002;</li>
+<li><strong>&#x663E;&#x793A;&#x7A0B;&#x5E8F; Info &#x6761;&#x76EE;</strong>&#x7528;<code>info</code>&#xFF08;GUN &#x63D0;&#x4F9B;&#x7684;&#x547D;&#x4EE4;&#x624B;&#x518C;&#x9875;&#x7684;&#x66FF;&#x4EE3;&#x7269;&#xFF09;&#xFF1A;<code>info ls</code>&#x3002;&#x5F53;&#x4F7F;&#x7528; info &#x547D;&#x4EE4;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x6765;&#x63A7;&#x5236; info &#x7684;&#x9605;&#x8BFB;&#x5668;&#xFF1A;&#x2460;<code>?</code>&#x663E;&#x793A;&#x547D;&#x4EE4;&#x5E2E;&#x52A9;&#x3001;&#x2461;<code>PgUp or Backspace</code>&#x663E;&#x793A;&#x4E0A;&#x4E00;&#x9875;&#x3001;&#x2462;<code>PgDn or Space</code>&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x9875;&#x3001;&#x2463;<code>n</code>&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x3001;&#x2464;<code>p</code>&#x663E;&#x793A;&#x4E0A;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x3001;&#x2465;<code>u</code>=<code>Up</code>&#x663E;&#x793A;&#x5F53;&#x524D;&#x6240;&#x663E;&#x793A;&#x7ED3;&#x70B9;&#x7684;&#x7236;&#x7ED3;&#x70B9;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x4E2A;&#x83DC;&#x5355;&#x3001;&#x2466;<code>Enter</code>&#x6FC0;&#x6D3B;&#x5149;&#x6807;&#x4F4D;&#x7F6E;&#x4E0B;&#x7684;&#x8D85;&#x7EA7;&#x94FE;&#x63A5;&#x3001;&#x2467;<code>q</code>&#x9000;&#x51FA;&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x628A;&#x591A;&#x4E2A;&#x547D;&#x4EE4;&#x653E;&#x5728;&#x540C;&#x4E00;&#x884C;&#x4E0A;&#xFF0C;&#x547D;&#x4EE4;&#x4E4B;&#x95F4;&#x7528;&#x201C;;&#x201D;&#x5206;&#x5F00;&#x3002;</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>alias &#x547D;&#x4EE4;</strong>&#xFF1A;<ul>
+<li>&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5C0F;&#x4F8B;&#x5B50;&#xFF1A;<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias foo=&apos;cd /usr; ls; cd -&apos;</span><br><span class="line">unalias foo</span><br></pre></td></tr></table></figure>
+<!--lalala--></li>
+<li>&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x5B9A;&#x4E49;&#x522B;&#x540D;&#x6709;&#x70B9;&#x513F;&#x5C0F;&#x95EE;&#x9898;&#xFF0C;&#x5F53;&#x4F60;&#x7684; shell &#x4F1A;&#x8BDD;&#x7ED3;&#x675F;&#x65F6;&#xFF0C;&#x5B83;&#x4EEC;&#x4F1A;&#x6D88;&#x5931;&#x3002;</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux-%E5%91%BD%E4%BB%A4%E8%A1%8C/" rel="tag"># Linux 命令行</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/09/28/%E5%91%B3%E9%81%93%E5%92%8C%E5%90%AF%E5%8F%91/" rel="prev" title="味道和启发">
+      <i class="fa fa-chevron-left"></i> 味道和启发
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/10/04/IntelliJ-IDEA%E7%9A%84Debug%E5%8A%9F%E8%83%BD/" rel="next" title="IntelliJ IDEA的Debug功能">
+      IntelliJ IDEA的Debug功能 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
@@ -16,7 +437,164 @@
       let commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
-  }</script></div><div class="toggle sidebar-toggle"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div><aside class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="post-toc-wrap sidebar-panel"></div><div class="site-overview-wrap sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="xijinian" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">xijinian</p><div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div></div><div class="site-state-wrap motion-element"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">107</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">21</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a> </span><span class="links-of-author-item"><a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a></span></div></div></div></aside><div id="sidebar-dimmer"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2020</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">xijinian</span></div></div></footer></div><script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script><script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/pisces.js"></script><script src="/js/next-boot.js"></script><script src="/js/local-search.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css"><script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css"><script>function loadCount(){var d=document,n=d.createElement("script");n.src="https://xijinian.disqus.com/count.js",n.id="dsq-count-scr",(d.head||d.body).appendChild(n)}window.addEventListener("load",loadCount,!1)</script><script>var disqus_config = function() {
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
     this.page.url = "https://www.xijinian.top/2017/10/01/%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/";
     this.page.identifier = "2017/10/01/基本命令/";
     this.page.title = "基本命令";
@@ -33,4 +611,8 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  });</script></body></html>
+  });
+</script>
+
+</body>
+</html>
