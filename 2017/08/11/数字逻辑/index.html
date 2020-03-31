@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Mist","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="绝大多数计算机，至少是大家熟悉的微处理器，都是由MOS晶体管构建而成的。“MOS代表金属氧化物半导体”。 晶体管有三个电极，分别称为漏极、栅极和源极。对于n-MOS晶体管，如果在栅极接入2.9V电压，则在源极和漏极之间就会产生一条通路，这时候n-MOS晶体管就等于是一根连接线，当栅极电压是0V，则漏极和源极断开。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字逻辑">
+<meta property="og:url" content="https://www.xijinian.top/2017/08/11/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="绝大多数计算机，至少是大家熟悉的微处理器，都是由MOS晶体管构建而成的。“MOS代表金属氧化物半导体”。 晶体管有三个电极，分别称为漏极、栅极和源极。对于n-MOS晶体管，如果在栅极接入2.9V电压，则在源极和漏极之间就会产生一条通路，这时候n-MOS晶体管就等于是一根连接线，当栅极电压是0V，则漏极和源极断开。">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fihbbhcg9qj303703iq2x.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fihainex1aj3040062wei.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fih9vmaghzj305705ljrg.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fih9wktssbj306j06i74f.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fih9xsw9c4j307606dmxe.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79ly1fih9yjfq4tj3091041jri.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1fiha942t32j30720610sy.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fihafko6woj306904kjrh.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fihazh59iij3082083gm0.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fihb5zoyibj307n05pq39.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fihfco2n3rj304d03fq2z.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1fihfwlqkg9j308i03gjrh.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1fihg7nt278j309e048q3a.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fihpdsqbmyj309c09ejs4.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fihpj9r0owj306w0423yo.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1fihpvib0vmj307h057mxd.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fihpw9y13mj30dh09uq3y.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fihq1m853ej30ht0m540r.jpg">
+<meta property="article:published_time" content="2017-08-11T09:20:53.000Z">
+<meta property="article:modified_time" content="2017-08-12T23:03:31.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fihbbhcg9qj303703iq2x.jpg">
+
+<link rel="canonical" href="https://www.xijinian.top/2017/08/11/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>数字逻辑 | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/11/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数字逻辑
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-11 17:20:53" itemprop="dateCreated datePublished" datetime="2017-08-11T17:20:53+08:00">2017-08-11</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/08/11/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/11/数字逻辑/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>绝大多数计算机，至少是大家熟悉的微处理器，都是由MOS晶体管构建而成的。“MOS代表<strong>金属氧化物半导体</strong>”。</li>
+<li>晶体管有三个电极，分别称为<strong>漏极</strong>、<strong>栅极</strong>和<strong>源极</strong>。对于n-MOS晶体管，如果在栅极接入2.9V电压，则在源极和漏极之间就会产生一条通路，这时候n-MOS晶体管就等于是一根连接线，当栅极电压是0V，则漏极和源极断开。<br><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fihbbhcg9qj303703iq2x.jpg" alt=""><a id="more"></a></li>
+<li>p-MOS晶体管和n-MOS晶体管的工作机制完全相反。</li>
+<li>如果电路同时包含p-MOS晶体管和n-MOS晶体管，则称该电路为“<strong>CMOS电路</strong>”，即<strong>互补金属氧化物半导体</strong>。</li>
+<li>非门：<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fihainex1aj3040062wei.jpg" alt=""></li>
+<li>或非门：<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fih9vmaghzj305705ljrg.jpg" alt=""></li>
+<li>或门：<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fih9wktssbj306j06i74f.jpg" alt=""></li>
+<li>与门：<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fih9xsw9c4j307606dmxe.jpg" alt=""></li>
+<li>基本逻辑门符号：<br><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fih9yjfq4tj3091041jri.jpg" alt=""></li>
+<li>组合逻辑分为两大类，一类是可以存储信息的，另一类则不能。不能存储信息的结构被称为“决策单元”，通常更广泛地称为“<strong>组合逻辑结构</strong>”，这是因为它们的输出状态完全取决与“当前”逻辑结构的输入。</li>
+<li>常见的3个组合逻辑结构是：<strong>译码器</strong>、<strong>多路复用器</strong>和<strong>全加器</strong>。</li>
+<li><strong>译码器</strong>的特点是，在所有的输出中有且仅有一个为1，其余皆为0。每个输出端口对应一个输入模式，因此该结构可以用于检测、匹配不同的输入模式——译码器主要用于解释一个二进制数：<br><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fiha942t32j30720610sy.jpg" alt=""></li>
+<li><strong>多路复用器</strong>的功能就是从多个输入中选择一个，将其与输出相连：<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fihafko6woj306904kjrh.jpg" alt=""></li>
+<li><strong>全加器</strong>对三个输入（操作数ai、操作数bi以及低位运算产生的进位carryi）相加产生两个进位（结果Si和对高位运算的进位carryi+1）：<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fihazh59iij3082083gm0.jpg" alt=""></li>
+<li>可编程阵列的概念：一种逻辑门单元集合，是一个可以实现任意逻辑函数的可构建模块。通过“编程”多个与门（不同的输入组合）和多个或门（不同的输出）之间的连接关系，可以实现任何我们所期望的逻辑函数（或功能）。其中，与门的数目对应真值表的输入组合数目，如果逻辑函数的输入数目是n，则PLA需要2^n个与门；或门的数目则取决于真值表的输出数目。<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fihb5zoyibj307n05pq39.jpg" alt=""></li>
+<li><strong>逻辑完备性</strong>是指只要有足够的AND、OR和NOT门，我们可以实现任何逻辑函数。</li>
+<li><strong>R-S锁存器</strong>能够锁存一位的信息：<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fihfco2n3rj304d03fq2z.jpg" alt=""></li>
+<li><strong>门控D锁存器</strong>是为了对锁存器的置1和清0操作采取一定的控制措施：WE默认为0，此时我们知道S、R均为1，所以锁存器中的内容是被锁住的，这时，将WE瞬间置1，锁存器的值将取决于D值（与D值相同），当WE恢复为0时，原先的D值将被存储在R-S锁存器中。<br><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fihfwlqkg9j308i03gjrh.jpg" alt=""></li>
+<li>在LC-3中，<strong>寄存器</strong>就是一堆门控D锁存器组成的。举例如下图：<br><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fihg7nt278j309e048q3a.jpg" alt=""></li>
+<li><strong>内存</strong>是由一定数目（通常非常大）的“位置”组成的，其中每个位置可以被单独识别并独立存放一个数据。通常我们称内存中可独立识别的位置的总数为内存的“<strong>寻址空间</strong>”，<strong>寻址能力</strong>是指每个内存位置中包含的bit数目。</li>
+<li>其实寻址空间就是一个<strong>bit选择的多路开关</strong>——任一时刻可有且只有一个字线被选中，内存中每根字线上包含n个bit（<strong>寻址能力</strong>）。<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fihpdsqbmyj309c09ejs4.jpg" alt=""></li>
+<li><strong>时序电路</strong>是一种输出状态与当前电路状态、之前电路状态均相关的逻辑电路。它既能处理数据又能存储数据。<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fihpj9r0owj306w0423yo.jpg" alt=""></li>
+<li>时序电路主要被用于有限状态机。</li>
+<li>注意区分“组合密码锁”和“时序密码锁”。</li>
+<li>系统的<strong>状态</strong>是系统中所有组成要素在拍照时刻的一个“快照”。</li>
+<li>不同时刻，系统处于不同的状态。所以，通常我们使用“有限状态机（FSM）”来描述系统的行为。</li>
+<li>有限状态机由五个部分组成：①状态（有限数目）；②外部输入（有限数目）；③对外输出（有限数目）；④任意状态间迁移（显示注明）；⑤对外输出操作（显示注明）。</li>
+<li>有限状态机的状态转移触发机制：<strong>时钟</strong>。</li>
+<li>有限状态机的设计与实现举例：<br><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fihpvib0vmj307h057mxd.jpg" alt=""><br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fihpw9y13mj30dh09uq3y.jpg" alt=""></li>
+<li>在上面用时序逻辑电路实现一个有限状态机的图中，我们使用了<strong>主从锁存器</strong>，它避免了当前周期开始输入的时候就覆盖存储单元。</li>
+<li>LC-3计算机的数据通路：<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fihq1m853ej30ht0m540r.jpg" alt=""></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag"># 计算机组成原理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/08/10/I-O/" rel="prev" title="I/O">
+      <i class="fa fa-chevron-left"></i> I/O
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/08/13/%E5%86%AF%C2%B7%E8%AF%BA%E4%BE%9D%E6%9B%BC%E6%A8%A1%E5%9E%8B/" rel="next" title="冯·诺依曼模型">
+      冯·诺依曼模型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xijinian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://www.xijinian.top/2017/08/11/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/";
+    this.page.identifier = "2017/08/11/数字逻辑/";
+    this.page.title = "数字逻辑";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xijinian.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
