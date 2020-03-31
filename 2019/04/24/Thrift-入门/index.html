@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一个示例写 Thrift 文件举个例子：Hello.thrift 1234namespace java xyz.xijinian.serviceservice HelloService &amp;#123;    string hello (1 : string userName)&amp;#125;  编译使用 Thrift 工具编译 Hello.thrift，就会生成相应的 Hello.java 文件。该文件">
+  <meta name="description" content="一个示例写 Thrift 文件举个例子：Hello.thrift 1234namespace java xyz.xijinian.serviceservice HelloService &amp;#123;    string hello (1 : string userName)&amp;#125;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Thrift 入门">
 <meta property="og:url" content="https://www.xijinian.top/2019/04/24/Thrift-%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="Adventures of xijinian">
-<meta property="og:description" content="一个示例写 Thrift 文件举个例子：Hello.thrift 1234namespace java xyz.xijinian.serviceservice HelloService &amp;#123;    string hello (1 : string userName)&amp;#125;  编译使用 Thrift 工具编译 Hello.thrift，就会生成相应的 Hello.java 文件。该文件">
+<meta property="og:description" content="一个示例写 Thrift 文件举个例子：Hello.thrift 1234namespace java xyz.xijinian.serviceservice HelloService &amp;#123;    string hello (1 : string userName)&amp;#125;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2020/03/31/ubSGetYlgi5FhXr.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/31/A3ewRICKSWZqVHJ.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/31/ERxgZqh6dIQPWyJ.jpg">
 <meta property="article:published_time" content="2019-04-24T08:55:39.000Z">
-<meta property="article:modified_time" content="2020-03-31T07:22:19.000Z">
+<meta property="article:modified_time" content="2020-03-31T07:27:25.000Z">
 <meta property="article:author" content="xijinian">
 <meta property="article:tag" content="Java 工具">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,7 @@
       
         <h3 id="一个示例"><a href="#一个示例" class="headerlink" title="一个示例"></a>一个示例</h3><h4 id="写-Thrift-文件"><a href="#写-Thrift-文件" class="headerlink" title="写 Thrift 文件"></a>写 Thrift 文件</h4><p>举个例子：<code>Hello.thrift</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">namespace java xyz.xijinian.service</span><br><span class="line">service HelloService &#123;</span><br><span class="line">    string hello (1 : string userName)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<a id="more"></a>
 <h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><p>使用 Thrift 工具编译 <code>Hello.thrift</code>，就会生成相应的 <code>Hello.java</code> 文件。该文件包含了在 <code>Hello.thrift</code> 文件中描述的服务 <strong>Hello 的接口定义，即 <code>Hello.Iface</code> 接口</strong>，以及服务调用的底层通信细节，包括<strong>客户端的调用逻辑 <code>Hello.Client</code></strong> 以及<strong>服务器端的处理逻辑 <code>Hello.Processor</code></strong>，用于构建客户端和服务器端的功能。</p>
 <p>在 IDEA 中，编译 thrift 文件仍然需要操作系统中软件的支持，然后在 IDEA 的 Project Structure 里面的 Facets 添加 Thrift 并指定 Output path，这样就可以直接在 .thrift 文件上右键 <code>Recompile &#39;helloservice.thrift&#39;</code> 生成对应的代码。</p>
 <h4 id="构建实现类"><a href="#构建实现类" class="headerlink" title="构建实现类"></a>构建实现类</h4><p>创建 <code>HelloServiceImpl.java</code> 文件实现 <code>Hello.Iface</code> 接口：</p>

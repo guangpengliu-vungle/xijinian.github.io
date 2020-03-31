@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Maven 简介作用应该有很多功能，不过我个人常用的是  JAR 包管理、自定义项目模板以及自动构建。 pom 文件pom 其实是 Project Object Mode 的缩写，实际上就是把项目当成对象来看待，通过 Maven 的构建工具可以让项目和项目之间产生关联。 JAR 的坐标每一 JAR 文件都有一个唯一坐标，通过坐标可以精确确定是哪个 JAR： 12345678910111213&amp;lt">
+  <meta name="description" content="Maven 简介作用应该有很多功能，不过我个人常用的是  JAR 包管理、自定义项目模板以及自动构建。 pom 文件pom 其实是 Project Object Mode 的缩写，实际上就是把项目当成对象来看待，通过 Maven 的构建工具可以让项目和项目之间产生关联。 JAR 的坐标每一 JAR 文件都有一个唯一坐标，通过坐标可以精确确定是哪个 JAR：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maven 必知必会">
 <meta property="og:url" content="https://www.xijinian.top/2018/12/20/Maven-%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/index.html">
 <meta property="og:site_name" content="Adventures of xijinian">
-<meta property="og:description" content="Maven 简介作用应该有很多功能，不过我个人常用的是  JAR 包管理、自定义项目模板以及自动构建。 pom 文件pom 其实是 Project Object Mode 的缩写，实际上就是把项目当成对象来看待，通过 Maven 的构建工具可以让项目和项目之间产生关联。 JAR 的坐标每一 JAR 文件都有一个唯一坐标，通过坐标可以精确确定是哪个 JAR： 12345678910111213&amp;lt">
+<meta property="og:description" content="Maven 简介作用应该有很多功能，不过我个人常用的是  JAR 包管理、自定义项目模板以及自动构建。 pom 文件pom 其实是 Project Object Mode 的缩写，实际上就是把项目当成对象来看待，通过 Maven 的构建工具可以让项目和项目之间产生关联。 JAR 的坐标每一 JAR 文件都有一个唯一坐标，通过坐标可以精确确定是哪个 JAR：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2018/12/13/5c11c3655a6ea.png">
 <meta property="og:image" content="https://i.loli.net/2018/12/13/5c125a6392c2e.png">
 <meta property="og:image" content="https://i.loli.net/2018/12/13/5c125ad06fbb5.png">
 <meta property="article:published_time" content="2018-12-20T02:53:33.000Z">
-<meta property="article:modified_time" content="2020-03-31T06:46:20.000Z">
+<meta property="article:modified_time" content="2020-03-31T07:26:10.000Z">
 <meta property="article:author" content="xijinian">
 <meta property="article:tag" content="Java 工具">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,7 @@
       
         <h3 id="Maven-简介"><a href="#Maven-简介" class="headerlink" title="Maven 简介"></a>Maven 简介</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>应该有很多功能，不过我个人常用的是  JAR 包管理、自定义项目模板以及自动构建。</p>
 <h4 id="pom-文件"><a href="#pom-文件" class="headerlink" title="pom 文件"></a>pom 文件</h4><p>pom 其实是 Project Object Mode 的缩写，实际上就是把项目当成对象来看待，通过 Maven 的构建工具可以让项目和项目之间产生关联。</p>
-<h4 id="JAR-的坐标"><a href="#JAR-的坐标" class="headerlink" title="JAR 的坐标"></a>JAR 的坐标</h4><p>每一 JAR 文件都有一个唯一坐标，通过坐标可以精确确定是哪个 JAR：</p>
+<h4 id="JAR-的坐标"><a href="#JAR-的坐标" class="headerlink" title="JAR 的坐标"></a>JAR 的坐标</h4><p>每一 JAR 文件都有一个唯一坐标，通过坐标可以精确确定是哪个 JAR：<a id="more"></a></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">groupId 是实际的项目，推荐命名为“官网网址倒写.项目名”，如：xyz.xijinian.myproject</span></span><br><span class="line"><span class="comment">artifactId 实际项目中的一个 Maven 项目(模块)，推荐命名为“实际项目名-模块名”，如：myproject-first，这是为了方便寻找实际构建，因为 Maven 生成的构件文件名会以 artifactId 开头，这样就能快速地从一个文件夹中找到某个项目的一组组件</span></span><br><span class="line"><span class="comment">version 当然就是这个模块的版本号啦</span></span><br><span class="line"><span class="comment">packaging 是打包方式(和上面的三项不同，这个可以不写，不写默认 jar)</span></span><br><span class="line"><span class="comment">classifier 用来帮助定义构建输出一些附属组件，如 xxx-javadoc.jar、xxx-sources.jar 等，它是不能自己定义的，因为附属组件不是项目直接默认生成的，而是由附加的插件帮助生成</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>我们可以通过 <a href="http://mvnrepository.com" target="_blank" rel="noopener">http://mvnrepository.com</a> 来查看坐标。</p>
