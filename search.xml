@@ -303,10 +303,8 @@
 
 <h4 id="反序列化时忽略未知字段"><a href="#反序列化时忽略未知字段" class="headerlink" title="反序列化时忽略未知字段"></a>反序列化时忽略未知字段</h4><p>两种方式：</p>
 <ul>
-<li><p>配置 <code>ObjectMapper</code>：<code>mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</code></p>
-</li>
-<li><p>配置具体类，举例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@JsonIgnoreProperties</span>(ignoreUnknown=<span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123; ...</span><br></pre></td></tr></table></figure>
+<li>配置 <code>ObjectMapper</code>：<code>mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</code></li>
+<li>配置具体类，举例：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@JsonIgnoreProperties</span>(ignoreUnknown=<span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123; ...</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
