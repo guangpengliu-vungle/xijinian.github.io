@@ -893,7 +893,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="Spring-MVC-起步"><a href="#Spring-MVC-起步" class="headerlink" title="Spring MVC 起步"></a>Spring MVC 起步</h3><h4 id="请求流程"><a href="#请求流程" class="headerlink" title="请求流程"></a>请求流程</h4><p>请求的第一站是 <code>DispatcherServlet</code>，它就 Spring MVC 的前端控制器，它作为一个单实例的 Servlet 将请求委托给合适的控制器来执行实际的处理，而要查找合适的控制器就要 <code>DispatcherServlet</code> 查询一个或多个handler mapping 来确定请求的下一站在在哪。handler mapping 会根据请求所携带的 URL 信息来进行决策。 一旦选择了合适的控制器，<code>DispatcherServlet</code> 会将请求发送给选中的控制器。到了控制器，请求会卸下其负载（用户提交的信息）并耐心等待控制器处理这些信息。 控制器处理完后将产生的信息（model）打包发回给 <code>DispatcherServlet</code>，同时传递一个视图（view）名。<code>DispatcherServlet</code> 将会使用视图解析器（view resolver）来将逻辑视图名匹配为一个特定的视图实现，最终渲染输出。</p>
+          <h3 id="Spring-MVC-起步"><a href="#Spring-MVC-起步" class="headerlink" title="Spring MVC 起步"></a>Spring MVC 起步</h3><h4 id="请求流程"><a href="#请求流程" class="headerlink" title="请求流程"></a>请求流程</h4><p>请求的第一站是 <code>DispatcherServlet</code>，它就 Spring MVC 的前端控制器，它作为一个单实例的 Servlet 将请求委托给合适的控制器来执行实际的处理，而要查找合适的控制器就要 <code>DispatcherServlet</code> 查询一个或多个 handler mapping 来确定请求的下一站在在哪。handler mapping 会根据请求所携带的 URL 信息来进行决策。 一旦选择了合适的控制器，<code>DispatcherServlet</code> 会将请求发送给选中的控制器。到了控制器，请求会卸下其负载（用户提交的信息）并耐心等待控制器处理这些信息。 控制器处理完后将产生的信息（model）打包发回给 <code>DispatcherServlet</code>，同时传递一个视图（view）名。<code>DispatcherServlet</code> 将会使用视图解析器（view resolver）来将逻辑视图名匹配为一个特定的视图实现，最终渲染输出。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/05/12/Spring-MVC-IN-ACTION/#more" rel="contents">
