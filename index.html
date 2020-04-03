@@ -841,6 +841,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/14/Spring-AOP-IN-ACTION/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/14/Spring-AOP-IN-ACTION/" class="post-title-link" itemprop="url">Spring AOP IN ACTION</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-14 11:00:04" itemprop="dateCreated datePublished" datetime="2018-05-14T11:00:04+08:00">2018-05-14</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/14/Spring-AOP-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/14/Spring-AOP-IN-ACTION/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="什么是面向切面编程"><a href="#什么是面向切面编程" class="headerlink" title="什么是面向切面编程"></a>什么是面向切面编程</h3><h4 id="AOP-术语"><a href="#AOP-术语" class="headerlink" title="AOP 术语"></a>AOP 术语</h4><ul>
+<li><strong>通知</strong>（Advice）<ul>
+<li>前置通知</li>
+<li>后置通知</li>
+<li>返回通知</li>
+<li>异常通知</li>
+<li>环绕通知</li>
+</ul>
+</li>
+<li><strong>连接点</strong>（Join point）</li>
+<li><strong>切点</strong>（Pointcut）</li>
+<li><strong>切面</strong>（Aspect）</li>
+<li><strong>引入</strong>（Introduction）—— 在无需修改现有类的情况下，让它们具有新的行为和状态</li>
+<li><strong>织入</strong>（Wearing）—— 把切面应用到目标对象并创建新的代理对象的过程<ul>
+<li><strong>编译器</strong><br>切面在目标类编译时被织入，需要特殊的编译器，AspectJ 的织入编辑器就是以这种方式织入切面</li>
+<li><strong>类加载期</strong><br>切面在目标类加载到 JVM 时织入，这种方式需要特殊的 ClassLoader，它可以在目标类被引入应用之前增强该目标类的字节码。AspectJ 5 LTW（load-time weaving）就支持以这种方式织入切面</li>
+<li><strong>运行期</strong><br>一般情况下，AOP 容器会为目标对象动态创建一个代理对象，这就是 Spring AOP</li>
+</ul>
+</li>
+</ul>
+<p>综述：<strong>连接点</strong>是程序执行过程中能够应用通知的所有点。<strong>通知</strong>定义了切面的<strong>时间</strong>和<strong>行为</strong>，<strong>切点</strong>定义了切面的<strong>位置</strong>（在哪些连接点）。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/14/Spring-AOP-IN-ACTION/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/12/Spring-MVC-IN-ACTION/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -897,92 +996,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/05/12/Spring-MVC-IN-ACTION/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/11/Spring-Bean-IN-ACTION/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/11/Spring-Bean-IN-ACTION/" class="post-title-link" itemprop="url">Spring Bean IN ACTION</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-11 23:35:08" itemprop="dateCreated datePublished" datetime="2018-05-11T23:35:08+08:00">2018-05-11</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/05/11/Spring-Bean-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/11/Spring-Bean-IN-ACTION/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="自动化装配-Bean"><a href="#自动化装配-Bean" class="headerlink" title="自动化装配 Bean"></a>自动化装配 Bean</h3><h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ul>
-<li>用一个类实现一个接口，并在此类上面标注 <code>@Component</code> 注解</li>
-<li>构造一个 Config 类，在上面标注 <code>@Configuration</code> 和 <code>@ComponentScan</code> 注解，意图让 Spring 可以发现此类同包下的 <code>Component</code> 注解</li>
-<li>在其他类中，可以直接在最开始定义的接口上标注一个 <code>@Autowired</code> 注解，这样就会把此注解的实现类注入到当前的类中了。</li>
-</ul>
-<h4 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h4><ul>
-<li><p>一个<strong>类</strong>在使用 <code>Component</code> 注解时直接为自己添加一个名字。语法为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(<span class="string">"xiaoHong"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/11/Spring-Bean-IN-ACTION/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1073,7 +1086,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
