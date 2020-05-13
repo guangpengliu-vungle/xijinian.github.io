@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在 Mac 上安装与运行安装1&gt; brew install redis  运行1234# 运行服务器，daemonize 表示在后台运行&gt; redis-server --daemonize yes# 运行命令行&gt; redis-cli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 实战">
+<meta property="og:url" content="https://www.xijinian.top/2019/02/24/Redis-%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="在 Mac 上安装与运行安装1&gt; brew install redis  运行1234# 运行服务器，daemonize 表示在后台运行&gt; redis-server --daemonize yes# 运行命令行&gt; redis-cli">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2019/01/12/5c38c518e39fc.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/28/3eJXnuZF9OAcRlS.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/16/2htoKE8wmFpvLA4.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/19/zwduoUL62RXDKNl.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/28/AjbUNRYiIZHK6Bs.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/19/NR2Ze8chB9MCmyE.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/28/tubH5KnAayXpLBU.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/28/Du5imAhvaTkz8n4.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/28/msnvRgO5Cz1Dbcj.png">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/2/164fa17ba5f2d88e?imageslim">
+<meta property="og:image" content="https://i.loli.net/2020/04/28/lpeBNTCiyf23xcg.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/28/4Lbqwvmt8TaIg3M.png">
+<meta property="article:published_time" content="2019-02-24T14:45:34.000Z">
+<meta property="article:modified_time" content="2020-04-28T10:49:42.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="NoSQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2019/01/12/5c38c518e39fc.png">
+
+<link rel="canonical" href="https://www.xijinian.top/2019/02/24/Redis-%E5%AE%9E%E6%88%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Redis 实战 | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/02/24/Redis-%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis 实战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-24 22:45:34" itemprop="dateCreated datePublished" datetime="2019-02-24T22:45:34+08:00">2019-02-24</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/02/24/Redis-%E5%AE%9E%E6%88%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/24/Redis-实战/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="在-Mac-上安装与运行"><a href="#在-Mac-上安装与运行" class="headerlink" title="在 Mac 上安装与运行"></a>在 Mac 上安装与运行</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; brew install redis</span><br></pre></td></tr></table></figure>
+
+<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行服务器，daemonize 表示在后台运行</span></span><br><span class="line">&gt; redis-server --daemonize yes</span><br><span class="line"><span class="comment"># 运行命令行</span></span><br><span class="line">&gt; redis-cli</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="Redis-基础数据结构"><a href="#Redis-基础数据结构" class="headerlink" title="Redis 基础数据结构"></a>Redis 基础数据结构</h3><p>Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。Redis 有 5 种基础数据结构，分别为：string (字符串)、list (列表)、set (集合)、hash (哈希) 和 zset (有序集合)。</p>
+<h4 id="string-字符串"><a href="#string-字符串" class="headerlink" title="string 字符串"></a>string 字符串</h4><p>Redis 的字符串是动态字符串，是可以修改的字符串，内部结构实现上类似于 Java 的 ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配，如下图所示，内部为当前字符串实际分配的空间 capacity 一般要高于实际字符串长度 len。当字符串长度小于 1M 时，扩容都是加倍现有的空间，如果超过 1M，扩容时一次只会多扩 1M 的空间。需要注意的是字符串最大长度为 512M。</p>
+<p><img data-src="https://i.loli.net/2019/01/12/5c38c518e39fc.png" alt=""></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 键值对</span></span><br><span class="line">&gt; <span class="built_in">set</span> name codehole</span><br><span class="line">OK</span><br><span class="line">&gt; get name</span><br><span class="line"><span class="string">"codehole"</span></span><br><span class="line">&gt; exists name</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; del name</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; get name</span><br><span class="line">(nil)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 批量键值对</span></span><br><span class="line">&gt; <span class="built_in">set</span> name1 codehole</span><br><span class="line">OK</span><br><span class="line">&gt; <span class="built_in">set</span> name2 holycoder</span><br><span class="line">OK</span><br><span class="line">&gt; mget name1 name2 name3 <span class="comment"># 返回一个列表</span></span><br><span class="line">1) <span class="string">"codehole"</span></span><br><span class="line">2) <span class="string">"holycoder"</span></span><br><span class="line">3) (nil)</span><br><span class="line">&gt; mset name1 boy name2 girl name3 unknown</span><br><span class="line">&gt; mget name1 name2 name3</span><br><span class="line">1) <span class="string">"boy"</span></span><br><span class="line">2) <span class="string">"girl"</span></span><br><span class="line">3) <span class="string">"unknown"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 过期和 set 命令拓展</span></span><br><span class="line">&gt; <span class="built_in">set</span> name codehole</span><br><span class="line">&gt; get name</span><br><span class="line"><span class="string">"codehole"</span></span><br><span class="line">&gt; expire name 5  <span class="comment"># 5s 后过期</span></span><br><span class="line">...  <span class="comment"># wait for 5s</span></span><br><span class="line">&gt; get name</span><br><span class="line">(nil)</span><br><span class="line"></span><br><span class="line">&gt; setex name 5 codehole  <span class="comment"># 5s 后过期，等价于 set + expire</span></span><br><span class="line">&gt; get name</span><br><span class="line"><span class="string">"codehole"</span></span><br><span class="line">... <span class="comment"># wait for 5s</span></span><br><span class="line">&gt; get name</span><br><span class="line">(nil)</span><br><span class="line"></span><br><span class="line">&gt; setnx name codehole  <span class="comment"># 如果 name 不存在就执行 set 创建</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; get name</span><br><span class="line"><span class="string">"codehole"</span></span><br><span class="line">&gt; setnx name holycoder</span><br><span class="line">(<span class="built_in">integer</span>) 0  <span class="comment"># 因为 name 已经存在，所以 set 创建不成功</span></span><br><span class="line">&gt; get name</span><br><span class="line"><span class="string">"codehole"</span>  <span class="comment"># 没有改变</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果 value 值是一个整数，还可以对它进行自增操作。它的范围是 signed long 的范围</span></span><br><span class="line">&gt; <span class="built_in">set</span> age 30</span><br><span class="line">OK</span><br><span class="line">&gt; incr age</span><br><span class="line">(<span class="built_in">integer</span>) 31</span><br><span class="line">&gt; incrby age 5</span><br><span class="line">(<span class="built_in">integer</span>) 36</span><br><span class="line">&gt; incrby age -5</span><br><span class="line">(<span class="built_in">integer</span>) 31</span><br><span class="line">&gt; <span class="built_in">set</span> codehole 9223372036854775807  <span class="comment"># Long.Max</span></span><br><span class="line">OK</span><br><span class="line">&gt; incr codehole</span><br><span class="line">(error) ERR increment or decrement would overflow</span><br></pre></td></tr></table></figure>
+
+<h4 id="list-列表"><a href="#list-列表" class="headerlink" title="list (列表)"></a>list (列表)</h4><p>Redis 的列表相当于 Java 语言里面的 LinkedList，注意它是链表而不是数组。这意味着 list 的插入和删除操作非常快，时间复杂度为 O(1)，但是索引定位很慢，时间复杂度为 O(n)。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 右边进左边出：队列</span></span><br><span class="line">&gt; rpush books python java golang</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">&gt; llen books</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">&gt; lpop books</span><br><span class="line"><span class="string">"python"</span></span><br><span class="line">&gt; lpop books</span><br><span class="line"><span class="string">"java"</span></span><br><span class="line">&gt; lpop books</span><br><span class="line"><span class="string">"golang"</span></span><br><span class="line">&gt; lpop books</span><br><span class="line">(nil)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 右边进右边出：栈</span></span><br><span class="line">&gt; rpush books python java golang</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">&gt; rpop books</span><br><span class="line"><span class="string">"golang"</span></span><br><span class="line">&gt; rpop books</span><br><span class="line"><span class="string">"java"</span></span><br><span class="line">&gt; rpop books</span><br><span class="line"><span class="string">"python"</span></span><br><span class="line">&gt; rpop books</span><br><span class="line">(nil)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 慢操作 lindex、lrange、ltrim</span></span><br><span class="line">&gt; rpush books python java golang</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">&gt; lindex books 1  <span class="comment"># O(n) 慎用</span></span><br><span class="line"><span class="string">"java"</span></span><br><span class="line">&gt; lrange books 0 -1  <span class="comment"># 获取所有元素，O(n) 慎用</span></span><br><span class="line">1) <span class="string">"python"</span></span><br><span class="line">2) <span class="string">"java"</span></span><br><span class="line">3) <span class="string">"golang"</span></span><br><span class="line">&gt; ltrim books 1 -1 <span class="comment"># O(n) 慎用</span></span><br><span class="line">OK</span><br><span class="line">&gt; lrange books 0 -1</span><br><span class="line">1) <span class="string">"java"</span></span><br><span class="line">2) <span class="string">"golang"</span></span><br><span class="line">&gt; ltrim books 1 0 <span class="comment"># 这其实是清空了整个列表，因为区间范围长度为负</span></span><br><span class="line">OK</span><br><span class="line">&gt; llen books</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="hash-字典"><a href="#hash-字典" class="headerlink" title="hash (字典)"></a>hash (字典)</h4><p>Redis 的字典相当于 Java 语言里面的 HashMap，它是无序字典。内部实现结构上同 Java 的 HashMap 也是一致的，同样的数组 + 链表二维结构。第一维 hash 的数组位置碰撞时，就会将碰撞的元素使用链表串接起来。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt; hset books java <span class="string">"think in java"</span>  <span class="comment"># 命令行的字符串如果包含空格，要用引号括起来</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; hset books golang <span class="string">"concurrency in go"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; hset books python <span class="string">"python cookbook"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; hgetall books  <span class="comment"># entries()，key 和 value 间隔出现</span></span><br><span class="line">1) <span class="string">"java"</span></span><br><span class="line">2) <span class="string">"think in java"</span></span><br><span class="line">3) <span class="string">"golang"</span></span><br><span class="line">4) <span class="string">"concurrency in go"</span></span><br><span class="line">5) <span class="string">"python"</span></span><br><span class="line">6) <span class="string">"python cookbook"</span></span><br><span class="line">&gt; hlen books</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">&gt; hget books java</span><br><span class="line"><span class="string">"think in java"</span></span><br><span class="line">&gt; hset books golang <span class="string">"learning go programming"</span>  <span class="comment"># 因为是更新操作，所以返回 0</span></span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">&gt; hget books golang</span><br><span class="line"><span class="string">"learning go programming"</span></span><br><span class="line">&gt; hmset books java <span class="string">"effective java"</span> python <span class="string">"learning python"</span> golang <span class="string">"modern golang programming"</span>  <span class="comment"># 批量 set</span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">&gt; hincrby user-laoqian age 1  <span class="comment"># 老钱又老了一岁</span></span><br><span class="line">(<span class="built_in">integer</span>) 30</span><br></pre></td></tr></table></figure>
+
+<h4 id="set-集合"><a href="#set-集合" class="headerlink" title="set (集合)"></a>set (集合)</h4><p>Redis 的集合相当于 Java 语言里面的 HashSet，它内部的键值对是无序的唯一的。它的内部实现相当于一个特殊的字典，字典中所有的 value 都是一个值——<code>NULL</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt; sadd books python</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; sadd books python  <span class="comment"># 重复</span></span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">&gt; sadd books java golang</span><br><span class="line">(<span class="built_in">integer</span>) 2</span><br><span class="line">&gt; smembers books  <span class="comment"># 注意顺序，和插入的并不一致，因为 set 是无序的</span></span><br><span class="line">1) <span class="string">"java"</span></span><br><span class="line">2) <span class="string">"python"</span></span><br><span class="line">3) <span class="string">"golang"</span></span><br><span class="line">&gt; sismember books java  <span class="comment"># 查询某个 value 是否存在，相当于 contains(o)</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; sismember books rust</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">&gt; scard books  <span class="comment"># 获取长度相当于 count()</span></span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">&gt; spop books  <span class="comment"># 弹出一个</span></span><br><span class="line"><span class="string">"java"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="zset-有序集合"><a href="#zset-有序集合" class="headerlink" title="zset (有序集合)"></a>zset (有序集合)</h4><p>zset 可能是 Redis 提供的最为特色的数据结构，它也是在面试中面试官最爱问的数据结构。它类似于 Java 的 SortedSet 和 HashMap 的结合体，一方面它是一个 set，保证了内部 value 的唯一性，另一方面它可以给每个 value 赋予一个 score，代表这个 value 的排序权重。它的内部实现用的是一种叫做「跳跃列表」的数据结构。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&gt; zadd books 9.0 <span class="string">"think in java"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zadd books 8.9 <span class="string">"java concurrency"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zadd books 8.6 <span class="string">"java cookbook"</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zrange books 0 -1  <span class="comment"># 按 score 排序列出，参数区间为排名范围</span></span><br><span class="line">1) <span class="string">"java cookbook"</span></span><br><span class="line">2) <span class="string">"java concurrency"</span></span><br><span class="line">3) <span class="string">"think in java"</span></span><br><span class="line">&gt; zrevrange books 0 -1  <span class="comment"># 按 score 逆序列出，参数区间为排名范围</span></span><br><span class="line">1) <span class="string">"think in java"</span></span><br><span class="line">2) <span class="string">"java concurrency"</span></span><br><span class="line">3) <span class="string">"java cookbook"</span></span><br><span class="line">&gt; zcard books  <span class="comment"># 相当于 count()</span></span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">&gt; zscore books <span class="string">"java concurrency"</span>  <span class="comment"># 获取指定 value 的 score</span></span><br><span class="line"><span class="string">"8.9000000000000004"</span>  <span class="comment"># 内部 score 使用 double 类型进行存储，所以存在小数点精度问题</span></span><br><span class="line">&gt; zrank books <span class="string">"java concurrency"</span>  <span class="comment"># 排名</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zrangebyscore books 0 8.91  <span class="comment"># 根据分值区间遍历 zset</span></span><br><span class="line">1) <span class="string">"java cookbook"</span></span><br><span class="line">2) <span class="string">"java concurrency"</span></span><br><span class="line">&gt; zrangebyscore books -inf 8.91 withscores <span class="comment"># 根据分值区间 (-∞, 8.91] 遍历 zset，同时返回分值。inf 代表 infinite，无穷大的意思。</span></span><br><span class="line">1) <span class="string">"java cookbook"</span></span><br><span class="line">2) <span class="string">"8.5999999999999996"</span></span><br><span class="line">3) <span class="string">"java concurrency"</span></span><br><span class="line">4) <span class="string">"8.9000000000000004"</span></span><br><span class="line">&gt; zrem books <span class="string">"java concurrency"</span>  <span class="comment"># 删除 value</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">&gt; zrange books 0 -1</span><br><span class="line">1) <span class="string">"java cookbook"</span></span><br><span class="line">2) <span class="string">"think in java"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><h4 id="一个内置命令搞定"><a href="#一个内置命令搞定" class="headerlink" title="一个内置命令搞定"></a>一个内置命令搞定</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; setnx lock:codehole <span class="literal">true</span></span><br><span class="line">OK</span><br><span class="line">&gt; expire lock:codehole 5</span><br><span class="line">... <span class="keyword">do</span> something critical ...</span><br><span class="line">&gt; del lock:codehole</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line"></span><br><span class="line">↓↓↓ <span class="built_in">set</span> 指令的扩展参数，使得 setnx 和 expire 指令可以一起执行</span><br><span class="line"><span class="built_in">set</span> lock:codehole <span class="literal">true</span> ex 5 nx</span><br></pre></td></tr></table></figure>
+
+<h4 id="加锁失败处理"><a href="#加锁失败处理" class="headerlink" title="加锁失败处理"></a>加锁失败处理</h4><p>放入延时队列延后处理以避开冲突。</p>
+<h3 id="延时队列"><a href="#延时队列" class="headerlink" title="延时队列"></a>延时队列</h3><h4 id="简易队列"><a href="#简易队列" class="headerlink" title="简易队列"></a>简易队列</h4><p>Redis 的 <code>list</code> 数据结构常用来作为异步消息队列使用，使用 <code>rpush/lpush</code> 操作入队列，使用 <code>lpop 和 rpop</code> 来出队列。如果队列空了，<code>pop</code> 会得到 <code>nil</code>，并空轮询，这是可以使用 <code>blpop</code>/<code>brpop</code> 替代前面的 <code>lpop</code>/<code>rpop</code>，’b’ 是 ‘blocking’ 的意思。如果线程一直阻塞在那里，Redis 的客户端连接就成了闲置连接，闲置过久，服务器一般会主动断开连接，减少闲置资源占用。这个时候 <code>blpop/brpop</code> 会抛出异常来。</p>
+<h4 id="延时队列-1"><a href="#延时队列-1" class="headerlink" title="延时队列"></a>延时队列</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// loop 方法可能会被多个线程、多个进程调用，同一个任务可能会被多个进程线程抢到，zrem 来决定唯一的属主</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><br><span class="line">    <span class="comment">// 只取一条</span></span><br><span class="line">    Set&lt;String&gt; values = jedis.zrangeByScore(queueKey, <span class="number">0</span>, System.currentTimeMillis(), <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (values.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">500</span>); <span class="comment">// 歇会继续</span></span><br><span class="line">      &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    String s = values.iterator().next();</span><br><span class="line">    <span class="keyword">if</span> (jedis.zrem(queueKey, s) &gt; <span class="number">0</span>) &#123; <span class="comment">// 抢到了</span></span><br><span class="line">      TaskItem&lt;T&gt; task = JSON.parseObject(s, TaskType); <span class="comment">// fastjson 反序列化</span></span><br><span class="line">      <span class="keyword">this</span>.handleMsg(task.msg);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="位图"><a href="#位图" class="headerlink" title="位图"></a>位图</h3><h4 id="简易使用"><a href="#简易使用" class="headerlink" title="简易使用"></a>简易使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>bin(ord(<span class="string">'h'</span>))</span><br><span class="line"><span class="string">'0b1101000'</span>   <span class="comment"># 高位 -&gt; 低位</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>bin(ord(<span class="string">'e'</span>))</span><br><span class="line"><span class="string">'0b1100101'</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; setbit s 1 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; setbit s 2 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; setbit s 4 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; setbit s 9 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; setbit s 10 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; setbit s 13 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; setbit s 15 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; get s</span><br><span class="line"><span class="string">"he"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="统计和查找"><a href="#统计和查找" class="headerlink" title="统计和查找"></a>统计和查找</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># bitcount 用来统计指定位置范围内 1 的个数，bitpos 用来查找指定范围内出现的第一个 0 或 1</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> w hello</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; bitcount w</span><br><span class="line">(<span class="built_in">integer</span>) 21</span><br><span class="line">127.0.0.1:6379&gt; bitcount w 0 0  <span class="comment"># 第一个字符中 1 的位数</span></span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">127.0.0.1:6379&gt; bitcount w 0 1  <span class="comment"># 前两个字符中 1 的位数</span></span><br><span class="line">(<span class="built_in">integer</span>) 7</span><br><span class="line">127.0.0.1:6379&gt; bitpos w 0  <span class="comment"># 第一个 0 位</span></span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; bitpos w 1  <span class="comment"># 第一个 1 位</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; bitpos w 1 1 1  <span class="comment"># 从第二个字符算起，第一个 1 位</span></span><br><span class="line">(<span class="built_in">integer</span>) 9</span><br><span class="line">127.0.0.1:6379&gt; bitpos w 1 2 2  <span class="comment"># 从第三个字符算起，第一个 1 位</span></span><br><span class="line">(<span class="built_in">integer</span>) 17</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> w hello</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; bitfield w get u4 0  <span class="comment"># 从第一个位开始取 4 个位，结果是无符号数 (u)</span></span><br><span class="line">(<span class="built_in">integer</span>) 6</span><br><span class="line">127.0.0.1:6379&gt; bitfield w get u3 2  <span class="comment"># 从第三个位开始取 3 个位，结果是无符号数 (u)</span></span><br><span class="line">(<span class="built_in">integer</span>) 5</span><br><span class="line">127.0.0.1:6379&gt; bitfield w get i4 0  <span class="comment"># 从第一个位开始取 4 个位，结果是有符号数 (i)</span></span><br><span class="line">1) (<span class="built_in">integer</span>) 6</span><br><span class="line">127.0.0.1:6379&gt; bitfield w get i3 2  <span class="comment"># 从第三个位开始取 3 个位，结果是有符号数 (i)</span></span><br><span class="line">1) (<span class="built_in">integer</span>) -3</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; bitfield w get u4 0 get u3 2 get i4 0 get i3 2</span><br><span class="line">1) (<span class="built_in">integer</span>) 6</span><br><span class="line">2) (<span class="built_in">integer</span>) 5</span><br><span class="line">3) (<span class="built_in">integer</span>) 6</span><br><span class="line">4) (<span class="built_in">integer</span>) -3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> w hello</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; bitfield w incrby u4 2 1  <span class="comment"># 从第三个位开始，对接下来的 4 位无符号数 +1</span></span><br><span class="line">1) (<span class="built_in">integer</span>) 11</span><br><span class="line">127.0.0.1:6379&gt; bitfield w incrby u4 2 1</span><br><span class="line">1) (<span class="built_in">integer</span>) 12</span><br><span class="line">127.0.0.1:6379&gt; bitfield w incrby u4 2 1</span><br><span class="line">1) (<span class="built_in">integer</span>) 13</span><br><span class="line">127.0.0.1:6379&gt; bitfield w incrby u4 2 1</span><br><span class="line">1) (<span class="built_in">integer</span>) 14</span><br><span class="line">127.0.0.1:6379&gt; bitfield w incrby u4 2 1</span><br><span class="line">1) (<span class="built_in">integer</span>) 15</span><br><span class="line">127.0.0.1:6379&gt; bitfield w incrby u4 2 1  <span class="comment"># 溢出策略会变成默认值折返</span></span><br><span class="line">1) (<span class="built_in">integer</span>) 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 饱和截断 SAT</span></span><br><span class="line">127.0.0.1:6379&gt; bitfield w overflow sat incrby u4 2 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 失败不执行 FAIL</span></span><br><span class="line">127.0.0.1:6379&gt; bitfield w overflow fail incrby u4 2 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h3><h4 id="简单实用"><a href="#简单实用" class="headerlink" title="简单实用"></a>简单实用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; pfadd codehole user1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; pfcount codehole</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; pfadd codehole user2 user3 user4 user5</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; pfcount codehole</span><br><span class="line">(<span class="built_in">integer</span>) 5</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将多个 <code>pf</code> 计数值累加在一起形成一个新的 <code>pf</code> 值：<code>pfmerge destkey sourcekey [sourcekey ...]</code></p>
+</blockquote>
+<h4 id="HyperLogLog-原理"><a href="#HyperLogLog-原理" class="headerlink" title="HyperLogLog 原理"></a>HyperLogLog 原理</h4><p>给定一系列的随机整数，我们记录下低位连续零位的最大长度 k，通过这个 k 值可以估算出随机数 N 的数量：$N≈2^K$</p>
+<p><img data-src="https://i.loli.net/2020/04/28/3eJXnuZF9OAcRlS.png" alt=""></p>
+<h4 id="pf-的内存占-12k？"><a href="#pf-的内存占-12k？" class="headerlink" title="pf 的内存占 12k？"></a>pf 的内存占 12k？</h4><p>Redis 的 HyperLogLog 实现中用到的是 16384 个桶，也就是 $2^{14}$，每个桶的 $maxbits$ 需要 6 个 bits 来存储，最大可以表示 $maxbits=63$，于是总共占用内存就是 $\frac{2^{14}\cdot 6}{8} = 12k$ 字节。</p>
+<p>不过，Redis 对 HyperLogLog 的存储进行了优化，在计数比较小时，它的存储空间采用稀疏矩阵存储，空间占用很小，仅仅在计数慢慢变大，稀疏矩阵占用空间渐渐超过了阈值时才会一次性转变成稠密矩阵，才会占用 12k 的空间。</p>
+<h3 id="BloomFilter"><a href="#BloomFilter" class="headerlink" title="BloomFilter"></a>BloomFilter</h3><h4 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; bf.add codehole user1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; bf.exists codehole user1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; bf.madd codehole user2 user3 user4</span><br><span class="line">1) (<span class="built_in">integer</span>) 1</span><br><span class="line">2) (<span class="built_in">integer</span>) 1</span><br><span class="line">3) (<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; bf.mexists codehole user2 user3 user4 user5</span><br><span class="line">1) (<span class="built_in">integer</span>) 1</span><br><span class="line">2) (<span class="built_in">integer</span>) 1</span><br><span class="line">3) (<span class="built_in">integer</span>) 1</span><br><span class="line">4) (<span class="built_in">integer</span>) 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义设置，bf.reserve key error_rate capacity</span></span><br><span class="line">127.0.0.1:6379&gt; bf.reserve codehole 0.001, 50000</span><br></pre></td></tr></table></figure>
+
+<h4 id="BloomFilter-原理"><a href="#BloomFilter-原理" class="headerlink" title="BloomFilter 原理"></a>BloomFilter 原理</h4><p>向布隆过滤器中添加 key 时，会使用多个 hash 函数对 key 进行 hash 算得一个整数索引值然后对位数组长度进行取模运算得到一个位置，每个 hash 函数都会算得一个不同的位置。再把位数组的这几个位置都置为 1 就完成了 add 操作。向布隆过滤器询问 key 是否存在时，跟 add 一样，也会把 hash 的几个位置都算出来，看看位数组中这几个位置是否都为 1，只要有一个位为 0，那么说明布隆过滤器中这个 key 不存在。</p>
+<p><img data-src="https://i.loli.net/2020/04/16/2htoKE8wmFpvLA4.png" alt="20200416005120.png"></p>
+<h4 id="空间占用估计"><a href="#空间占用估计" class="headerlink" title="空间占用估计"></a>空间占用估计</h4><p>公式是 $f=0.6185^{\frac{l}{n}}$，f：错误率、l：bit 数组长度、n：key 数量</p>
+<ol>
+<li>错误率为 10%，一个元素需要的平均指纹空间为 4.792 个 bit，大约为 5bit</li>
+<li>错误率为 1%，一个元素需要的平均指纹空间为 9.585 个 bit，大约为 10bit</li>
+<li>错误率为 0.1%，一个元素需要的平均指纹空间为 14.377 个 bit，大约为 15bit</li>
+</ol>
+<h4 id="最佳-Hash-函数数量"><a href="#最佳-Hash-函数数量" class="headerlink" title="最佳 Hash 函数数量"></a>最佳 Hash 函数数量</h4><p>公式是 $k=0.7\cdot \frac{l}{n}$，k：最佳 hash 函数数量、l：bit 数组长度、n：key 数量</p>
+<h3 id="简单限流"><a href="#简单限流" class="headerlink" title="简单限流"></a>简单限流</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 这个代码有点问题，正确写法如下：</span></span><br><span class="line"><span class="comment"> * 1、清除一下时间窗口之外的数据。</span></span><br><span class="line"><span class="comment"> * 2、统计时间窗口内的数量。如果大于等于限制次数，直接返回 false，否则 3</span></span><br><span class="line"><span class="comment"> * 3、添加此次请求到时间窗口，同时返回 true</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isActionAllowed</span><span class="params">(String userId, String actionKey, <span class="keyword">int</span> period, <span class="keyword">int</span> maxCount)</span> </span>&#123;</span><br><span class="line">  String key = String.format(<span class="string">"hist:%s:%s"</span>, userId, actionKey);</span><br><span class="line">  <span class="keyword">long</span> nowTs = System.currentTimeMillis();</span><br><span class="line">  Pipeline pipe = jedis.pipelined();</span><br><span class="line">  pipe.multi();</span><br><span class="line">  pipe.zadd(key, nowTs, <span class="string">""</span> + nowTs);</span><br><span class="line">  pipe.zremrangeByScore(key, <span class="number">0</span>, nowTs - period * <span class="number">1000</span>);</span><br><span class="line">  Response&lt;Long&gt; count = pipe.zcard(key);</span><br><span class="line">  pipe.expire(key, period + <span class="number">1</span>);</span><br><span class="line">  pipe.exec();</span><br><span class="line">  pipe.close();</span><br><span class="line">  <span class="keyword">return</span> count.get() &lt;= maxCount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="漏斗限流"><a href="#漏斗限流" class="headerlink" title="漏斗限流"></a>漏斗限流</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FunnelRateLimiter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Funnel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> capacity; <span class="comment">// 漏斗容量</span></span><br><span class="line">    <span class="keyword">float</span> leakingRate; <span class="comment">// 漏嘴流水速率</span></span><br><span class="line">    <span class="keyword">int</span> leftQuota; <span class="comment">// 漏斗剩余空间</span></span><br><span class="line">    <span class="keyword">long</span> leakingTs; <span class="comment">// 上一次漏水时间</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Funnel</span><span class="params">(<span class="keyword">int</span> capacity, <span class="keyword">float</span> leakingRate)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.capacity = capacity;</span><br><span class="line">      <span class="keyword">this</span>.leakingRate = leakingRate;</span><br><span class="line">      <span class="keyword">this</span>.leftQuota = capacity;</span><br><span class="line">      <span class="keyword">this</span>.leakingTs = System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">makeSpace</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">long</span> nowTs = System.currentTimeMillis();</span><br><span class="line">      <span class="keyword">long</span> deltaTs = nowTs - leakingTs;</span><br><span class="line">      <span class="keyword">int</span> deltaQuota = (<span class="keyword">int</span>) (deltaTs * leakingRate);</span><br><span class="line">      <span class="keyword">if</span> (deltaQuota &lt; <span class="number">0</span>) &#123; <span class="comment">// 间隔时间太长，整数数字过大溢出</span></span><br><span class="line">        <span class="keyword">this</span>.leftQuota = capacity;</span><br><span class="line">        <span class="keyword">this</span>.leakingTs = nowTs;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (deltaQuota &lt; <span class="number">1</span>) &#123; <span class="comment">// 腾出空间太小，最小单位是1</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.leftQuota += deltaQuota;</span><br><span class="line">      <span class="keyword">this</span>.leakingTs = nowTs;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.leftQuota &gt; <span class="keyword">this</span>.capacity) &#123;</span><br><span class="line">        <span class="keyword">this</span>.leftQuota = <span class="keyword">this</span>.capacity;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">watering</span><span class="params">(<span class="keyword">int</span> quota)</span> </span>&#123;</span><br><span class="line">      makeSpace();</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.leftQuota &gt;= quota) &#123;</span><br><span class="line">        <span class="keyword">this</span>.leftQuota -= quota;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Map&lt;String, Funnel&gt; funnels = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isActionAllowed</span><span class="params">(String userId, String actionKey, <span class="keyword">int</span> capacity, <span class="keyword">float</span> leakingRate)</span> </span>&#123;</span><br><span class="line">    String key = String.format(<span class="string">"%s:%s"</span>, userId, actionKey);</span><br><span class="line">    Funnel funnel = funnels.get(key);</span><br><span class="line">    <span class="keyword">if</span> (funnel == <span class="keyword">null</span>) &#123;</span><br><span class="line">      funnel = <span class="keyword">new</span> Funnel(capacity, leakingRate);</span><br><span class="line">      funnels.put(key, funnel);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> funnel.watering(<span class="number">1</span>); <span class="comment">// 需要1个quota</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Redis-Cell"><a href="#Redis-Cell" class="headerlink" title="Redis-Cell"></a>Redis-Cell</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; cl.throttle laoqian:reply 15 30 60 1</span><br><span class="line">                      ▲     ▲  ▲  ▲  ▲</span><br><span class="line">                      |     |  |  |  └───── need 1 quota (可选参数，默认值也是1)</span><br><span class="line">                      |     |  └──┴──────── 30 operations / 60 seconds 这是漏水速率</span><br><span class="line">                      |     └────────────── 15 capacity 这是漏斗容量</span><br><span class="line">                      └──────────────────── key laoqian</span><br><span class="line"></span><br><span class="line">&gt; cl.throttle laoqian:reply 15 30 60</span><br><span class="line">1) (<span class="built_in">integer</span>) 0   <span class="comment"># 0 表示允许，1表示拒绝</span></span><br><span class="line">2) (<span class="built_in">integer</span>) 15  <span class="comment"># 漏斗容量capacity</span></span><br><span class="line">3) (<span class="built_in">integer</span>) 14  <span class="comment"># 漏斗剩余空间left_quota</span></span><br><span class="line">4) (<span class="built_in">integer</span>) -1  <span class="comment"># 如果拒绝了，需要多长时间后再试(漏斗有空间了，单位秒)</span></span><br><span class="line">5) (<span class="built_in">integer</span>) 2   <span class="comment"># 多长时间后，漏斗完全空出来(left_quota==capacity，单位秒)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="GeoHash"><a href="#GeoHash" class="headerlink" title="GeoHash"></a>GeoHash</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; geoadd company 116.48105 39.996794 juejin</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; geoadd company 116.514203 39.905409 ireader</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; geoadd company 116.489033 40.007669 meituan</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; geoadd company 116.562108 39.787602 jd 116.334255 40.027400 xiaomi</span><br><span class="line">(<span class="built_in">integer</span>) 2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算两个元素之间的距离</span></span><br><span class="line">127.0.0.1:6379&gt; geodist company juejin ireader km</span><br><span class="line"><span class="string">"10.5501"</span></span><br><span class="line">127.0.0.1:6379&gt; geodist company juejin meituan km</span><br><span class="line"><span class="string">"1.3878"</span></span><br><span class="line">127.0.0.1:6379&gt; geodist company juejin jd km</span><br><span class="line"><span class="string">"24.2739"</span></span><br><span class="line">127.0.0.1:6379&gt; geodist company juejin xiaomi km</span><br><span class="line"><span class="string">"12.9606"</span></span><br><span class="line">127.0.0.1:6379&gt; geodist company juejin juejin km</span><br><span class="line"><span class="string">"0.0000"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取集合中任意元素的经纬度坐标</span></span><br><span class="line">127.0.0.1:6379&gt; geopos company juejin</span><br><span class="line">1) 1) <span class="string">"116.48104995489120483"</span></span><br><span class="line">   2) <span class="string">"39.99679348858259686"</span></span><br><span class="line">127.0.0.1:6379&gt; geopos company ireader</span><br><span class="line">1) 1) <span class="string">"116.5142020583152771"</span></span><br><span class="line">   2) <span class="string">"39.90540918662494363"</span></span><br><span class="line">127.0.0.1:6379&gt; geopos company juejin ireader</span><br><span class="line">1) 1) <span class="string">"116.48104995489120483"</span></span><br><span class="line">   2) <span class="string">"39.99679348858259686"</span></span><br><span class="line">2) 1) <span class="string">"116.5142020583152771"</span></span><br><span class="line">   2) <span class="string">"39.90540918662494363"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取元素的 hash 值</span></span><br><span class="line">127.0.0.1:6379&gt; geohash company ireader</span><br><span class="line">1) <span class="string">"wx4g52e1ce0"</span></span><br><span class="line">127.0.0.1:6379&gt; geohash company juejin</span><br><span class="line">1) <span class="string">"wx4gd94yjn0"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 范围 20 公里以内最多 3 个元素按距离正排，它不会排除自身</span></span><br><span class="line">127.0.0.1:6379&gt; georadiusbymember company ireader 20 km count 3 asc</span><br><span class="line">1) <span class="string">"ireader"</span></span><br><span class="line">2) <span class="string">"juejin"</span></span><br><span class="line">3) <span class="string">"meituan"</span></span><br><span class="line"><span class="comment"># 范围 20 公里以内最多 3 个元素按距离倒排</span></span><br><span class="line">127.0.0.1:6379&gt; georadiusbymember company ireader 20 km count 3 desc</span><br><span class="line">1) <span class="string">"jd"</span></span><br><span class="line">2) <span class="string">"meituan"</span></span><br><span class="line">3) <span class="string">"juejin"</span></span><br><span class="line"><span class="comment"># 三个可选参数 withcoord withdist withhash 用来携带附加参数</span></span><br><span class="line"><span class="comment"># withdist 很有用，它可以用来显示距离</span></span><br><span class="line">127.0.0.1:6379&gt; georadiusbymember company ireader 20 km withcoord withdist withhash count 3 asc</span><br><span class="line">1) 1) <span class="string">"ireader"</span></span><br><span class="line">   2) <span class="string">"0.0000"</span></span><br><span class="line">   3) (<span class="built_in">integer</span>) 4069886008361398</span><br><span class="line">   4) 1) <span class="string">"116.5142020583152771"</span></span><br><span class="line">      2) <span class="string">"39.90540918662494363"</span></span><br><span class="line">2) 1) <span class="string">"juejin"</span></span><br><span class="line">   2) <span class="string">"10.5501"</span></span><br><span class="line">   3) (<span class="built_in">integer</span>) 4069887154388167</span><br><span class="line">   4) 1) <span class="string">"116.48104995489120483"</span></span><br><span class="line">      2) <span class="string">"39.99679348858259686"</span></span><br><span class="line">3) 1) <span class="string">"meituan"</span></span><br><span class="line">   2) <span class="string">"11.5748"</span></span><br><span class="line">   3) (<span class="built_in">integer</span>) 4069887179083478</span><br><span class="line">   4) 1) <span class="string">"116.48903220891952515"</span></span><br><span class="line">      2) <span class="string">"40.00766997707732031"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; georadius company 116.514202 39.905409 20 km withdist count 3 asc</span><br><span class="line">1) 1) <span class="string">"ireader"</span></span><br><span class="line">   2) <span class="string">"0.0000"</span></span><br><span class="line">2) 1) <span class="string">"juejin"</span></span><br><span class="line">   2) <span class="string">"10.5501"</span></span><br><span class="line">3) 1) <span class="string">"meituan"</span></span><br><span class="line">   2) <span class="string">"11.5748"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="keys-和-scan"><a href="#keys-和-scan" class="headerlink" title="keys 和 scan"></a>keys 和 scan</h3><h4 id="简单暴力的-keys"><a href="#简单暴力的-keys" class="headerlink" title="简单暴力的 keys"></a>简单暴力的 <code>keys</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) <span class="string">"codehole1"</span></span><br><span class="line">2) <span class="string">"code3hole"</span></span><br><span class="line">3) <span class="string">"codehole3"</span></span><br><span class="line">4) <span class="string">"code2hole"</span></span><br><span class="line">5) <span class="string">"codehole2"</span></span><br><span class="line">6) <span class="string">"code1hole"</span></span><br><span class="line">127.0.0.1:6379&gt; keys codehole*</span><br><span class="line">1) <span class="string">"codehole1"</span></span><br><span class="line">2) <span class="string">"codehole3"</span></span><br><span class="line">3) <span class="string">"codehole2"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="替代者-scan"><a href="#替代者-scan" class="headerlink" title="替代者 scan"></a>替代者 <code>scan</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 虽然提供的 limit 是 1000，但是返回的结果只有 10 个左右</span></span><br><span class="line"><span class="comment"># 因为这个 limit 不是限定返回结果的数量，而是限定服务器单次遍历的字典槽位数量(约等于)。</span></span><br><span class="line">127.0.0.1:6379&gt; scan 0 match key99* count 1000</span><br><span class="line">1) <span class="string">"13976"</span></span><br><span class="line">2)  1) <span class="string">"key9911"</span></span><br><span class="line">    2) <span class="string">"key9974"</span></span><br><span class="line">    3) <span class="string">"key9994"</span></span><br><span class="line">    4) <span class="string">"key9910"</span></span><br><span class="line">    5) <span class="string">"key9907"</span></span><br><span class="line">    6) <span class="string">"key9989"</span></span><br><span class="line">    7) <span class="string">"key9971"</span></span><br><span class="line">    8) <span class="string">"key99"</span></span><br><span class="line">    9) <span class="string">"key9966"</span></span><br><span class="line">   10) <span class="string">"key992"</span></span><br><span class="line">   11) <span class="string">"key9903"</span></span><br><span class="line">   12) <span class="string">"key9905"</span></span><br><span class="line">127.0.0.1:6379&gt; scan 13976 match key99* count 1000</span><br><span class="line">1) <span class="string">"1996"</span></span><br><span class="line">2)  1) <span class="string">"key9982"</span></span><br><span class="line">    2) <span class="string">"key9997"</span></span><br><span class="line">    3) <span class="string">"key9963"</span></span><br><span class="line">    4) <span class="string">"key996"</span></span><br><span class="line">    5) <span class="string">"key9912"</span></span><br><span class="line">    6) <span class="string">"key9999"</span></span><br><span class="line">    7) <span class="string">"key9921"</span></span><br><span class="line">    8) <span class="string">"key994"</span></span><br><span class="line">    9) <span class="string">"key9956"</span></span><br><span class="line">   10) <span class="string">"key9919"</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h4 id="字典结构"><a href="#字典结构" class="headerlink" title="字典结构"></a>字典结构</h4><p>在 Redis 中所有的 key 都存储在一个很大的字典中，这个字典的结构和 Java 中的 HashMap 一样，是一维数组 + 二维链表结构，第一维数组的大小总是 $2^n(n&gt;=0)$，扩容一次数组大小空间加倍，也就是 $2^{n+1}$。<code>scan</code> 指令返回的游标就是第一维数组的位置索引，我们将这个位置索引称为槽 (slot)。如果不考虑字典的扩容缩容，直接按数组下标挨个遍历就行了。limit（实际上是 <code>count</code>）参数就表示需要遍历的槽位数，之所以返回的结果可能多可能少，是因为不是所有的槽位上都会挂接链表，有些槽位可能是空的，还有些槽位上挂接的链表上的元素可能会有多个。每一次遍历都会将 limit 数量的槽位上挂接的所有链表元素进行模式匹配过滤后，一次性返回给客户端。</p>
+<h4 id="Scan-遍历顺序"><a href="#Scan-遍历顺序" class="headerlink" title="Scan 遍历顺序"></a>Scan 遍历顺序</h4><p>高位进位加法（0000→1000→0100→1100→0010→1010→0110→1110→0001→…→1111）。目的是保持扩容、缩容时，仍能继续遍历：</p>
+<p><img data-src="https://i.loli.net/2020/04/19/zwduoUL62RXDKNl.png" alt=""></p>
+<h4 id="rehash-问题"><a href="#rehash-问题" class="headerlink" title="rehash 问题"></a>rehash 问题</h4><p>Redis 为了解决 rehash 线程卡顿，它采用<strong>渐进式 rehash</strong>，因此在某一时刻可能会同时存在新旧槽位，<code>scan</code> 对此需要同时扫描新旧槽位，然后将结果融合后返回给客户端。</p>
+<h4 id="更多的-scan-指令"><a href="#更多的-scan-指令" class="headerlink" title="更多的 scan 指令"></a>更多的 <code>scan</code> 指令</h4><p><code>scan</code> 指令是一系列指令，除了可以遍历所有的 key 之外，还可以对指定的容器集合进行遍历。比如 <code>zscan</code> 遍历 zset 集合元素，<code>hscan</code> 遍历 hash 字典的元素、<code>sscan</code> 遍历 set 集合的元素。</p>
+<p>它们的原理同 <code>scan</code> 都会类似的，因为 hash 底层就是字典，set 也是一个特殊的 hash（所有的 value 指向同一个元素），zset 内部也使用了字典来存储所有的元素内容。</p>
+<h4 id="定位大-key"><a href="#定位大-key" class="headerlink" title="定位大 key"></a>定位大 key</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这个指令每隔 100 条 scan 指令就会休眠 0.1s，ops 就不会剧烈抬升</span></span><br><span class="line">redis-cli -h 127.0.0.1 -p 7001 –-bigkeys -i 0.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="线程-IO-模型"><a href="#线程-IO-模型" class="headerlink" title="线程 IO 模型"></a>线程 IO 模型</h3><h4 id="Reactor-模式"><a href="#Reactor-模式" class="headerlink" title="Reactor 模式"></a>Reactor 模式</h4><p><img data-src="https://i.loli.net/2020/04/28/AjbUNRYiIZHK6Bs.png" alt=""></p>
+<p>Redis 会为每个客户端套接字关联一个响应队列以此来将指令的返回结果回复给客户端。如果队列为空，那么意味着连接暂时处于空闲状态，不需要去获取写事件，也就是可以将当前的客户端描述符从 <code>write_fds</code> 里面移出来，等到队列有数据了，再将描述符放进去。因为如果 <code>select</code> 注册了写事件，会立刻触发可写（除非写缓存满了），导致空轮询。</p>
+<h3 id="RESP"><a href="#RESP" class="headerlink" title="RESP"></a>RESP</h3><h4 id="最小单元类型"><a href="#最小单元类型" class="headerlink" title="最小单元类型"></a>最小单元类型</h4><ol>
+<li><strong>单行字符串</strong>以 <code>+</code> 符号开头。</li>
+<li><strong>多行字符串</strong>以 <code>$</code> 符号开头，后跟字符串长度。</li>
+<li><strong>整数值</strong>以 <code>:</code> 符号开头，后跟整数的字符串形式。</li>
+<li><strong>错误消息</strong>以 <code>-</code> 符号开头。</li>
+<li><strong>数组</strong>以 <code>*</code> 号开头，后跟数组的长度。</li>
+</ol>
+<p>另：</p>
+<ol>
+<li>单元结束时统一加上回车换行符号 <code>\r\n</code>。</li>
+<li><strong>NULL</strong> 用多行字符串表示，不过长度要写成 -1 —— <code>$-1\r\n</code>。</li>
+<li><strong>空串</strong>用多行字符串表示，长度填 0 —— <code>$0\r\n\r\n</code></li>
+</ol>
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><p>客户端向服务器发送的指令只有一种格式，多行字符串数组。</p>
+<p>如发送 <code>set author codehole</code> 就是 <code>*3\r\n$3\r\nset\r\n$6\r\nauthor\r\n$8\r\ncodehole\r\n</code></p>
+<h4 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h4><p>有<strong>单行字符串响应</strong>、<strong>错误响应</strong>、<strong>整数响应</strong>、<strong>多行字符串响应</strong>、<strong>数组响应</strong>、<strong>嵌套</strong></p>
+<p>就说说<strong>嵌套</strong>，下面表示成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## *2\r\n$1\r\n0\r\n*3\r\n$4\r\ninfo\r\n$5\r\nbooks\r\n$6\r\nauthor\r\n</span></span><br><span class="line">127.0.0.1:6379&gt; scan 0</span><br><span class="line">1) <span class="string">"0"</span></span><br><span class="line">2) 1) <span class="string">"info"</span></span><br><span class="line">   2) <span class="string">"books"</span></span><br><span class="line">   3) <span class="string">"author"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><h4 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h4><p>Redis 使用操作系统的多进程 COW(Copy On Write) 机制来实现快照持久化，Redis 在持久化时会调用 <code>glibc</code> 的函数 <code>fork</code> 产生一个子进程，快照持久化完全交给子进程来处理，父进程继续处理客户端请求。为了节约内存资源，所以尽可能让父子进程共享内存里面的代码段和数据段。在进程分离的一瞬间，内存的增长几乎没有明显变化。</p>
+<p>数据段是由很多操作系统的页面组合而成，当父进程对其中一个页面的数据进行修改时，会将被共享的页面复制一份分离出来，然后对这个复制的页面进行修改。这时子进程相应的页面是没有变化的，还是进程产生时那一瞬间的数据，接下来子进程就可以非常安心的遍历数据了进行序列化写磁盘了。</p>
+<h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p>AOF 日志存储的是 Redis 服务器的顺序指令序列，所谓的“恢复”，就是对 AOF 的重放，可能会非常慢。我们可以使用 <code>bgrewriteaof</code> 指令对 AOF 日志进行瘦身，其原理就是开辟一个子进程对内存进行遍历转换成一系列 Redis 的操作指令，序列化到一个新的 AOF 日志文件中。序列化完毕后再将操作期间发生的增量 AOF 日志追加到这个新的 AOF 日志文件中，追加完毕后就立即替代旧的 AOF 日志文件了。</p>
+<p>如果机器突然宕机，AOF 日志内容可能还没有来得及完全刷到磁盘中，这个时候就会出现日志丢失。Linux 的 <code>glibc</code> 提供了 <code>fsync(int fd)</code> 函数可以将指定文件的内容强制从内核缓存刷到磁盘。在生产环境的服务器中，Redis 通常是每隔 1s 左右执行一次 <code>fsync</code> 操作。</p>
+<p>通常 Redis 的主节点是不会进行持久化操作，持久化操作主要在从节点进行。从节点是备份节点，没有来自客户端请求的压力，它的操作系统资源往往比较充沛。因此更要努力保证从节点连接主节点的稳定性。</p>
+<h4 id="混合持久化"><a href="#混合持久化" class="headerlink" title="混合持久化"></a>混合持久化</h4><p>Redis 4.0 为了解决速度和数据完整性的平衡，引入了混合持久化，即：将 rdb 文件的内容和增量的 AOF 日志文件存在一起。这里的 AOF 日志不再是全量的日志，而是自持久化开始到持久化结束的这段时间发生的增量 AOF 日志，通常很小。</p>
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><h4 id="管道的本质"><a href="#管道的本质" class="headerlink" title="管道的本质"></a>管道的本质</h4><p><img data-src="https://i.loli.net/2020/04/19/NR2Ze8chB9MCmyE.png" alt=""></p>
+<p>我们开始以为 <code>write</code> 操作是要等到对方收到消息才会返回，但实际上不是这样的。<code>write</code> 操作只负责将数据写到本地操作系统内核的发送缓冲然后就返回了。剩下的事交给操作系统内核异步将数据送到目标机器。但是如果发送缓冲满了，那么就需要等待缓冲空出空闲空间来，这个就是写操作 IO 操作的真正耗时。</p>
+<p>我们开始以为 <code>read</code> 操作是从目标机器拉取数据，但实际上不是这样的。<code>read</code> 操作只负责将数据从本地操作系统内核的接收缓冲中取出来就了事了。但是如果缓冲是空的，那么就需要等待数据到来，这个就是读操作 IO 操作的真正耗时。</p>
+<p>所以对于 <code>value = redis.get(key)</code>这样一个简单的请求来说，<code>write</code> 操作几乎没有耗时，直接写到发送缓冲就返回，而 <code>read</code> 就会比较耗时了，因为它要等待消息经过网络路由到目标机器处理后的响应消息，再回送到当前的内核读缓冲才可以返回。<strong>这才是一个网络来回的真正开销</strong>。</p>
+<p>而对于管道来说，连续的<code>write</code>操作根本就没有耗时，之后第一个<code>read</code>操作会等待一个网络的来回开销，然后所有的响应消息就都已经回送到内核的读缓冲了，后续的 <code>read</code> 操作直接就可以从缓冲拿到结果，瞬间就返回了。</p>
+<p><strong>管道是指客户端无需等待服务器返回数据便可继续发送请求</strong>。</p>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>Redis 事务相关的三个主要命令是：<code>multi</code>/<code>exec</code>/<code>discard</code>。</p>
+<h4 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h4><p>Redis 事务保证不了<strong>原子性</strong>，因为事务在遇到指令执行失败后，后面的指令还可以继续执行。仅仅能保证隔离性。</p>
+<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p>Redis 事务在发送每个指令到事务缓存队列时都要经过一次网络读写，当一个事务内部的指令较多时，需要的网络 IO 时间也会线性增长。所以通常 Redis 的客户端在执行事务时都会结合 pipeline 一起使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pipe = redis.pipeline(transaction=true)</span><br><span class="line">pipe.multi()</span><br><span class="line">pipe.incr(<span class="string">"books"</span>)</span><br><span class="line">pipe.incr(<span class="string">"books"</span>)</span><br><span class="line">values = pipe.execute()</span><br></pre></td></tr></table></figure>
+
+<h4 id="用-Watch-实现乐观锁"><a href="#用-Watch-实现乐观锁" class="headerlink" title="用 Watch 实现乐观锁"></a>用 <code>Watch</code> 实现乐观锁</h4><p><code>watch</code> 会在事务开始之前盯住 1 个或多个关键变量，当事务执行时，也就是服务器收到了 <code>exec</code> 指令要顺序执行缓存的事务队列时，Redis 会检查关键变量自 <code>watch</code> 之后，是否被修改了 (包括当前事务所在的客户端)。如果关键变量被人动过了，<code>exec</code> 指令就会返回 <code>null</code> 回复告知客户端事务执行失败：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">doubleAccount</span><span class="params">(Jedis jedis, String userId)</span> </span>&#123;</span><br><span class="line">  String key = keyFor(userId);</span><br><span class="line">  <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">    jedis.watch(key);</span><br><span class="line">    <span class="keyword">int</span> value = Integer.parseInt(jedis.get(key));</span><br><span class="line">    value *= <span class="number">2</span>; <span class="comment">// 加倍</span></span><br><span class="line">    Transaction tx = jedis.multi();</span><br><span class="line">    tx.set(key, String.valueOf(value));</span><br><span class="line">    List&lt;Object&gt; res = tx.exec();</span><br><span class="line">    <span class="keyword">if</span> (res != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">break</span>; <span class="comment">// 成功了</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> Integer.parseInt(jedis.get(key)); <span class="comment">// 重新获取余额</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="为什么-Redis-事务无法回滚"><a href="#为什么-Redis-事务无法回滚" class="headerlink" title="为什么 Redis 事务无法回滚"></a>为什么 Redis 事务无法回滚</h4><p>因为 Redis 是先操作再纪录日志，操作失败了，日志都没，怎么回滚。即使所有的写操作命令都记录了日志，但是并不是所有的写操作命令都可以回滚，例如 HyperLogLog，布隆过滤器等等。</p>
+<h3 id="PubSub"><a href="#PubSub" class="headerlink" title="PubSub"></a>PubSub</h3><p><code>PubSub</code> 缺点很多，如：<em>没有消费者造成消息直接丢弃</em>；<em>挂掉的消费者重新连上时无法获得停机时间生产出的消息</em>；<em>消息是不会持久化的</em>。</p>
+<p>Redis5.0 新增了 <code>Stream</code> 数据结构，这个功能解决了很多 <code>PubSub</code> 的问题，因此还是直接使用 <code>Stream</code> 比较稳，当然，我们更可以直接使用成熟的 MQ。</p>
+<h3 id="小对象压缩"><a href="#小对象压缩" class="headerlink" title="小对象压缩"></a>小对象压缩</h3><h4 id="编译方式"><a href="#编译方式" class="headerlink" title="编译方式"></a>编译方式</h4><p>Redis 如果使用 32bit 进行编译，内部所有数据结构所使用的指针空间占用会少一半，如果你对 Redis 使用内存不超过 4GB（32 位地址线的寻址空间封顶即为 4GB），可以考虑使用 32bit 进行编译，可以节约大量内存。</p>
+<h4 id="紧凑形式的数据结构"><a href="#紧凑形式的数据结构" class="headerlink" title="紧凑形式的数据结构"></a>紧凑形式的数据结构</h4><ul>
+<li>如果 Redis 内部管理的集合数据结构很小，它会使用紧凑存储形式压缩存储。</li>
+<li>Redis 在删除大 key 时，空间不会立刻减少，因为 Redis 内存回收是按页的，由于 key 不是连续存储，可能存在有些页还存在数据，所以不会立刻回收，但是它会重用那些尚未回收的空闲内存。</li>
+<li>当集合对象的元素不断增加，或者某个 value 值过大，这种小对象存储也会被升级为标准结构。</li>
+</ul>
+<h3 id="主从同步"><a href="#主从同步" class="headerlink" title="主从同步"></a>主从同步</h3><h4 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h4><p>Redis 同步的是指令流，主节点会将那些对自己的状态产生修改性影响的指令记录在本地的内存 buffer 中，然后异步将 buffer 中的指令同步到从节点，从节点一边执行同步的指令流来达到和主节点一样的状态，一边向主节点反馈自己同步到哪里了 (偏移量)。</p>
+<p>因为内存的 buffer 是有限的，所以 Redis 主库不能将所有的指令都记录在内存 buffer 中。Redis 的复制内存 buffer 是一个定长的环形数组，如果数组内容满了，就会从头开始覆盖前面的内容。</p>
+<p><img data-src="https://i.loli.net/2020/04/28/tubH5KnAayXpLBU.png" alt=""></p>
+<h4 id="快照同步"><a href="#快照同步" class="headerlink" title="快照同步"></a>快照同步</h4><p>从节点挂了，增量同步无法正常进行，因为 buffer 满了，有些指令被覆盖了。</p>
+<p>快照同步首先需要在主库上进行一次 <code>bgsave</code> 将当前内存的数据全部快照到磁盘文件中，然后再将快照文件的内容全部传送到从节点。从节点将快照文件接受完毕后，立即执行一次全量加载，加载之前先要将当前内存的数据清空。加载完毕后通知主节点继续进行增量同步。如果快照同步的时间过长或者复制 buffer 太小，都会导致同步期间的增量指令在复制 buffer 中被覆盖，极有可能会陷入快照同步的死循环。所以<strong>务必配置一个合适的复制 buffer 大小参数</strong>。</p>
+<blockquote>
+<p>当从节点刚刚加入到集群时，它必须先要进行一次快照同步，同步完成后再继续进行增量同步。</p>
+</blockquote>
+<h4 id="无盘复制"><a href="#无盘复制" class="headerlink" title="无盘复制"></a>无盘复制</h4><p>就是主库上进行 <code>bgsave</code> 时不将当前内存的数据全部快照到磁盘文件中啦，而是边 <code>bgsave</code> 边把序列化的快照通过套接字发送到从节点，从而减少主节点的磁盘 IO 压力。</p>
+<h4 id="同步复制"><a href="#同步复制" class="headerlink" title="同步复制"></a>同步复制</h4><p><strong>增量同步</strong>是异步的，可以通过 <code>wait 1 0</code> 来强行进行增量同步，第一个参数是从库的数量 N，第二个参数代表等待时间 t，以毫秒为单位。如果 t = 0，那么不同步完，就一直阻塞。</p>
+<h3 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h3><p>sentinel 负责持续监控主从节点的健康，当主节点挂掉时，自动选择一个最优的从节点切换为主节点。</p>
+<p>客户端来连接集群时，会首先连接 sentinel，通过 sentinel 来查询主节点的地址，然后再去连接主节点进行数据交互。当主节点发生故障时，客户端会重新向 sentinel 要地址，sentinel 会将最新的主节点地址告诉客户端。如此应用程序将无需重启即可自动完成节点切换。</p>
+<p>如果是手动切换了主从，而之前的主库连接已经建立了在使用了，没有新连接需要建立，那这个连接是不是一直切换不了？</p>
+<p>主从切换后，之前的主库被降级到从库，所有的修改性的指令都会抛出 <code>ReadonlyError</code>。如果没有修改性指令不会切断，因为不切换也没关系。</p>
+<h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Redis Cluster 将所有数据划分为 16384 的 slots，每个节点负责其中一部分槽位，槽位的信息存储于每个节点中，当 Redis Cluster 的客户端来连接集群时，它也会得到一份集群的槽位配置信息并缓存。这样当客户端要查找某个 key 时，可以直接定位到目标节点（槽位的信息可能会存在客户端与服务器不一致，当客户端向一个错误的节点发出了指令，该节点会向客户端发送一个 <code>-MOVED</code> 指令）。另外，RedisCluster 的每个节点会将集群的配置信息持久化到配置文件中，所以必须确保配置文件是可写的。</p>
+<h4 id="slots-定位算法"><a href="#slots-定位算法" class="headerlink" title="slots 定位算法"></a>slots 定位算法</h4><p>Cluster 默认会对 key 值使用 crc16 算法进行 hash 得到一个整数值，然后用这个整数值对 16384 进行取模来得到具体槽位。</p>
+<p>Cluster 还允许用户强制某个 key 挂在特定槽位上，通过在 key 字符串里面嵌入 tag 标记，这就可以强制 key 所挂在的槽位等于 tag 所在的槽位。</p>
+<h4 id="数据移槽"><a href="#数据移槽" class="headerlink" title="数据移槽"></a>数据移槽</h4><p>Redis Cluster 提供了工具 redis-trib 可以让运维人员手动调整槽位的分配情况。这时客户端访问 key 可能出现这样的情况：</p>
+<p><img data-src="https://i.loli.net/2020/04/28/Du5imAhvaTkz8n4.png" alt=""></p>
+<p>第三步的 <code>asking</code> 指令的意思是让目标节点 B 认真对待，否则目标节点 B 会让客户端去源节点 A 去执行，因为还没同步完事呢。</p>
+<h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><h4 id="MQ-模型梗概"><a href="#MQ-模型梗概" class="headerlink" title="MQ 模型梗概"></a>MQ 模型梗概</h4><p>Stream 借鉴了 Kafka 的很多设计：</p>
+<p>每个 Stream 都有唯一的名称，它就是 Redis 的 key，在我们首次使用 <code>xadd</code> 指令追加消息时自动创建。</p>
+<p>每个 Stream 都可以挂多个消费组，每个消费组会有个游标 <code>last_delivered_id</code>。</p>
+<p>每个消费组都有一个 Stream 内唯一的名称，消费组用 <code>xgroup create</code>  进行创建，需要指定从 Stream 的某个消息 ID 开始消费，这个 ID 用来初始化 <code>last_delivered_id</code> 变量。</p>
+<p>每个消费组的状态都是独立的，相互不受影响。即同一份 Stream 内部的消息会被每个消费组都消费到。</p>
+<p>同一个消费组可以挂接多个消费者，这些消费者之间是竞争关系，任意一个消费者读取了消息都会使游标 <code>last_delivered_id</code> 往前移动。每个消费者有一个组内唯一名称。</p>
+<p>消费者内部会有个状态变量 <code>pending_ids</code>，它记录了当前已经被客户端读取的消息，但是还没有 ack。如果客户端没有 ack，这个变量里面的消息 ID 会越来越多，一旦某个消息被 ack，它就开始减少。这个 <code>pending_ids</code> 变量在 Redis 官方被称之为 <code>PEL</code>，用来确保客户端至少消费了消息一次。</p>
+<p><img data-src="https://i.loli.net/2020/04/28/msnvRgO5Cz1Dbcj.png" alt=""></p>
+<h4 id="创建-Stream"><a href="#创建-Stream" class="headerlink" title="创建 Stream"></a>创建 Stream</h4><ol>
+<li><code>xadd</code> 追加消息</li>
+<li><code>xdel</code> 删除消息，这里的删除仅仅是设置了标志位，不影响消息总长度</li>
+<li><code>xrange</code> 获取消息列表，会自动过滤已经删除的消息</li>
+<li><code>xlen</code> 消息长度</li>
+<li><code>del</code> 删除 Stream</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># * 号表示服务器自动生成 ID，后面顺序跟着一堆 key/value</span></span><br><span class="line">127.0.0.1:6379&gt; xadd codehole * name laoqian age 30  </span><br><span class="line">1527849609889-0  <span class="comment"># 生成的消息 ID</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; xadd codehole maxlen 3 * name xiaorui age 20</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; xlen codehole</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line"></span><br><span class="line"><span class="comment"># -表示最小值 , + 表示最大值</span></span><br><span class="line">127.0.0.1:6379&gt; xrange codehole - +</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定最小消息 ID 的列表</span></span><br><span class="line">127.0.0.1:6379&gt; xrange codehole 1527849629172-0 +</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定最大消息 ID 的列表</span></span><br><span class="line">127.0.0.1:6379&gt; xrange codehole - 1527849629172-0</span><br><span class="line"></span><br><span class="line">xlen codehole</span><br></pre></td></tr></table></figure>
+
+<h4 id="独立消费-xread"><a href="#独立消费-xread" class="headerlink" title="独立消费 xread"></a>独立消费 <code>xread</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从 Stream 头部读取两条消息</span></span><br><span class="line">127.0.0.1:6379&gt; xread count 2 streams codehole 0-0</span><br><span class="line"><span class="comment"># 从尾部阻塞等待新消息到来，下面的指令会阻塞到新消息到来</span></span><br><span class="line">127.0.0.1:6379&gt; xread block 0 count 1 streams codehole $</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建消费组"><a href="#创建消费组" class="headerlink" title="创建消费组"></a>创建消费组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  表示从头开始消费</span></span><br><span class="line">127.0.0.1:6379&gt; xgroup create codehole cg1 0-0</span><br><span class="line"><span class="comment"># $ 表示从尾部开始消费，只接受新消息，当前 Stream 消息会全部忽略</span></span><br><span class="line">127.0.0.1:6379&gt; xgroup create codehole cg2 $</span><br></pre></td></tr></table></figure>
+
+<h4 id="消费组消费-xreadgroup"><a href="#消费组消费-xreadgroup" class="headerlink" title="消费组消费 xreadgroup"></a>消费组消费 <code>xreadgroup</code></h4><p> <code>xreadgroup</code> 指令可以进行消费组的组内消费，需要提供消费组名称、消费者名称和起始消息 ID。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; xreadgroup GROUP cg1 c1 count 1 streams codehole &gt;</span><br><span class="line">127.0.0.1:6379&gt; xreadgroup GROUP cg1 c1 block 0 count 1 streams codehole &gt;</span><br><span class="line">127.0.0.1:6379&gt; xinfo groups codehole</span><br><span class="line">127.0.0.1:6379&gt; xinfo consumers codehole cg1</span><br><span class="line">127.0.0.1:6379&gt; xack codehole cg1 1527851486781-0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Info"><a href="#Info" class="headerlink" title="Info"></a>Info</h3><p>Info 指令显示的信息非常繁多，分为 9 大块，每个块都有非常多的参数，这 9 个块分别是:</p>
+<ol>
+<li>Server 服务器运行的环境参数</li>
+<li>Clients 客户端相关信息</li>
+<li>Memory 服务器运行内存统计数据</li>
+<li>Persistence 持久化信息</li>
+<li>Stats 通用统计数据</li>
+<li>Replication 主从复制相关信息</li>
+<li>CPU CPU 使用情况</li>
+<li>Cluster 集群信息</li>
+<li>KeySpace 键值对统计数量信息</li>
+</ol>
+<h4 id="Redis-每秒执行多少次指令？"><a href="#Redis-每秒执行多少次指令？" class="headerlink" title="Redis 每秒执行多少次指令？"></a>Redis 每秒执行多少次指令？</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; redis-cli info stats | grep ops</span><br><span class="line">&gt; redis-cli monitor</span><br></pre></td></tr></table></figure>
+
+<h4 id="Redis-连接了多少客户端？"><a href="#Redis-连接了多少客户端？" class="headerlink" title="Redis 连接了多少客户端？"></a>Redis 连接了多少客户端？</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; redis-cli info clients</span><br><span class="line">&gt; redis-cli info stats | grep reject</span><br></pre></td></tr></table></figure>
+
+<h4 id="Redis-内存占用多大？"><a href="#Redis-内存占用多大？" class="headerlink" title="Redis 内存占用多大？"></a>Redis 内存占用多大？</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; redis-cli info memory | grep used | grep human</span><br></pre></td></tr></table></figure>
+
+<h4 id="复制积压缓冲区多大？"><a href="#复制积压缓冲区多大？" class="headerlink" title="复制积压缓冲区多大？"></a>复制积压缓冲区多大？</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; redis-cli info replication | grep backlog</span><br></pre></td></tr></table></figure>
+
+<h4 id="积压缓冲区够用吗？"><a href="#积压缓冲区够用吗？" class="headerlink" title="积压缓冲区够用吗？"></a>积压缓冲区够用吗？</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; redis-cli info stats | grep sync</span><br></pre></td></tr></table></figure>
+
+<h3 id="分布式的分布式锁-Redlock"><a href="#分布式的分布式锁-Redlock" class="headerlink" title="分布式的分布式锁 Redlock"></a>分布式的分布式锁 Redlock</h3><p>为了使用 Redlock，需要提供多个 Redis 实例，这些实例之前相互独立没有主从关系。加锁时，它会向过半节点发送 <code>set(key, value, nx=True, ex=xxx)</code> 指令，只要过半节点 <code>set</code> 成功，那就认为加锁成功。释放锁时，需要向所有节点发送 <code>del</code> 指令。</p>
+<h3 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h3><p>Redis 会将每个设置了过期时间的 key 放入到一个独立的字典中，以后会定时遍历这个字典来删除到期的 key。除了定时遍历之外，它还会使用惰性策略来删除过期的 key，所谓惰性策略就是在客户端访问这个 key 的时候，redis 对 key 的过期时间进行检查，如果过期了就立即删除。定时删除是集中处理，惰性删除是零散处理。</p>
+<h4 id="贪心遍历策略"><a href="#贪心遍历策略" class="headerlink" title="贪心遍历策略"></a>贪心遍历策略</h4><p>Redis 默认会每秒进行十次过期扫描，过期扫描不会遍历过期字典中所有的 key，而是：</p>
+<ol>
+<li>从过期字典中随机 20 个 key；</li>
+<li>删除这 20 个 key 中已经过期的 key；</li>
+<li>如果过期的 key 比率超过 1/4，那就重复步骤 1；</li>
+</ol>
+<p>同时，为了保证过期扫描不会出现循环过度，导致线程卡死现象，算法还增加了扫描时间的上限，默认不会超过 25ms。</p>
+<h4 id="大量-key-过期导致的卡顿"><a href="#大量-key-过期导致的卡顿" class="headerlink" title="大量 key 过期导致的卡顿"></a>大量 key 过期导致的卡顿</h4><p>如果大量 key 同时过期，① Redis 会长久陷入遍历循环（25ms），② 加上因此被阻塞的客户端命令不断堆积，新命令需要更久的响应时延，③ 同时内存管理器需要频繁回收内存页，也会产生 CPU 消耗…</p>
+<p>所以应该给 key 的过期时间设置一个随机范围，而不宜全部在同一时间过期，从而分散过期处理的压力。</p>
+<h4 id="从库的过期策略"><a href="#从库的过期策略" class="headerlink" title="从库的过期策略"></a>从库的过期策略</h4><p>从库不会进行过期扫描，从库对过期的处理是被动的。主库在 key 到期时，会在 AOF 文件里增加一条 <code>del</code> 指令，同步到所有的从库，从库通过执行这条 <code>del</code> 指令来删除过期的 key，因此可能会出现主从数据的不一致的情况。</p>
+<h3 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h3><h4 id="超预期内存删-key-策略"><a href="#超预期内存删-key-策略" class="headerlink" title="超预期内存删 key 策略"></a>超预期内存删 key 策略</h4><p>当 Redis 内存超出物理内存限制时，内存的数据会开始和磁盘产生频繁的交换 (swap)，导致其性能急剧下降。在生产环境中我们是不允许 Redis 出现交换行为的，为了限制最大使用内存，Redis 提供了配置参数 <code>maxmemory</code> 来限制内存超出期望大小。</p>
+<p>当实际内存超出 <code>maxmemory</code> 时，Redis 提供了几种可选策略 (maxmemory-policy) 来让用户自己决定该如何腾出新的空间以继续提供读写服务。</p>
+<ul>
+<li><strong><code>noeviction</code></strong> 不会继续服务写请求 (DEL 请求可以继续服务)，读请求可以继续进行。这样可以保证不会丢失数据，但是会让线上的业务不能持续进行。这是默认的淘汰策略。</li>
+<li><strong><code>volatile-lru</code></strong> 尝试淘汰设置了过期时间的 key，最少使用的 key 优先被淘汰。没有设置过期时间的 key 不会被淘汰，这样可以保证需要持久化的数据不会突然丢失。</li>
+<li><strong><code>volatile-ttl</code></strong> 跟上面一样，除了淘汰的策略不是 LRU，而是 key 的剩余寿命 ttl 的值，ttl 越小越优先被淘汰。</li>
+<li><strong><code>volatile-random</code></strong> 跟上面一样，不过淘汰的 key 是过期 key 集合中随机的 key。</li>
+<li><strong><code>allkeys-lru</code></strong> 区别于 volatile-lru，这个策略要淘汰的 key 对象是全体的 key 集合，而不只是过期的 key 集合。这意味着没有设置过期时间的 key 也会被淘汰。</li>
+<li><strong><code>allkeys-random</code></strong> 跟上面一样，不过淘汰的策略是随机的 key。</li>
+</ul>
+<p><code>volatile-xxx</code> 策略只会针对带过期时间的 key 进行淘汰，<code>allkeys-xxx</code> 策略会对所有的 key 进行淘汰。</p>
+<p>如果你只是拿 Redis 做缓存，那应该使用 <code>allkeys-xxx</code>；如果你还想同时使用 Redis 的持久化功能，那就只能使用 <code>volatile-xxx</code> 策略。</p>
+<h4 id="LRU-算法"><a href="#LRU-算法" class="headerlink" title="LRU 算法"></a>LRU 算法</h4><p>实现 LRU 算法除了需要 key/value 字典外，还需要附加一个链表，链表中的元素按照一定的顺序进行排列。当空间满的时候，会踢掉链表尾部的元素。当字典的某个元素被访问时，它在链表中的位置会被移动到表头。所以链表的元素排列顺序就是元素最近被访问的时间顺序。</p>
+<h4 id="近似-LRU-算法"><a href="#近似-LRU-算法" class="headerlink" title="近似 LRU 算法"></a>近似 LRU 算法</h4><p>Redis 为实现近似 LRU 算法，它给每个 key 增加了一个额外的小字段，这个字段的长度是 24 个 bit，也就是最后一次被访问的时间戳。</p>
+<p>它的处理方式只有懒惰处理。当 Redis 执行写操作时，发现内存超出 <code>maxmemory</code>，就会执行一次 LRU 淘汰算法。这个算法也很简单，就是随机采样出 5（可以配置）个 key，然后淘汰掉最旧的 key，如果淘汰后内存还是超出 <code>maxmemory</code>，那就继续随机采样淘汰，直到内存低于 <code>maxmemory</code> 为止。</p>
+<h4 id="淘汰池"><a href="#淘汰池" class="headerlink" title="淘汰池"></a>淘汰池</h4><p>Redis3.0 在算法中增加了淘汰池，进一步提升了近似 LRU 算法的效果。</p>
+<p>淘汰池是一个数组，它的大小是 <code>maxmemory_samples</code>，在每一次淘汰循环中，新随机出来的 key 列表会和淘汰池中的 key 列表进行融合，淘汰掉最旧的一个 key 之后，保留剩余较旧的 key 列表放入淘汰池中留待下一个循环。</p>
+<h3 id="多线程？Yes！"><a href="#多线程？Yes！" class="headerlink" title="多线程？Yes！"></a>多线程？Yes！</h3><h4 id="大-key-删除"><a href="#大-key-删除" class="headerlink" title="大 key 删除"></a>大 key 删除</h4><p>大 key <code>del</code> 可能要很长时间，占用了主线程，因此 Redis 4.0 引入了 <code>unlink</code> 指令，它能对删除操作进行懒处理，丢给后台线程来异步回收内存。当 <code>unlink</code> 指令发出时，它只是把大树中的一个树枝别断了，然后扔到旁边的火堆里焚烧 (异步线程池)。树枝离开大树的一瞬间，它就再也无法被主线程中的其它指令访问到了，因为主线程只会沿着这颗大树来访问。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; unlink key</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>主线程将对象的引用从「大树」中摘除后，会将这个 key 的内存回收操作包装成一个任务，塞进异步任务队列，后台线程会从这个异步队列中取任务。</p>
+<p><img data-src="https://user-gold-cdn.xitu.io/2018/8/2/164fa17ba5f2d88e?imageslim" alt="img"></p>
+<p>不是所有的 <code>unlink</code> 操作都会延后处理，如果对应 key 所占用的内存很小，延后处理就没有必要了，这时候 Redis 会将对应的 key 内存立即回收，跟 <code>del</code> 指令一样。</p>
+<h4 id="清空数据库"><a href="#清空数据库" class="headerlink" title="清空数据库"></a>清空数据库</h4><p>Redis 提供了 <code>flushdb</code> 和 <code>flushall</code> 指令，用来清空数据库，这也是极其缓慢的操作。Redis 4.0 同样给这两个指令也带来了异步化，在指令后面增加 <code>async</code> 参数就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; flushall async</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<h4 id="同步-AOF"><a href="#同步-AOF" class="headerlink" title="同步 AOF"></a>同步 AOF</h4><p>Redis 需要每秒一次（可配置）同步 AOF 日志到磁盘，确保消息尽量不丢失，需要调用 sync 函数，这个操作会比较耗时，会导致主线程的效率下降，所以 Redis 也将这个操作移到异步线程来完成。</p>
+<h4 id="更多删除点"><a href="#更多删除点" class="headerlink" title="更多删除点"></a>更多删除点</h4><p>Redis 回收内存除了 <code>del</code> 指令和 <code>flush</code> 之外，还会存在于在 key 的过期、LRU 淘汰、rename 指令以及从库全量同步时接受完 rdb 文件后会立即进行的 flush 操作。Redis 4.0 为这些删除点也带来了异步删除机制，打开这些点需要额外的配置选项。</p>
+<h3 id="使用-Jedis"><a href="#使用-Jedis" class="headerlink" title="使用 Jedis"></a>使用 Jedis</h3><h4 id="确保回收-Redis-连接"><a href="#确保回收-Redis-连接" class="headerlink" title="确保回收 Redis 连接"></a>确保回收 Redis 连接</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  JedisPool pool = <span class="keyword">new</span> JedisPool();</span><br><span class="line">  <span class="keyword">try</span> (Jedis jedis = pool.getResource()) &#123; <span class="comment">// 用完自动 close</span></span><br><span class="line">    doSomething(jedis);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="封装获取、回收连接方法"><a href="#封装获取、回收连接方法" class="headerlink" title="封装获取、回收连接方法"></a>封装获取、回收连接方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">CallWithJedis</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Jedis jedis)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RedisPool</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> JedisPool pool;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">RedisPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.pool = <span class="keyword">new</span> JedisPool();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(CallWithJedis caller)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span>(Jedis jedis = pool.getResource()) &#123;</span><br><span class="line">      caller.call(jedis);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (JedisConnectionException e) &#123;</span><br><span class="line">      caller.call(jedis); <span class="comment">// 重试一次</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Holder</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> T value;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Holder</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Holder</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">value</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> T <span class="title">value</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JedisTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Redis redis = <span class="keyword">new</span> Redis();</span><br><span class="line">    Holder&lt;Long&gt; countHolder = <span class="keyword">new</span> Holder&lt;&gt;();</span><br><span class="line">    redis.execute(jedis -&gt; &#123;</span><br><span class="line">      <span class="keyword">long</span> count = jedis.zcard(<span class="string">"codehole"</span>);</span><br><span class="line">      countHolder.value(count);</span><br><span class="line">    &#125;);</span><br><span class="line">    System.out.println(countHolder.value());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="保护-Redis"><a href="#保护-Redis" class="headerlink" title="保护 Redis"></a>保护 Redis</h3><h4 id="指令转移"><a href="#指令转移" class="headerlink" title="指令转移"></a>指令转移</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rename-command keys abckeysabc</span><br><span class="line">rename-command flushall <span class="string">""</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h4><ul>
+<li>转移端口</li>
+<li>绑定 IP，内网访问</li>
+<li>设置密码 <code>requirepass password</code>，设置后从库也要配置密码才能同步了 <code>masterauth password</code></li>
+</ul>
+<h4 id="禁止-UCG-生成-Lua-脚本"><a href="#禁止-UCG-生成-Lua-脚本" class="headerlink" title="禁止 UCG 生成 Lua 脚本"></a>禁止 UCG 生成 Lua 脚本</h4><p>同时，我们应该让 Redis 以普通用户的身份启动，这样即使存在恶意代码黑客也无法拿到 root 权限。</p>
+<h4 id="spiped-加密-SSL"><a href="#spiped-加密-SSL" class="headerlink" title="spiped 加密 SSL"></a>spiped 加密 SSL</h4><p><img data-src="https://i.loli.net/2020/04/28/lpeBNTCiyf23xcg.png" alt=""></p>
+<p>除非不得不在公网使用，不然这玩意挺繁琐的。</p>
+<h3 id="Lua-脚本执行原理"><a href="#Lua-脚本执行原理" class="headerlink" title="Lua 脚本执行原理"></a>Lua 脚本执行原理</h3><h4 id="一个简易的-Lua-脚本"><a href="#一个简易的-Lua-脚本" class="headerlink" title="一个简易的 Lua 脚本"></a>一个简易的 Lua 脚本</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> redis.call(<span class="string">"get"</span>, KEYS[<span class="number">1</span>]) == ARGV[<span class="number">1</span>] <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">return</span> redis.call(<span class="string">"del"</span>, KEYS[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="EVAL-指令执行-Lua"><a href="#EVAL-指令执行-Lua" class="headerlink" title="EVAL 指令执行 Lua"></a><code>EVAL</code> 指令执行 Lua</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EVAL SCRIPT KEY_NUM KEY1 KEY2 ... KEYN ARG1 ARG2 ....</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> foo bar</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">eval</span> <span class="string">'if redis.call("get", KEYS[1]) == ARGV[1] then return redis.call("del", KEYS[1]) else return 0 end'</span> 1 foo bar</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br></pre></td></tr></table></figure>
+
+<h4 id="SCRIPT-LOAD-和-EVALSHA-指令"><a href="#SCRIPT-LOAD-和-EVALSHA-指令" class="headerlink" title="SCRIPT LOAD 和 EVALSHA 指令"></a><code>SCRIPT LOAD</code> 和 <code>EVALSHA</code> 指令</h4><p><img data-src="https://i.loli.net/2020/04/28/4Lbqwvmt8TaIg3M.png" alt=""></p>
+<ol>
+<li><p>Lua 脚本</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> curVal = redis.call(<span class="string">"get"</span>, KEYS[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">if</span> curVal == <span class="literal">false</span> <span class="keyword">then</span></span><br><span class="line">  curVal = <span class="number">0</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  curVal = <span class="built_in">tonumber</span>(curVal)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">curVal = curVal * <span class="built_in">tonumber</span>(ARGV[<span class="number">1</span>])</span><br><span class="line">redis.call(<span class="string">"set"</span>, KEYS[<span class="number">1</span>], curVal)</span><br><span class="line"><span class="keyword">return</span> curVal</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>串行化</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> curVal = redis.call(<span class="string">"get"</span>, KEYS[<span class="number">1</span>]); <span class="keyword">if</span> curVal == <span class="literal">false</span> <span class="keyword">then</span> curVal = <span class="number">0</span> <span class="keyword">else</span> curVal = <span class="built_in">tonumber</span>(curVal) <span class="keyword">end</span>; curVal = curVal * <span class="built_in">tonumber</span>(ARGV[<span class="number">1</span>]); redis.call(<span class="string">"set"</span>, KEYS[<span class="number">1</span>], curVal); <span class="keyword">return</span> curVal</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加载脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; script load <span class="string">'local curVal = redis.call("get", KEYS[1]); if curVal == false then curVal = 0 else curVal = tonumber(curVal) end; curVal = curVal * tonumber(ARGV[1]); redis.call("set", KEYS[1], curVal); return curVal'</span></span><br><span class="line"><span class="string">"be4f93d8a5379e5e5b768a74e77c8a4eb0434441"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> foo 1</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; evalsha be4f93d8a5379e5e5b768a74e77c8a4eb0434441 1 foo 5</span><br><span class="line">(<span class="built_in">integer</span>) 5</span><br><span class="line">127.0.0.1:6379&gt; evalsha be4f93d8a5379e5e5b768a74e77c8a4eb0434441 1 foo 5</span><br><span class="line">(<span class="built_in">integer</span>) 25</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h4><p>Lua 语言有所了解就知道 Lua 原生没有提供 <code>try catch</code> 语句，那上面提到的异常包裹语句究竟是用什么来实现的呢？Lua 的替代方案是内置了 <code>pcall(f)</code> 函数调用，意思是 <code>protected call</code>，它会让 <code>f</code> 函数运行在保护模式下，<code>f</code> 如果出现了错误，<code>pcall</code> 调用会返回 <code>false</code> 和错误信息。而 <code>call</code> 函数出错时会中断脚本的执行，并无法回滚，为了保证脚本的原子性，要谨慎使用。</p>
+<h4 id="停止-Lua-脚本"><a href="#停止-Lua-脚本" class="headerlink" title="停止 Lua 脚本"></a>停止 Lua 脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; script <span class="built_in">kill</span></span><br><span class="line">OK</span><br><span class="line">(2.58s)</span><br></pre></td></tr></table></figure>
+
+<p>原理：Redis 在钩子函数里会忙里偷闲去处理客户端的请求，并且只有在发现 <code>Lua</code> 脚本执行超时之后才会去处理请求，这个超时时间默认是 5 秒。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">evalGenericCommand</span><span class="params">(client *c, <span class="keyword">int</span> evalsha)</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// lua引擎每执行10w条指令，执行一次钩子函数 luaMaskCountHook</span></span><br><span class="line">  lua_sethook(lua,luaMaskCountHook,LUA_MASKCOUNT,<span class="number">100000</span>);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令行工具"><a href="#命令行工具" class="headerlink" title="命令行工具"></a>命令行工具</h3><h4 id="执行单条命令"><a href="#执行单条命令" class="headerlink" title="执行单条命令"></a>执行单条命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ redis-cli incrby foo 5</span><br><span class="line">(<span class="built_in">integer</span>) 5</span><br><span class="line"></span><br><span class="line">$ redis-cli info &gt; info.txt</span><br><span class="line">$ wc -l info.txt</span><br><span class="line">     120 info.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">## -n 2 表示使用第2个库，相当于 select 2</span></span><br><span class="line">$ redis-cli -h localhost -p 6379 -n 2 ping</span><br><span class="line">PONG</span><br></pre></td></tr></table></figure>
+
+<h4 id="批量执行命令"><a href="#批量执行命令" class="headerlink" title="批量执行命令"></a>批量执行命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 使用管道</span></span><br><span class="line">$ cat cmds.txt</span><br><span class="line"><span class="built_in">set</span> foo1 bar1</span><br><span class="line"><span class="built_in">set</span> foo2 bar2</span><br><span class="line"><span class="built_in">set</span> foo3 bar3</span><br><span class="line">......</span><br><span class="line">$ cat cmds.txt | redis-cli</span><br><span class="line">OK</span><br><span class="line">OK</span><br><span class="line">OK</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">## 使用重定向</span></span><br><span class="line">$ redis-cli &lt; cmds.txt</span><br><span class="line">OK</span><br><span class="line">OK</span><br><span class="line">OK</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h4 id="set-多行字符串"><a href="#set-多行字符串" class="headerlink" title="set 多行字符串"></a><code>set</code> 多行字符串</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cat str.txt</span><br><span class="line">Ernest Hemingway once wrote,</span><br><span class="line"><span class="string">"The world is a fine place and worth fighting for."</span></span><br><span class="line">I agree with the second part.</span><br><span class="line">$ redis-cli -x <span class="built_in">set</span> foo &lt; str.txt</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<h4 id="重复执行指令"><a href="#重复执行指令" class="headerlink" title="重复执行指令"></a>重复执行指令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 间隔 1s，执行 5 次，观察 qps 的变化，`-r -1` 表示永远重复，不写 `-i` 表示不间断重复执行</span></span><br><span class="line">$ redis-cli -r 5 -i 1 info | grep ops</span><br><span class="line">instantaneous_ops_per_sec:43469</span><br><span class="line">instantaneous_ops_per_sec:47460</span><br><span class="line">instantaneous_ops_per_sec:47699</span><br><span class="line">instantaneous_ops_per_sec:46434</span><br><span class="line">instantaneous_ops_per_sec:47216</span><br><span class="line"></span><br><span class="line"><span class="comment">## 在 redis-cli 交互模式下重复执行办法</span></span><br><span class="line">127.0.0.1:6379&gt; 5 ping</span><br><span class="line">PONG</span><br><span class="line">PONG</span><br><span class="line">PONG</span><br><span class="line">PONG</span><br><span class="line">PONG</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行-Lua-脚本"><a href="#执行-Lua-脚本" class="headerlink" title="执行 Lua 脚本"></a>执行 Lua 脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat mset.txt</span><br><span class="line"><span class="built_in">return</span> redis.pcall(<span class="string">'mset'</span>, KEYS[1], ARGV[1], KEYS[2], ARGV[2])</span><br><span class="line">$ cat mget.txt</span><br><span class="line"><span class="built_in">return</span> redis.pcall(<span class="string">'mget'</span>, KEYS[1], KEYS[2])</span><br><span class="line">$ redis-cli --<span class="built_in">eval</span> mset.txt foo1 foo2 , bar1 bar2</span><br><span class="line">OK</span><br><span class="line">$ redis-cli --<span class="built_in">eval</span> mget.txt foo1 foo2</span><br><span class="line">1) <span class="string">"bar1"</span></span><br><span class="line">2) <span class="string">"bar2"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="监控服务器状态"><a href="#监控服务器状态" class="headerlink" title="监控服务器状态"></a>监控服务器状态</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 默认间隔 1s 实时输出一次，如果你觉得间隔太长或是太短，可以使用 -i 参数调整输出间隔</span></span><br><span class="line">$ redis-cli --<span class="built_in">stat</span></span><br><span class="line">------- data ------ --------------------- load -------------------- - child -</span><br><span class="line">keys       mem      clients blocked requests            connections</span><br><span class="line">2          6.66M    100     0       11591628 (+0)       335</span><br><span class="line">2          6.66M    100     0       11653169 (+61541)   335</span><br><span class="line">2          6.66M    100     0       11706550 (+53381)   335</span><br><span class="line">2          6.54M    100     0       11758831 (+52281)   335</span><br><span class="line">2          6.66M    100     0       11803132 (+44301)   335</span><br><span class="line">2          6.66M    100     0       11854183 (+51051)   335</span><br></pre></td></tr></table></figure>
+
+<h4 id="扫描大-KEY"><a href="#扫描大-KEY" class="headerlink" title="扫描大 KEY"></a>扫描大 KEY</h4><p>redis-cli 对于每一种对象类型都会记录长度最大的 KEY，对于每一种对象类型，刷新一次最高记录就会立即输出一次。它能保证输出长度为 Top1 的 KEY，但是其他大 KEY 是无法保证可以扫描出来的。一般的处理方法是多扫描几次，或者是消灭了 Top1 的 KEY 之后再扫描确认次大的 KEY。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli --bigkeys -i 0.01</span><br><span class="line">[00.00%] Biggest zset   found so far <span class="string">'hist:aht:main:async_finish:20180425:17'</span> with 1440 members</span><br><span class="line">[00.00%] Biggest zset   found so far <span class="string">'hist:qps:async:authorize:20170311:27'</span> with 2465 members</span><br><span class="line">[00.00%] Biggest <span class="built_in">hash</span>   found so far <span class="string">'job:counters:6ya9ypu6ckcl'</span> with 3 fields</span><br><span class="line">[00.01%] Biggest string found so far <span class="string">'rt:aht:main:device_online:68:&#123;-4&#125;'</span> with 4 bytes</span><br><span class="line">[00.01%] Biggest zset   found so far <span class="string">'machine:load:20180709'</span> with 2879 members</span><br><span class="line">[00.02%] Biggest string found so far <span class="string">'6y6fze8kj7cy:&#123;-7&#125;'</span> with 90 bytes</span><br></pre></td></tr></table></figure>
+
+<h4 id="采样服务器指令"><a href="#采样服务器指令" class="headerlink" title="采样服务器指令"></a>采样服务器指令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ redis-cli --host 192.168.x.x --port 6379 monitor</span><br><span class="line">1539853410.458483 [0 10.100.90.62:34365] <span class="string">"GET"</span> <span class="string">"6yax3eb6etq8:&#123;-7&#125;"</span></span><br><span class="line">1539853410.459212 [0 10.100.90.61:56659] <span class="string">"PFADD"</span> <span class="string">"growth:dau:20181018"</span> <span class="string">"2klxkimass8w"</span></span><br><span class="line">1539853410.462938 [0 10.100.90.62:20681] <span class="string">"GET"</span> <span class="string">"6yax3eb6etq8:&#123;-7&#125;"</span></span><br><span class="line">1539853410.467231 [0 10.100.90.61:40277] <span class="string">"PFADD"</span> <span class="string">"growth:dau:20181018"</span> <span class="string">"2kei0to86ps1"</span></span><br><span class="line">1539853410.470319 [0 10.100.90.62:34365] <span class="string">"GET"</span> <span class="string">"6yax3eb6etq8:&#123;-7&#125;"</span></span><br><span class="line">1539853410.473927 [0 10.100.90.61:58128] <span class="string">"GET"</span> <span class="string">"6yax3eb6etq8:&#123;-7&#125;"</span></span><br><span class="line">1539853410.475712 [0 10.100.90.61:40277] <span class="string">"PFADD"</span> <span class="string">"growth:dau:20181018"</span> <span class="string">"2km8sqhlefpc"</span></span><br><span class="line">1539853410.477053 [0 10.100.90.62:61292] <span class="string">"GET"</span> <span class="string">"6yax3eb6etq8:&#123;-7&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="诊断服务器时延"><a href="#诊断服务器时延" class="headerlink" title="诊断服务器时延"></a>诊断服务器时延</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ redis-cli --host 192.168.x.x --port 6379 --latency</span><br><span class="line">min: 0, max: 5, avg: 0.08 (305 samples)</span><br></pre></td></tr></table></figure>
+
+<h4 id="远程-RDB-备份"><a href="#远程-RDB-备份" class="headerlink" title="远程 RDB 备份"></a>远程 RDB 备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli --host 192.168.x.x --port 6379 --rdb ./user.rdb</span><br><span class="line">SYNC sent to master, writing 2501265095 bytes to <span class="string">'./user.rdb'</span></span><br><span class="line">Transfer finished with success.</span><br></pre></td></tr></table></figure>
+
+<h4 id="模拟从库"><a href="#模拟从库" class="headerlink" title="模拟从库"></a>模拟从库</h4><p>从库连上主库的第一件事是全量同步，所以看到下面指令卡顿这很正常，待首次全量同步完成后，就会输出增量的 AOF 日志。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli --host 192.168.x.x --port 6379 --slave</span><br><span class="line">SYNC with master, discarding 51778306 bytes of bulk transfer...</span><br><span class="line">SYNC <span class="keyword">done</span>. Logging commands from master.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NoSQL/" rel="tag"># NoSQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/" rel="prev" title="Java 并发包的基石">
+      <i class="fa fa-chevron-left"></i> Java 并发包的基石
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/02/27/MySQL-%E5%AE%9E%E6%88%98/" rel="next" title="MySQL 实战">
+      MySQL 实战 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Mac-上安装与运行"><span class="nav-text">在 Mac 上安装与运行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行"><span class="nav-text">运行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-基础数据结构"><span class="nav-text">Redis 基础数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#string-字符串"><span class="nav-text">string 字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list-列表"><span class="nav-text">list (列表)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hash-字典"><span class="nav-text">hash (字典)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set-集合"><span class="nav-text">set (集合)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zset-有序集合"><span class="nav-text">zset (有序集合)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式锁"><span class="nav-text">分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一个内置命令搞定"><span class="nav-text">一个内置命令搞定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加锁失败处理"><span class="nav-text">加锁失败处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延时队列"><span class="nav-text">延时队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简易队列"><span class="nav-text">简易队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延时队列-1"><span class="nav-text">延时队列</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位图"><span class="nav-text">位图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简易使用"><span class="nav-text">简易使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#统计和查找"><span class="nav-text">统计和查找</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HyperLogLog"><span class="nav-text">HyperLogLog</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单实用"><span class="nav-text">简单实用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HyperLogLog-原理"><span class="nav-text">HyperLogLog 原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pf-的内存占-12k？"><span class="nav-text">pf 的内存占 12k？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BloomFilter"><span class="nav-text">BloomFilter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单使用"><span class="nav-text">简单使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BloomFilter-原理"><span class="nav-text">BloomFilter 原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空间占用估计"><span class="nav-text">空间占用估计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最佳-Hash-函数数量"><span class="nav-text">最佳 Hash 函数数量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单限流"><span class="nav-text">简单限流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏斗限流"><span class="nav-text">漏斗限流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-Cell"><span class="nav-text">Redis-Cell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GeoHash"><span class="nav-text">GeoHash</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keys-和-scan"><span class="nav-text">keys 和 scan</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单暴力的-keys"><span class="nav-text">简单暴力的 keys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替代者-scan"><span class="nav-text">替代者 scan</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典结构"><span class="nav-text">字典结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scan-遍历顺序"><span class="nav-text">Scan 遍历顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rehash-问题"><span class="nav-text">rehash 问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更多的-scan-指令"><span class="nav-text">更多的 scan 指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位大-key"><span class="nav-text">定位大 key</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程-IO-模型"><span class="nav-text">线程 IO 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reactor-模式"><span class="nav-text">Reactor 模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RESP"><span class="nav-text">RESP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#最小单元类型"><span class="nav-text">最小单元类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端"><span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端"><span class="nav-text">服务端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久化"><span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快照"><span class="nav-text">快照</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AOF"><span class="nav-text">AOF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#混合持久化"><span class="nav-text">混合持久化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管道"><span class="nav-text">管道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#管道的本质"><span class="nav-text">管道的本质</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ACID"><span class="nav-text">ACID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化"><span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用-Watch-实现乐观锁"><span class="nav-text">用 Watch 实现乐观锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么-Redis-事务无法回滚"><span class="nav-text">为什么 Redis 事务无法回滚</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PubSub"><span class="nav-text">PubSub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小对象压缩"><span class="nav-text">小对象压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编译方式"><span class="nav-text">编译方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#紧凑形式的数据结构"><span class="nav-text">紧凑形式的数据结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主从同步"><span class="nav-text">主从同步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#增量同步"><span class="nav-text">增量同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快照同步"><span class="nav-text">快照同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无盘复制"><span class="nav-text">无盘复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步复制"><span class="nav-text">同步复制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sentinel"><span class="nav-text">Sentinel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster"><span class="nav-text">Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#slots-定位算法"><span class="nav-text">slots 定位算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据移槽"><span class="nav-text">数据移槽</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream"><span class="nav-text">Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MQ-模型梗概"><span class="nav-text">MQ 模型梗概</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-Stream"><span class="nav-text">创建 Stream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#独立消费-xread"><span class="nav-text">独立消费 xread</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建消费组"><span class="nav-text">创建消费组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消费组消费-xreadgroup"><span class="nav-text">消费组消费 xreadgroup</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Info"><span class="nav-text">Info</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-每秒执行多少次指令？"><span class="nav-text">Redis 每秒执行多少次指令？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-连接了多少客户端？"><span class="nav-text">Redis 连接了多少客户端？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-内存占用多大？"><span class="nav-text">Redis 内存占用多大？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制积压缓冲区多大？"><span class="nav-text">复制积压缓冲区多大？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#积压缓冲区够用吗？"><span class="nav-text">积压缓冲区够用吗？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式的分布式锁-Redlock"><span class="nav-text">分布式的分布式锁 Redlock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过期策略"><span class="nav-text">过期策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#贪心遍历策略"><span class="nav-text">贪心遍历策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#大量-key-过期导致的卡顿"><span class="nav-text">大量 key 过期导致的卡顿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从库的过期策略"><span class="nav-text">从库的过期策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LRU"><span class="nav-text">LRU</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#超预期内存删-key-策略"><span class="nav-text">超预期内存删 key 策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LRU-算法"><span class="nav-text">LRU 算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#近似-LRU-算法"><span class="nav-text">近似 LRU 算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#淘汰池"><span class="nav-text">淘汰池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程？Yes！"><span class="nav-text">多线程？Yes！</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#大-key-删除"><span class="nav-text">大 key 删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#清空数据库"><span class="nav-text">清空数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步-AOF"><span class="nav-text">同步 AOF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更多删除点"><span class="nav-text">更多删除点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Jedis"><span class="nav-text">使用 Jedis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#确保回收-Redis-连接"><span class="nav-text">确保回收 Redis 连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#封装获取、回收连接方法"><span class="nav-text">封装获取、回收连接方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保护-Redis"><span class="nav-text">保护 Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指令转移"><span class="nav-text">指令转移</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问权限"><span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁止-UCG-生成-Lua-脚本"><span class="nav-text">禁止 UCG 生成 Lua 脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spiped-加密-SSL"><span class="nav-text">spiped 加密 SSL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lua-脚本执行原理"><span class="nav-text">Lua 脚本执行原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一个简易的-Lua-脚本"><span class="nav-text">一个简易的 Lua 脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EVAL-指令执行-Lua"><span class="nav-text">EVAL 指令执行 Lua</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SCRIPT-LOAD-和-EVALSHA-指令"><span class="nav-text">SCRIPT LOAD 和 EVALSHA 指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误处理"><span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#停止-Lua-脚本"><span class="nav-text">停止 Lua 脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令行工具"><span class="nav-text">命令行工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#执行单条命令"><span class="nav-text">执行单条命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批量执行命令"><span class="nav-text">批量执行命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set-多行字符串"><span class="nav-text">set 多行字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重复执行指令"><span class="nav-text">重复执行指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行-Lua-脚本"><span class="nav-text">执行 Lua 脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#监控服务器状态"><span class="nav-text">监控服务器状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扫描大-KEY"><span class="nav-text">扫描大 KEY</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#采样服务器指令"><span class="nav-text">采样服务器指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#诊断服务器时延"><span class="nav-text">诊断服务器时延</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#远程-RDB-备份"><span class="nav-text">远程 RDB 备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模拟从库"><span class="nav-text">模拟从库</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://www.xijinian.top/2019/02/24/Redis-%E5%AE%9E%E6%88%98/";
+    this.page.identifier = "2019/02/24/Redis-实战/";
+    this.page.title = "Redis 实战";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xijinian.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

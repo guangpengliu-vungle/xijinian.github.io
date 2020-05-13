@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="为什么需要消息队列异步处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MQ 速览">
+<meta property="og:url" content="https://www.xijinian.top/2019/03/10/MQ-%E9%80%9F%E8%A7%88/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="为什么需要消息队列异步处理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/E917DpdKb3LnHzP.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/dlRDBpT7YKHeUyh.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/C3Z4YyAex8Pbih5.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/i7mGLdB5nQvwAbR.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/oMg5tarlvw7OS1H.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/nUXOqdT6lFPW75j.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/JrCogpKQcj7i2Dd.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/12/sPLCeVgkld7oH1u.png">
+<meta property="article:published_time" content="2019-03-09T17:55:23.000Z">
+<meta property="article:modified_time" content="2020-05-13T17:58:24.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="MQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/12/E917DpdKb3LnHzP.png">
+
+<link rel="canonical" href="https://www.xijinian.top/2019/03/10/MQ-%E9%80%9F%E8%A7%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MQ 速览 | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/03/10/MQ-%E9%80%9F%E8%A7%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MQ 速览
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-10 01:55:23" itemprop="dateCreated datePublished" datetime="2019-03-10T01:55:23+08:00">2019-03-10</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/03/10/MQ-%E9%80%9F%E8%A7%88/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/10/MQ-速览/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="为什么需要消息队列"><a href="#为什么需要消息队列" class="headerlink" title="为什么需要消息队列"></a>为什么需要消息队列</h3><h4 id="异步处理"><a href="#异步处理" class="headerlink" title="异步处理"></a>异步处理</h4><p><img data-src="https://i.loli.net/2020/05/12/E917DpdKb3LnHzP.png" alt=""></p>
+<a id="more"></a>
+
+<h4 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h4><p><img data-src="https://i.loli.net/2020/05/12/dlRDBpT7YKHeUyh.png" alt=""></p>
+<p><img data-src="https://i.loli.net/2020/05/12/C3Z4YyAex8Pbih5.png" alt=""></p>
+<h4 id="服务解耦"><a href="#服务解耦" class="headerlink" title="服务解耦"></a>服务解耦</h4><p>这个就不说了，上面的图已经从侧面说明了。</p>
+<h3 id="主题和队列消息模型"><a href="#主题和队列消息模型" class="headerlink" title="主题和队列消息模型"></a>主题和队列消息模型</h3><p>现代消息队列一般都是主题模型，即 Publisher → Topic → Subscriber，但神奇的 RabbitMQ 依然使用队列模型。</p>
+<h4 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h4><p>在 RabbitMQ 中，有一个神奇的 Exchange 模块，它位于生产者和队列之间，生产者并不关心将消息发送到哪个队列，而是将消息发给 Exchange，由 Exchange 上配置的策略来决定将消息投递到哪些队列中。这样 RocketMQ 变相地实现了主题模型。</p>
+<p><img data-src="https://i.loli.net/2020/05/12/i7mGLdB5nQvwAbR.png" alt=""></p>
+<h4 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h4><p>每个主题包含多个队列，通过多个队列来实现多实例并行生产和消费。RocketMQ 只在队列上保证消息的有序性，主题层面是无法保证消息的严格顺序的。</p>
+<p>RocketMQ 中，订阅者的概念是通过消费组（Consumer Group）来体现的。每个消费组都消费主题中一份完整的消息，不同消费组之间消费进度彼此不受影响，也就是说，一条消息被 Consumer Group1 消费过，也会再给 Consumer Group2 消费。</p>
+<p>消费组中包含多个消费者，同一个组内的消费者是竞争消费的关系，每个消费者负责消费组内的一部分消息。如果一条消息被消费者 Consumer1 消费了，那同组的其他消费者就不会再收到这条消息。</p>
+<p>在 Topic 的消费过程中，由于消息需要被不同的组进行多次消费，所以消费完的消息并不会立即被删除，这就需要 RocketMQ 为每个消费组在每个队列上维护一个消费位置（Consumer Offset），这个位置之前的消息都被消费过，之后的消息都没有被消费过，每成功消费一条消息，消费位置就加一。这个消费位置是非常重要的概念，我们在使用消息队列的时候，丢消息的原因大多是由于消费位置处理不当导致的。</p>
+<p><img data-src="https://i.loli.net/2020/05/12/oMg5tarlvw7OS1H.png" alt=""></p>
+<h4 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h4><p>Kafka 的消息模型和 RocketMQ 是完全一样的，我刚刚讲的所有 RocketMQ 中对应的概念，和生产消费过程中的确认机制，都完全适用于 Kafka。唯一的区别是，在 Kafka 中，队列这个概念的名称不一样，Kafka 中对应的名称是“分区（Partition）”，含义和功能是没有任何区别的。</p>
+<h3 id="实现分布式事务"><a href="#实现分布式事务" class="headerlink" title="实现分布式事务"></a>实现分布式事务</h3><p><img data-src="https://i.loli.net/2020/05/12/nUXOqdT6lFPW75j.png" alt=""></p>
+<h3 id="确保消息不丢"><a href="#确保消息不丢" class="headerlink" title="确保消息不丢"></a>确保消息不丢</h3><h4 id="检测消息丢失的方法"><a href="#检测消息丢失的方法" class="headerlink" title="检测消息丢失的方法"></a>检测消息丢失的方法</h4><p>在 Producer 端，我们给每个发出的消息附加一个连续递增的序号，然后在 Consumer 端来检查这个序号的连续性。</p>
+<p>大多数消息队列的客户端都支持拦截器机制，你可以利用这个拦截器机制，在 Producer 发送消息之前的拦截器中将序号注入到消息中，在 Consumer 收到消息的拦截器中检测序号的连续性，这样实现的好处是消息检测的代码不会侵入到你的业务代码中，待你的系统稳定后，也方便将这部分检测的逻辑关闭或者删除。</p>
+<p>首先，像 Kafka 和 RocketMQ 这样的消息队列，它是不保证在 Topic 上的严格顺序的，只能保证分区上的消息是有序的，所以我们在发消息的时候必须要指定分区，并且，在每个分区单独检测消息序号的连续性。</p>
+<p>如果你的系统中 Producer 是多实例的，由于并不好协调多个 Producer 之间的发送顺序，所以也需要每个 Producer 分别生成各自的消息序号，并且需要附加上 Producer 的标识，在 Consumer 端按照每个 Producer 分别来检测序号的连续性。</p>
+<p>Consumer 实例的数量最好和分区数量一致，做到 Consumer 和分区一一对应，这样会比较方便地在 Consumer 内检测消息序号的连续性。</p>
+<h4 id="确保消息可靠传递"><a href="#确保消息可靠传递" class="headerlink" title="确保消息可靠传递"></a>确保消息可靠传递</h4><p><img data-src="https://i.loli.net/2020/05/12/JrCogpKQcj7i2Dd.png" alt=""></p>
+<ol>
+<li><p>生产阶段</p>
+<p>只要 Producer 收到了 Broker 的确认响应，就可以保证消息在生产阶段不会丢失。有些消息队列在长时间没收到发送确认响应后，会自动重试，如果重试再失败，就会以返回值或者异常的方式告知用户。<strong>正确处理返回值或者捕获异常，就可以保证这个阶段的消息不会丢失。</strong></p>
+</li>
+<li><p>存储阶段</p>
+<p>消息在 Broker 端存储，如果是集群，消息会在这个阶段被复制到其他的副本上。</p>
+<p>对于单个节点的 Broker，需要配置 Broker 参数，在收到消息后，将消息写入磁盘后再给 Producer 返回确认响应，这样即使发生宕机，由于消息已经被写入磁盘，就不会丢失消息，恢复后还可以继续消费。例如，在 RocketMQ 中，需要将刷盘方式 flushDiskType 配置为 SYNC_FLUSH 同步刷盘。</p>
+<p>如果是 Broker 是由多个节点组成的集群，需要将 Broker 集群配置成：至少将消息发送到 2 个以上的节点，再给客户端回复发送确认响应。这样当某个 Broker 宕机时，其他的 Broker 可以替代宕机的 Broker，也不会发生消息丢失。后面我会专门安排一节课，来讲解在集群模式下，消息队列是如何通过消息复制来确保消息的可靠性的。</p>
+</li>
+<li><p>消费阶段</p>
+<p>应该在执行完所有消费业务逻辑之后，再发送消费确认。</p>
+</li>
+</ol>
+<h3 id="处理重复消费"><a href="#处理重复消费" class="headerlink" title="处理重复消费"></a>处理重复消费</h3><p>At least once + 幂等消费 = Exactly once，实现幂等消费的几个办法：</p>
+<ol>
+<li>利用数据库的唯一约束</li>
+<li>为更新的数据设置前置条件</li>
+<li>记录并检查操作（Token 机制或者 GUID 机制）</li>
+</ol>
+<h3 id="处理消息积压"><a href="#处理消息积压" class="headerlink" title="处理消息积压"></a>处理消息积压</h3><h4 id="发送端性能优化"><a href="#发送端性能优化" class="headerlink" title="发送端性能优化"></a>发送端性能优化</h4><ol>
+<li><p>并发 —— 注重系统的时延</p>
+</li>
+<li><p>批量 —— 注重系统的吞吐量</p>
+</li>
+</ol>
+<h4 id="消费端性能优化"><a href="#消费端性能优化" class="headerlink" title="消费端性能优化"></a>消费端性能优化</h4><ul>
+<li><p>确保消费端性能高于生产端的发送性能</p>
+</li>
+<li><p>扩容 Consumer 的实例数量的同时，必须同步扩容主题中的队列（分区）数量，确保 Consumer 的实例数和分区数量是相等的</p>
+</li>
+<li><p>常见错误（这样如果收消息的节点发生宕机，会发生消息丢失）</p>
+<p><img data-src="https://i.loli.net/2020/05/12/sPLCeVgkld7oH1u.png" alt=""></p>
+</li>
+</ul>
+<h4 id="处理消息积压-1"><a href="#处理消息积压-1" class="headerlink" title="处理消息积压"></a>处理消息积压</h4><ol>
+<li><p>生产快了</p>
+<p>消费端扩容、生产端降级</p>
+</li>
+<li><p>消费慢了</p>
+<p>看是不是有大量的消费错误、反复消费、死锁、持续等待资源等等</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MQ/" rel="tag"># MQ</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/27/MySQL-%E5%AE%9E%E6%88%98/" rel="prev" title="MySQL 实战">
+      <i class="fa fa-chevron-left"></i> MySQL 实战
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/23/Protocol-Buffers-3/" rel="next" title="Protocol Buffers 3">
+      Protocol Buffers 3 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要消息队列"><span class="nav-text">为什么需要消息队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异步处理"><span class="nav-text">异步处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流量控制"><span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务解耦"><span class="nav-text">服务解耦</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题和队列消息模型"><span class="nav-text">主题和队列消息模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RabbitMQ"><span class="nav-text">RabbitMQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RocketMQ"><span class="nav-text">RocketMQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka"><span class="nav-text">Kafka</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现分布式事务"><span class="nav-text">实现分布式事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确保消息不丢"><span class="nav-text">确保消息不丢</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#检测消息丢失的方法"><span class="nav-text">检测消息丢失的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#确保消息可靠传递"><span class="nav-text">确保消息可靠传递</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理重复消费"><span class="nav-text">处理重复消费</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理消息积压"><span class="nav-text">处理消息积压</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#发送端性能优化"><span class="nav-text">发送端性能优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消费端性能优化"><span class="nav-text">消费端性能优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理消息积压-1"><span class="nav-text">处理消息积压</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://www.xijinian.top/2019/03/10/MQ-%E9%80%9F%E8%A7%88/";
+    this.page.identifier = "2019/03/10/MQ-速览/";
+    this.page.title = "MQ 速览";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xijinian.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

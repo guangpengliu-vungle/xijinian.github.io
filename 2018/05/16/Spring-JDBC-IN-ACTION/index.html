@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="经典 JDBC连接数据库 注册 Driver 实例（只要加载 java.sql.Driver 接口的实现类 com.mysql.jdbc.Driver 就行，会自动将 com.mysql.jdbc.Driver 注册到 DriverManager） 取得 Connection 实例（Connection conn &#x3D; DriverManager.getConnection(jdbcUrl, use">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring JDBC IN ACTION">
+<meta property="og:url" content="https://www.xijinian.top/2018/05/16/Spring-JDBC-IN-ACTION/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="经典 JDBC连接数据库 注册 Driver 实例（只要加载 java.sql.Driver 接口的实现类 com.mysql.jdbc.Driver 就行，会自动将 com.mysql.jdbc.Driver 注册到 DriverManager） 取得 Connection 实例（Connection conn &#x3D; DriverManager.getConnection(jdbcUrl, use">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/02/59iEloCUG6gfSja.png">
+<meta property="article:published_time" content="2018-05-15T17:39:31.000Z">
+<meta property="article:modified_time" content="2020-05-03T05:42:27.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="Spring IN ACTION">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/02/59iEloCUG6gfSja.png">
+
+<link rel="canonical" href="https://www.xijinian.top/2018/05/16/Spring-JDBC-IN-ACTION/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Spring JDBC IN ACTION | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/16/Spring-JDBC-IN-ACTION/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring JDBC IN ACTION
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-16 01:39:31" itemprop="dateCreated datePublished" datetime="2018-05-16T01:39:31+08:00">2018-05-16</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/16/Spring-JDBC-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/16/Spring-JDBC-IN-ACTION/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="经典-JDBC"><a href="#经典-JDBC" class="headerlink" title="经典 JDBC"></a>经典 JDBC</h3><h4 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h4><ol>
+<li>注册 <code>Driver</code> 实例（只要加载 <code>java.sql.Driver</code> 接口的实现类 <code>com.mysql.jdbc.Driver</code> 就行，会自动将 <code>com.mysql.jdbc.Driver</code> 注册到 <code>DriverManager</code>）</li>
+<li>取得 <code>Connection</code> 实例（<code>Connection conn = DriverManager.getConnection(jdbcUrl, username, password)</code>）</li>
+<li>最后关闭 <code>Connection</code> 实例（JDBC 规范没要求关闭 <code>conn</code> 的时候关闭 <code>stmt</code>，最好手动关闭 <code>stmt</code>）<a id="more"></a></li>
+</ol>
+<h4 id="Statement-和-ResultSet"><a href="#Statement-和-ResultSet" class="headerlink" title="Statement 和 ResultSet"></a><code>Statement</code> 和 <code>ResultSet</code></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Statement stmt = conn.createStatement();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新操作</span></span><br><span class="line">stmt.executeUpdate(<span class="string">"INSERT INTO t_message VALUES(1, 'justin', 'justin@mail.com', 'msg')"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询操作</span></span><br><span class="line">ResultSet result = stmt.executeQuery(<span class="string">"SELECT * FROM t_message"</span>);</span><br><span class="line"><span class="keyword">while</span>(result.next()) &#123;</span><br><span class="line">  <span class="keyword">int</span> id = result.getInt(<span class="string">"id"</span>);</span><br><span class="line">  String name = result.getString(<span class="string">"name"</span>);</span><br><span class="line">  String email = result.getString(<span class="string">"email"</span>);</span><br><span class="line">  String msg = result.getString(<span class="string">"msg"</span>);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Statement</code> 和 <code>ResultSet</code> 在不使用的时候都应该关闭，关闭 <code>Statement</code> 会自动关闭相关的 <code>ResultSet</code>。</p>
+<h4 id="PreparedStatement-和-CallableStatement"><a href="#PreparedStatement-和-CallableStatement" class="headerlink" title="PreparedStatement 和 CallableStatement"></a><code>PreparedStatement</code> 和 <code>CallableStatement</code></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">statement = conn.prepareStatement(<span class="string">"INSERT INTO t_message(name, email, msg) VALUES (?, ?, ?)"</span>)</span><br><span class="line">statement.setString(<span class="number">1</span>, message.getName());</span><br><span class="line">statement.setString(<span class="number">2</span>, message.getEmail());</span><br><span class="line">statement.setString(<span class="number">3</span>, message.getMsg());</span><br><span class="line">statement.executeUpdate();</span><br><span class="line">statement.clearParameters();</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>CallableStatement</code> 是用于存储过程的，不多说了。</p>
+<h4 id="使用-DateSource-来取得连接"><a href="#使用-DateSource-来取得连接" class="headerlink" title="使用 DateSource 来取得连接"></a>使用 <code>DateSource</code> 来取得连接</h4><p>比如可以使用 JNDI 来获取 <code>DateSource</code>，然后再 <code>conn = dataSource.getConnection();</code></p>
+<h4 id="使用-ResultSet-来卷动、更新数据"><a href="#使用-ResultSet-来卷动、更新数据" class="headerlink" title="使用 ResultSet 来卷动、更新数据"></a>使用 <code>ResultSet</code> 来卷动、更新数据</h4><p>从 JDBC 2.0 开始，在使用 <code>Connection</code> 的 <code>createStatement()</code> 和 <code>prepareStatement()</code> 的时候，可以指定<strong>结果集类型</strong>和<strong>并行方式</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conn.createStatement(<span class="keyword">int</span> resultSetType, <span class="keyword">int</span> resultSetConcurrency)</span><br><span class="line"></span><br><span class="line">conn.prepareStatement(String sql, <span class="keyword">int</span> resultSetType, <span class="keyword">int</span> resultSetConcurrency)</span><br></pre></td></tr></table></figure>
+
+<p>结果集类型可以指定三种设置：</p>
+<ul>
+<li><code>ResultSet.TYPE_FORWARD_ONLY</code>（默认）→ 只能前进光标，<code>next()</code></li>
+<li><code>ResultSet.TYPE_SCROLL-INSENSITIVE</code> → 可以前后移动光标，不会反应数据库中的数据修改</li>
+<li><code>ResultSet.TYPE_SCROLL-SENSITIVE</code> → 可以前后移动光标，会反应数据库中的数据修改</li>
+</ul>
+<p>并发方式有两种指定：</p>
+<ul>
+<li><code>ResultSet.CONCUR_READ_ONLY</code>（默认）→ 只能用 <code>ResultSet</code> 进行数据读取</li>
+<li><code>ResultSet.CONCUR_UPDATABLE</code> → 还可以对数据进行更新</li>
+</ul>
+<h4 id="批次更新"><a href="#批次更新" class="headerlink" title="批次更新"></a>批次更新</h4><p>可以使用 <code>addBatch()</code> 方法来收集 SQL，并使用 <code>executeBatch()</code> 方法将所收集的 SQL 传送出去。</p>
+<p>使用 <code>executeBatch()</code> 时，SQL 执行顺序就是 <code>addBatch()</code> 的顺序，最终会返回 <code>int[]</code>，代表每笔 SQL 造成的数据异动列表。执行 <code>executeBatch()</code> 时，先前已打开的 <code>ResultSet</code> 会被关闭，执行过后收集 SQL 用的 List 会被清空。</p>
+<p>注意：① 执行批次更新的时候，要搭配<strong>关闭自动提交</strong>，更新完再打开自动提交。② 以 MySQL 为例，要支持批次更新，必须在 JDBC URL 上附加 <code>rewriteBatchedStatements=true</code></p>
+<h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><p>事务的四个基本要求是<strong>原子性</strong>（Atomicity）、<strong>一致性</strong>（Consistency）、<strong>隔离行为</strong>（Isolation behavior）和<strong>持续性</strong>（Durability），简称 <strong>ACID</strong>。</p>
+<ul>
+<li><strong>原子性</strong>：一个事务有很多步骤，这些步骤要么都执行，要么都不执行。</li>
+<li><strong>一致性</strong>：事务作用的数据集合在事务前后必须一致，不能使整个数据集合部分有变更，部分没变更。</li>
+<li><strong>隔离行为</strong>：在多人使用的环境下，事务与事务必须互不干扰，用户不会意识到别的用户在进行事务。</li>
+<li><strong>持续性</strong>：事务一旦变更，所有变更必须保存下来，即使系统发生了故障，事务的结果也不能遗失。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">Connection conn = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  conn = dataSource.getConnection();</span><br><span class="line">→ conn.setAutoCommit(<span class="keyword">false</span>);</span><br><span class="line">  Statement stmt = conn.createStatement();</span><br><span class="line">  stmt.executeUpdate(<span class="string">"INSERT INTO ..."</span>);</span><br><span class="line">  stmt.executeUpdate(<span class="string">"INSERT INTO ..."</span>);</span><br><span class="line">→ conn.commit();</span><br><span class="line">&#125; <span class="keyword">catch</span>(SQLException e) &#123;</span><br><span class="line">  e.printStackTrace();</span><br><span class="line">  <span class="keyword">if</span>(conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">→     conn.rollback();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(SQLException ex) &#123;</span><br><span class="line">      ex.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">if</span>(conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">→     conn.setAutoCommit(<span class="keyword">true</span>);</span><br><span class="line">      conn.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(SQLException ex) &#123;</span><br><span class="line">      ex.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 我们还可以给事务设置存储点(Save point)</span></span><br><span class="line">Connection conn = <span class="keyword">null</span>;</span><br><span class="line">Savepoint point = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  conn = dataSource.getConnection();</span><br><span class="line">  conn.setAutoCommit(<span class="keyword">false</span>);</span><br><span class="line">  Statement stmt = conn.createStatement();</span><br><span class="line">  stmt.executeUpdate(<span class="string">"INSERT INTO ..."</span>);</span><br><span class="line">→ point = conn.setSavepoint();</span><br><span class="line">  stmt.executeUpdate(<span class="string">"INSERT INTO ..."</span>);</span><br><span class="line">  conn.commit();</span><br><span class="line">&#125; <span class="keyword">catch</span>(SQLException e) &#123;</span><br><span class="line">  e.printStackTrace();</span><br><span class="line">  <span class="keyword">if</span>(conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">→     <span class="keyword">if</span>(point = <span class="keyword">null</span>) &#123;</span><br><span class="line">        conn.rollback();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">→       conn.rollback(point);</span><br><span class="line">→       conn.releaseSavepoint(point);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(SQLException ex) &#123;</span><br><span class="line">      ex.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">if</span>(conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      conn.setAutoCommit(<span class="keyword">true</span>);</span><br><span class="line">      conn.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(SQLException ex) &#123;</span><br><span class="line">      ex.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据库的隔离级别"><a href="#数据库的隔离级别" class="headerlink" title="数据库的隔离级别"></a>数据库的隔离级别</h4><p>JDBC 可以通过 <code>Connection</code> 的 <code>getTransactionIsolation()</code> 取得数据库当前的隔离级别设置，可以通过 <code>setTransactionIsolation()</code> 来设置数据库的隔离级别。可设置常数是定义在 <code>Connection</code> 上的：</p>
+<ul>
+<li><code>TRANSACTION_NONE</code></li>
+<li><code>TRANSACTION_UNCOMMITTED</code> → A 事务更新但未提交的数据，B 事务可读不可改 → 解决<strong>更新遗失</strong></li>
+<li><code>TRANSACTION_COMMITTED</code> → A 事务更新并提交的数据，B 事务才可以读 → 解决<strong>脏读</strong></li>
+<li><code>TRANSACTION_REPEATABLE_READ</code> → A 读取事务在提交前，B 事务可读不可改 → 解决<strong>不可重读读</strong></li>
+<li><code>TRANSACTION_SERIALIZABLE</code> → 事务一个一个循序进行 → 解决<strong>幻读</strong></li>
+</ul>
+<h3 id="在-Spring-中使用-JDBC"><a href="#在-Spring-中使用-JDBC" class="headerlink" title="在 Spring 中使用 JDBC"></a>在 Spring 中使用 JDBC</h3><h4 id="用-Spring-配置数据源"><a href="#用-Spring-配置数据源" class="headerlink" title="用 Spring 配置数据源"></a>用 Spring 配置数据源</h4><ol>
+<li><p>使用 JNDI 数据源</p>
+</li>
+<li><p>使用数据源连接池</p>
+<ul>
+<li><p>XML 方式</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:driverClassName</span>=<span class="string">"org.h2.Driver"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:url</span>=<span class="string">"jdbc:h2:tcp://localhost/~/spitter"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:username</span>=<span class="string">"sa"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:password</span>=<span class="string">""</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:initialSize</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:maxActive</span>=<span class="string">"10"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Java 方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> BasicDataSource <span class="title">dataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  BasicDataSource ds = <span class="keyword">new</span> BasicDataSource();</span><br><span class="line">  ds.setDriverClassName(<span class="string">"org.h2.Driver"</span>);</span><br><span class="line">  ds.setUrl(<span class="string">"jdbc:h2:tcp://localhost/~/spitter"</span>);</span><br><span class="line">  ds.setUsername(<span class="string">"sa"</span>);</span><br><span class="line">  ds.setPassword(<span class="string">""</span>);</span><br><span class="line">  ds.setInitialSize(<span class="number">5</span>);</span><br><span class="line">  ds.setMaxActive(<span class="number">10</span>);</span><br><span class="line">  <span class="keyword">return</span> ds;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>基于 JDBC 驱动的数据源</p>
+<ul>
+<li><p><code>DriverManagerDataSource</code>：在每个连接请求时都会返回一个新建的连接，并没有进行池化管理</p>
+</li>
+<li><p><code>SimpleDriverDataSource</code>：与 <code>DriverManagerDataSource</code> 的工作方式类似，但直接使用 JDBC 驱动</p>
+</li>
+<li><p><code>SingleConnectionDataSource</code>：在每个连接请求时都会返回同一个的连接</p>
+</li>
+</ul>
+<p>因此以上三个都不推荐使用。</p>
+</li>
+<li><p>使用嵌入式的数据源</p>
+<ul>
+<li><p>XML 方式</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:c</span>=<span class="string">"http://www.springframework.org/schema/c"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:jdbc</span>=<span class="string">"http://www.springframework.org/schema/jdbc"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/jdbc</span></span></span><br><span class="line"><span class="tag"><span class="string">      http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">      http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">      http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">jdbc:embedded-database</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">type</span>=<span class="string">"H2"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbc:script</span> <span class="attr">location</span>=<span class="string">"classpath:spittr/db/jdbc/schema.sql"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbc:script</span> <span class="attr">location</span>=<span class="string">"classpath:spittr/db/jdbc/test-data.sql"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">jdbc:embedded-database</span>&gt;</span></span><br><span class="line">  ... </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Java 方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">dataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> EmbeddedDatabaseBuilder()</span><br><span class="line">    .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">    .addScript(<span class="string">"classpath:schema.sql"</span>)</span><br><span class="line">    .addScript(<span class="string">"classpath:text-data.sql"</span>)</span><br><span class="line">    .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="使用-Profile-选择数据源"><a href="#使用-Profile-选择数据源" class="headerlink" title="使用 @Profile 选择数据源"></a>使用 <code>@Profile</code> 选择数据源</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceConfiguration</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Profile</span>(<span class="string">"development"</span>)</span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">embeddedDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> EmbeddedDatabaseBuilder()</span><br><span class="line">      .setType(EmbeddedDatabaseType.H2)</span><br><span class="line">      .addScript(<span class="string">"classpath:schema.sql"</span>)</span><br><span class="line">      .addScript(<span class="string">"classpath:test-data.sql"</span>)</span><br><span class="line">      .build();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Profile</span>(<span class="string">"qa"</span>)</span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">data</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BasicDataSource ds = <span class="keyword">new</span> BasicDataSource();</span><br><span class="line">    ds.setDriverClassName(<span class="string">"org.h2.Driver"</span>);</span><br><span class="line">    ds.setUrl(<span class="string">"jdbc:h2:tcp://localhost/-/spitter"</span>)</span><br><span class="line">    ds.setUsername(<span class="string">"sa"</span>);</span><br><span class="line">    ds.setPassword(<span class="string">""</span>);</span><br><span class="line">    ds.setlnitialSize(<span class="number">5</span>);</span><br><span class="line">    ds.setMaxActive(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">return</span> ds;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Profile</span> (<span class="string">"production"</span>)</span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">dataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JndiObjectFactoryBean jndiObjectFactoryBean = <span class="keyword">new</span> JndiObjectFactoryBean();</span><br><span class="line">    jndiObjectFactoryBean.setJndiName(<span class="string">"jdbc/SpittrDS"</span>);</span><br><span class="line">    jndiObjectFactoryBean.setResourceRef(<span class="keyword">true</span>);</span><br><span class="line">    jndiObjectFactoryBean.setProxylnterface(javax.sql.Datasource<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    <span class="keyword">return</span> (Datasource) jndiObjectFactoryBean.getObject();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-JdbcTemplate"><a href="#使用-JdbcTemplate" class="headerlink" title="使用 JdbcTemplate"></a>使用 <code>JdbcTemplate</code></h4><p>首先要将 <code>JdbcTemplate</code> 注册为 Bean，同时把数据源传进去</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> JdbcTemplate <span class="title">jdbcTemplate</span><span class="params">(DataSource dataSource)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> JdbcTemplate(dataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着就写 Mapper（DAO 的下一层） 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcSpitterRepository</span> <span class="keyword">implements</span> <span class="title">SpitterRepository</span> </span>&#123;</span><br><span class="line">  <span class="comment">// JdbcOperations 是一个接口，定义了 JdbcTemplate 所实现的操作</span></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> JdbcOperations jdbcOperations;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insertSpitter</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    jdbcTemplate.update(</span><br><span class="line">      <span class="string">"insert into Spitter (username, password, fullname, email, updateByEmail) values (?, ?, ?, ?, ?)"</span>,</span><br><span class="line">      spitter.getUsername(),</span><br><span class="line">      spitter.getPassword(),</span><br><span class="line">      spitter.getFullName(),</span><br><span class="line">      spitter.getEmail(),</span><br><span class="line">      spitter.isUpdateByEmail()</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> Spitter <span class="title">findOne</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jdbcTemplate.queryForObject(</span><br><span class="line">      <span class="string">"select id, username, password, fullname, email, updateByEmail from Spitter where id = ?"</span>,</span><br><span class="line">      <span class="keyword">new</span> SpitterRowMapper(),</span><br><span class="line">      id</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 对于查询返回的每一行数据，JdbcTemplate 将会调用 RowMapper 的 mapRow() 方法，并传入一个 ResultSet 和包含行号的整数</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">SpitterRowMapper</span> <span class="keyword">implements</span> <span class="title">RowMapper</span>&lt;<span class="title">Spitter</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Spitter <span class="title">mapRow</span><span class="params">(ResultSet rs, <span class="keyword">int</span> rowNum)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">      <span class="keyword">long</span> id = rs.getLong(<span class="string">"id"</span>);</span><br><span class="line">      String username = rs.getString(<span class="string">"username"</span>);</span><br><span class="line">      String password = rs.getString(<span class="string">"password"</span>);</span><br><span class="line">      String fullName = rs.getString(<span class="string">"fullname"</span>);</span><br><span class="line">      String email = rs.getString(<span class="string">"email"</span>);</span><br><span class="line">      <span class="keyword">boolean</span> updateByEmail = rs.getBoolean(<span class="string">"updateByEmail"</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Spitter(id, username, password, fullName, email, updateByEmail);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 Lambda 简化代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Spitter <span class="title">findOne</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> jdbcOperations.queryForObject(</span><br><span class="line">    <span class="string">"select id, username, password, fullname, email, updateByEmail from Spitter where id = ?"</span>,</span><br><span class="line">    (rs, rowNum) -&gt; &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Spitter(</span><br><span class="line">        rs.getLong(<span class="string">"id"</span>),</span><br><span class="line">        rs.getString(<span class="string">"username"</span>),</span><br><span class="line">        rs.getString(<span class="string">"password"</span>),</span><br><span class="line">        rs.getString(<span class="string">"fullname"</span>),</span><br><span class="line">        rs.getString(<span class="string">"email"</span>),</span><br><span class="line">        rs.getBoolean(<span class="string">"updateByEmail"</span>)</span><br><span class="line">      );</span><br><span class="line">    &#125;,</span><br><span class="line">    id);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者自己在单独的方法中定义映射逻辑</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Spitter <span class="title">findOne</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> jdbcOperations.queryForObejct(</span><br><span class="line">    <span class="string">"select id, username, password, fullname, email, updateByEmail from Spitter where id = ?"</span>,</span><br><span class="line">    <span class="keyword">this</span>::mapSpitter,</span><br><span class="line">    id</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> Spitter <span class="title">mapSpitter</span><span class="params">(ResultSet rs, <span class="keyword">int</span> row)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Spitter(</span><br><span class="line">    rs.getLong(<span class="string">"id"</span>),</span><br><span class="line">    rs.getString(<span class="string">"username"</span>),</span><br><span class="line">    rs.getString(<span class="string">"password"</span>),</span><br><span class="line">    rs.getString(<span class="string">"fullname"</span>),</span><br><span class="line">    rs.getString(<span class="string">"email"</span>),</span><br><span class="line">    rs.getBoolean(<span class="string">"updateByEmail"</span>)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SpitterRepository</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">long</span> <span class="title">count</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function">Spitter <span class="title">save</span><span class="params">(Spitter spitter)</span></span>;</span><br><span class="line">  <span class="function">Spitter <span class="title">findOne</span><span class="params">(<span class="keyword">long</span> id)</span></span>;</span><br><span class="line">  <span class="function">Spitter <span class="title">findByUsername</span><span class="params">(String username)</span></span>;</span><br><span class="line">  <span class="function">List&lt;Spitter&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcSpitterRepository</span> <span class="keyword">implements</span> <span class="title">SpitterRepository</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">count</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jdbcTemplate.queryForLong(<span class="string">"select count(id) from Spitter"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Spitter <span class="title">save</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    Long id = spitter.getId();</span><br><span class="line">    <span class="keyword">if</span> (id == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">long</span> spitterId = insertSpitterAndReturnId(spitter);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Spitter(spitterId, spitter.getUsername(), spitter.getPassword(), spitter.getFullName(), spitter.getEmail(), spitter.isUpdateByEmail());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      jdbcTemplate.update(</span><br><span class="line">        <span class="string">"update Spitter set username=?, password=?, fullname=?, email=?, updateByEmail=? where id=?"</span>,</span><br><span class="line">        spitter.getUsername(),</span><br><span class="line">        spitter.getPassword(),</span><br><span class="line">        spitter.getFullName(),</span><br><span class="line">        spitter.getEmail(),</span><br><span class="line">        spitter.isUpdateByEmail(),</span><br><span class="line">        id</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> spitter;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Inserts a spitter using SimpleJdbcInsert. </span></span><br><span class="line"><span class="comment">   * Involves no direct SQL and is able to return the ID of the newly created Spitter.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> spitter a Spitter to insert into the databse</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> the ID of the newly inserted Spitter</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">insertSpitterAndReturnId</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    SimpleJdbcInsert jdbcInsert = <span class="keyword">new</span> SimpleJdbcInsert(jdbcTemplate).withTableName(<span class="string">"Spitter"</span>);</span><br><span class="line">    jdbcInsert.setGeneratedKeyName(<span class="string">"id"</span>);</span><br><span class="line">    Map&lt;String, Object&gt; args = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">    args.put(<span class="string">"username"</span>, spitter.getUsername());</span><br><span class="line">    args.put(<span class="string">"password"</span>, spitter.getPassword());</span><br><span class="line">    args.put(<span class="string">"fullname"</span>, spitter.getFullName());</span><br><span class="line">    args.put(<span class="string">"email"</span>, spitter.getEmail());</span><br><span class="line">    args.put(<span class="string">"updateByEmail"</span>, spitter.isUpdateByEmail());</span><br><span class="line">    <span class="keyword">long</span> spitterId = jdbcInsert.executeAndReturnKey(args).longValue();</span><br><span class="line">    <span class="keyword">return</span> spitterId;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Inserts a spitter using a simple JdbcTemplate update() call.</span></span><br><span class="line"><span class="comment">   * Does not return the ID of the newly created Spitter.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> spitter a Spitter to insert into the database</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@SuppressWarnings</span>(<span class="string">"unused"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insertSpitter</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    jdbcTemplate.update(</span><br><span class="line">      INSERT_SPITTER,</span><br><span class="line">      spitter.getUsername(),</span><br><span class="line">      spitter.getPassword(),</span><br><span class="line">      spitter.getFullName(),</span><br><span class="line">      spitter.getEmail(),</span><br><span class="line">      spitter.isUpdateByEmail()</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Spitter <span class="title">findOne</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jdbcTemplate.queryForObject(SELECT_SPITTER + <span class="string">" where id = ?"</span>, <span class="keyword">new</span> SpitterRowMapper(), id);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Spitter <span class="title">findByUsername</span><span class="params">(String username)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jdbcTemplate.queryForObject(SELECT_SPITTER + <span class="string">" where username = ?"</span>, <span class="keyword">new</span> SpitterRowMapper(), username);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> List&lt;Spitter&gt; <span class="title">findAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jdbcTemplate.query(SELECT_SPITTER + <span class="string">" order by id"</span>, <span class="keyword">new</span> SpitterRowMapper());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">SpitterRowMapper</span> <span class="keyword">implements</span> <span class="title">RowMapper</span>&lt;<span class="title">Spitter</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Spitter <span class="title">mapRow</span><span class="params">(ResultSet rs, <span class="keyword">int</span> rowNum)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">      <span class="keyword">long</span> id = rs.getLong(<span class="string">"id"</span>);</span><br><span class="line">      String username = rs.getString(<span class="string">"username"</span>);</span><br><span class="line">      String password = rs.getString(<span class="string">"password"</span>);</span><br><span class="line">      String fullName = rs.getString(<span class="string">"fullname"</span>);</span><br><span class="line">      String email = rs.getString(<span class="string">"email"</span>);</span><br><span class="line">      <span class="keyword">boolean</span> updateByEmail = rs.getBoolean(<span class="string">"updateByEmail"</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Spitter(id, username, password, fullName, email, updateByEmail);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String INSERT_SPITTER = <span class="string">"insert into Spitter (username, password, fullname, email, updateByEmail) values (?, ?, ?, ?, ?)"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SELECT_SPITTER = <span class="string">"select id, username, password, fullname, email, updateByEmail from Spitter"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring-中的事务"><a href="#Spring-中的事务" class="headerlink" title="Spring 中的事务"></a>Spring 中的事务</h3><p>在 Spring 中，有多个数据库事务管理器，并且支持 JTA 事务。常用的事务管理器是 <code>DataSourceTransactionManager</code>，它继承了 <code>AbstractPlatformTransactionManager</code>，因此实现了 <code>PlatformTransactionManager</code>。</p>
+<h4 id="配置事务管理器"><a href="#配置事务管理器" class="headerlink" title="配置事务管理器"></a>配置事务管理器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransactionConfig</span> <span class="keyword">implements</span> <span class="title">TransactionManagementConfigurer</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Bean</span>(name=<span class="string">"dataSource"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> DataSource <span class="title">initDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BasicDataSource ds = <span class="keyword">new</span> BasicDataSource();</span><br><span class="line">    ds.setDriverClassName(<span class="string">"org.h2.Driver"</span>);</span><br><span class="line">    ds.setUrl(<span class="string">"jdbc:h2:tcp://localhost/-/spitter"</span>)</span><br><span class="line">    ds.setUsername(<span class="string">"sa"</span>);</span><br><span class="line">    ds.setPassword(<span class="string">""</span>);</span><br><span class="line">    ds.setlnitialSize(<span class="number">5</span>);</span><br><span class="line">    ds.setMaxActive(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">return</span> ds;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">transactionManager</span><span class="params">(DataSource dataSource)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(dataSource;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">(DataSource dataSource)</span> </span>&#123;</span><br><span class="line">    SqlSessionFactoryBean factoryBean = <span class="keyword">new</span> SqlSessionFactoryBean();</span><br><span class="line">    factoryBean.setDataSource(dataSource);</span><br><span class="line">    <span class="keyword">return</span> factoryBean.getObject();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="事务传播行为"><a href="#事务传播行为" class="headerlink" title="事务传播行为"></a>事务传播行为</h4><p>前面说过了事务隔离级别，这里再说说事务传播行为，当一个具有事务控制的方法被另一个有事务控制的方法调用后，需要如何管理事务（新建事务？在事务中执行？事务挂起？报异常？）</p>
+<ul>
+<li><strong>REQUIRED</strong>（默认值），在当前的事务中执行，如果当前没有事务，就新建一个事务。</li>
+<li>SUPPORTS，在当前的事务中执行，如果当前没有事务，就在非事务状态下执行。</li>
+<li>MANDATORY，必须在事务内部执行，如果当前有事务，就在事务中执行，如果没有事务，报错。</li>
+<li><strong>REQUIRES_NEW</strong>，必须在事务中执行，如果当前没有事务，新建事务，如果当前有事务，把当前事务挂起，新建事务。</li>
+<li>NOT_SUPPORTED，必须在非事务下执行，如果当前没有事务，正常执行，如果当前有事务，把当前事务挂起。</li>
+<li>NEVER，必须在非事务状态下执行，如果当前没有事务，正常执行，如果当前有事务，报错。</li>
+<li><strong>NESTED</strong>：必须在事务状态下执行，如果没有事务，新建事务，如果当前有事务，创建一个<strong>嵌套事务</strong>。实际上使用了<strong>保存点</strong>技术。</li>
+</ul>
+<p>我们常用的三个已经在上面加粗标记。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RoleListServiceImpl</span> <span class="keyword">implements</span> <span class="title">RoleListService</span> </span>&#123;</span><br><span class="line">  Logger log = Logger.getLogger(RoleListServiceImpl<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  </span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> RoleService roleService;</span><br><span class="line">  </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="meta">@Transactional</span>(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">insertRoleList</span><span class="params">(List&lt;Role&gt; roleList)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (Role role : roleList) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				count += roleService.insertRole(role);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">				log.info(ex);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> count;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RoleServiceImpl</span> <span class="keyword">implements</span> <span class="title">RoleService</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> RoleMapper roleMapper;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="meta">@Transactional</span>(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">insertRole</span><span class="params">(Role role)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> roleMapper.insertRole(role);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Transactional-失效问题"><a href="#Transactional-失效问题" class="headerlink" title="@Transactional 失效问题"></a><code>@Transactional</code> 失效问题</h4><p>如果我们在一个类中自调用了 <code>@Transactional</code> 注解方法，这个注解就会失效，理由很简单，因为 Spring 事务控制基于 AOP，而 AOP 基于动态代理，自调用没法使用动态代理。可以通过 <code>getBean</code> 之类的办法，手动调用代理。</p>
+<h4 id="错误使用-ServiceImpl"><a href="#错误使用-ServiceImpl" class="headerlink" title="错误使用 ServiceImpl"></a>错误使用 <code>ServiceImpl</code></h4><p>在一个 Service 方法中连续调用了两个带事务的方法，并不能保证两个事务都能执行成功。</p>
+<h4 id="不要滥用事务"><a href="#不要滥用事务" class="headerlink" title="不要滥用事务"></a>不要滥用事务</h4><p>事务代码中应该都和事务有关，无关的代码拿到事务注解外，否则数据库的连接数撑不住。</p>
+<h4 id="错误捕捉异常"><a href="#错误捕捉异常" class="headerlink" title="错误捕捉异常"></a>错误捕捉异常</h4><p>在事务中 <code>catch</code> 住异常后，可以做一些善后工作，但之后还是要抛出一个异常，因为希望让 Spring 进行事务管理，如果你手动把异常吞了，Spring 就看不到，也不会回滚了。</p>
+<h3 id="Spring-中的-JPA"><a href="#Spring-中的-JPA" class="headerlink" title="Spring 中的  JPA"></a>Spring 中的  JPA</h3><h4 id="用-Spring-管理-JPA"><a href="#用-Spring-管理-JPA" class="headerlink" title="用 Spring 管理 JPA"></a>用 Spring 管理 JPA</h4><p>基于 JPA 的应用程序需要使用 <code>EntityManagerFactory</code> 的实现类来获取 <code>EntityManager</code> 的实例。JPA 定义了两种类型的实体管理器，这两种实体管理器工厂可以借助 Spring 非常简单地创建：</p>
+<ul>
+<li><code>LocalEntityManagerFactoryBean</code> 生成应用程序管理类型的 <code>EntityManagerFactory</code></li>
+<li><code>LocalContainerEntityManagerFactoryBean</code> 生成容器管理类型的 <code>EntityManagerFactory</code></li>
+</ul>
+<p>应用程序管理类型的还要配置 JPA 传统的 persistence.xml，因此我们不太关注，我们可以直接使用容器管理类型的 <code>EntityManagerFactory</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">entityManagerFactory</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    DataSource dataSource, JpaVendorAdapter jpaVendorAdapter)</span> </span>&#123;</span><br><span class="line">  LocalContainerEntityManagerFactoryBean emfb = <span class="keyword">new</span> LocalContainerEntityManagerFactoryBean();</span><br><span class="line">  emfb.setDataSource(dataSource);</span><br><span class="line">  emfb.setJpaVendorAdapter(jpaVendorAdapter);</span><br><span class="line">  emfb.setPackagesToScan(<span class="string">"com.habuma.spittr.domain"</span>);</span><br><span class="line">  <span class="keyword">return</span> emfb;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们看第二个参数，其代表的是 JPA 的实现，Spring 中有好几个 JPA 的实现：<code>EclipseLinkJpaVendorAdapter</code>、<code>HibernateJpaVendorAdapter</code>、<code>OpenJpaVendorAdapter</code>，我们一般选择 <code>HibernateJpaVendorAdapter</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> JpaVendorAdapter <span class="title">jpaVendorAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  HibernateJpaVendorAdapter adapter = <span class="keyword">new</span> HibernateJpaVendorAdapter();</span><br><span class="line">  adapter.setDatabase(<span class="string">"HSQL"</span>);</span><br><span class="line">  adapter.setShowSql(<span class="keyword">true</span>);</span><br><span class="line">  adapter.setGenerateDdl(<span class="keyword">false</span>);</span><br><span class="line">  adapter.setDatabasePlatform(<span class="string">"org.hibernet.dialect.HSQLDialect"</span>);</span><br><span class="line">  <span class="keyword">return</span> adapter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们还应该使用 <code>PersistenceExceptionTranslationPostProcessor</code> 和 <code>@Repository</code> 注解，将 JPA 异常转换为 Spring 的统一数据访问异常：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> BeanPostProcessor <span class="title">persistenceTranslation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> PersistenceExceptionTranslationPostProcessor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写基于-JPA-的-Repository"><a href="#编写基于-JPA-的-Repository" class="headerlink" title="编写基于 JPA 的 Repository"></a>编写基于 JPA 的 Repository</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JpaSpitterRepository</span> <span class="keyword">implements</span> <span class="title">SpitterRepository</span> </span>&#123;</span><br><span class="line">  <span class="meta">@PersistenceUnit</span></span><br><span class="line">  <span class="keyword">private</span> EntityManagerFactory emf;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addSpitter</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    emf.createEntityManager().persist(spitter);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> Spitter <span class="title">getSpitterById</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> emf.createEntityManager().find(Spitter<span class="class">.<span class="keyword">class</span>, <span class="title">id</span>)</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveSpitter</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    emf.createEntityManager().merge(spitter);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">↓↓↓</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JpaSpitterRepository</span> <span class="keyword">implements</span> <span class="title">SpitterRepository</span> </span>&#123;</span><br><span class="line">  <span class="comment">// @PersistenceContext 并不会真正注入 EntityManager</span></span><br><span class="line">  <span class="comment">// 而是注入了一个 EntityManager 的代理。真正的 EntityManager 是与当前事务相关联的那一个</span></span><br><span class="line">  <span class="meta">@PersistenceContext</span></span><br><span class="line">  <span class="keyword">private</span> EntityManager em;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addSpitter</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    em.persist(spitter);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> Spitter <span class="title">getSpitterById</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> em.find(Spitter<span class="class">.<span class="keyword">class</span>, <span class="title">id</span>)</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveSpitter</span><span class="params">(Spitter spitter)</span> </span>&#123;</span><br><span class="line">    em.merge(spitter);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>@PersistenceUnit</code> 和 <code>@PersistenceContext</code> 并不是 Spring 的注解，它们是由 JPA 规范提供的。为了让 Spring 理解这些注解，我们应该在 Spring 的上下文中注册 <code>PersistenceAnnotationBeanPostProcessor</code> 的 Bean：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PersistenceAnnotationBeanPostProcessor <span class="title">paPostProcessor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> PersistenceAnnotationBeanPostProcessor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果已经使用了 <code>&lt;context:annotation-config&gt;</code> 或 <code>&lt;context:component-scan&gt;</code>，那么就不必手动配置了，因为这些配置元素会自动注册 <code>PersistenceAnnotationBeanPostProcessor</code> 的 Bean。</p>
+<h3 id="用-Spring-Data-实现自动化的-JPA"><a href="#用-Spring-Data-实现自动化的-JPA" class="headerlink" title="用 Spring Data 实现自动化的 JPA"></a>用 Spring Data 实现自动化的 JPA</h3><h4 id="快速查询"><a href="#快速查询" class="headerlink" title="快速查询"></a>快速查询</h4><p>上面配置来配置去，最后也没简单多少，我们可以借助 Spring Data JPA，直接写接口，实现类让 Spring 在创建应用上下文的时候自动生成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableJpaRepositories</span>(basePackages=<span class="string">"com.habuma.spittr.db"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JpaConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SpitterRepository</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Spitter</span>, <span class="title">Long</span>&gt; </span>&#123;</span><br><span class="line">  <span class="function">Spitter <span class="title">findByUsername</span><span class="params">(String username)</span></span>;</span><br><span class="line">  <span class="function">List&lt;Spitter&gt; <span class="title">readByFirstnameOrLastname</span><span class="params">(String first, String last)</span></span>;</span><br><span class="line">  <span class="function">List&lt;Spitter&gt; <span class="title">readByFirstnameIgnoringCaseOrLastnameIgnoringCase</span><span class="params">(String first, String last)</span></span>;</span><br><span class="line">  <span class="comment">// List&lt;Spitter&gt; readByFirstnameOrLastnameAllIgnoresCase(String first, String last);</span></span><br><span class="line">  <span class="function">List&lt;Spitter&gt; <span class="title">readByFirstnameOrLastnameOrderByLastnameAsc</span><span class="params">(String first, String last)</span></span>;</span><br><span class="line">  <span class="function">List&lt;Spitter&gt; <span class="title">readByFirstnameOrLastnameOrderByLastnameAscFirstnameDesc</span><span class="params">(String first, String last)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口说明"><a href="#接口说明" class="headerlink" title="接口说明"></a>接口说明</h4><p>我们来看看我们写的接口格式：</p>
+<p><img data-src="https://i.loli.net/2020/05/02/59iEloCUG6gfSja.png" alt=""></p>
+<ol>
+<li><p>查询动词</p>
+<p>Spring Data 允许四种查询动词，如 <code>get</code>、<code>read</code>、<code>find</code> 和 <code>count</code>，其中前三个是同义词。</p>
+</li>
+<li><p>主题</p>
+<p>对于大部分场景来说，主题会被省略掉，因为要查询的对象类型是通过如何参数化 <code>JpaRepository</code> 接口来确定的，而不是方法名称中的主题。有一种例外情况，如果主题的名称以 <code>Distinct</code> 开头的话，那么在生成查询的时候会确保所返回结果集中不包含重复记录。</p>
+</li>
+<li><p>断言</p>
+<p>断言中会有一个或多个限制结果的条件，每个条件必须引用一个属性，并且还可以指定一种比较操作。如果省略比较操作符的话，那么这暗指是一种相等比较操作，其他比较操作如下：</p>
+<ul>
+<li><code>IsAfter</code>、<code>After</code>、<code>IsGreaterThan</code>、<code>GreaterThan</code></li>
+<li><code>IsGreaterThanEqual</code>、<code>GreaterThanEqual</code></li>
+<li><code>IsBefore</code>、<code>Before</code>、<code>IsLessThan</code>、<code>LessThan</code></li>
+<li><code>IsLessThanEqual</code>、<code>LessThanEqual</code></li>
+<li><code>IsBetween</code>、<code>Between</code></li>
+<li><code>IsNull</code>、<code>Null</code>、<code>IsNotNull</code>、<code>NotNull</code></li>
+<li><code>IsIn</code>、<code>In</code>、<code>IsNotIn</code>、<code>NotIn</code></li>
+<li><code>IsStartingWith</code>、<code>StartingWith</code>、<code>StartsWith</code></li>
+<li><code>IsEndingWith</code>、<code>EndingWith</code>、<code>EndsWith</code></li>
+<li><code>IsContaining</code>、<code>Containing</code>、<code>Contains</code></li>
+<li><code>IsLike</code>、<code>Like</code></li>
+<li><code>IsNotLike</code>、<code>NotLike</code></li>
+<li><code>IsTrue</code>、<code>True</code></li>
+<li><code>IsFalse</code>、<code>False</code></li>
+<li><code>Is</code>、<code>Equals</code></li>
+<li><code>IsNot</code>、<code>Not</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="自定义查询-Query"><a href="#自定义查询-Query" class="headerlink" title="自定义查询 @Query"></a>自定义查询 <code>@Query</code></h4><p>如果上面这些还不够我们使用，或者使用得不爽，我们还可以使用自定义查询 <code>@Query</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">每次传入 <span class="string">"%gmail.com"</span></span><br><span class="line"><span class="function">List&lt;Spitter&gt; <span class="title">findByEmailLike</span><span class="params">(String mailType)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">↓↓↓</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">@<span class="title">Query</span><span class="params">(<span class="string">"select s from Spitter s where s.email like '%gmail.com'"</span>)</span></span></span><br><span class="line"><span class="function">List&lt;Spitter&gt; <span class="title">findAllGmailSpitters</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="混合自定义功能"><a href="#混合自定义功能" class="headerlink" title="混合自定义功能"></a>混合自定义功能</h4><p>有些方法我们不得不自己编写实现类，但我们也不同推翻 Spring Date JPA 的其它方法，只给这些不得不自己编写实现类的方法写实现类就行了。</p>
+<ol>
+<li>给需要手动实现的方法单独定义在一个接口</li>
+<li>原 Repository 继承这个接口</li>
+<li>定义一个原 Repository 接口的实现类，并实现 1 的接口</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SpitterSweeper</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">eliteSweep</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SpitterRepository</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Spitter</span>, <span class="title">Long</span>&gt;, <span class="title">SpitterSweeper</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpitterRepositoryImpl</span> <span class="keyword">implements</span> <span class="title">SpitterSweeper</span> </span>&#123;</span><br><span class="line">  <span class="meta">@PersistenceContext</span></span><br><span class="line">  <span class="keyword">private</span> EntityManager em;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">eliteSweep</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String update = </span><br><span class="line">      <span class="string">"UPDATE Spitter spitter "</span> +</span><br><span class="line">      <span class="string">"SET spitter.status = 'Elite' "</span> +</span><br><span class="line">      <span class="string">"WHERE spitter.status = 'Newbie' "</span> +</span><br><span class="line">      <span class="string">"AND spitter.id IN ("</span> +</span><br><span class="line">      <span class="string">"SELECT s FROM Spitter s WHERE ("</span> +</span><br><span class="line">      <span class="string">"  SELECT COUNT(spittles) FROM s.spittles spittles) &gt; 10000"</span> +</span><br><span class="line">      <span class="string">")"</span>;</span><br><span class="line">    <span class="keyword">return</span> em.createQuery(update).executeUpdate();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：Spring Data JPA 将实现类与接口关联起来是基于接口的名称。“Impl” 后缀只是默认的做法，如果你想使用其他后缀的话，只需在配置 <code>@EnableJpaRepositories</code> 的时候，设置一下就行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableJpaRepositories</span>(basePackages=<span class="string">"com.habuma.spittr.db"</span>, repositoryImplementationPostfix=<span class="string">"Helper"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JpaConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h4><p>其实 Spring Date JPA 也非常博大精深，实体类如果比较复杂，可能需要定义非常非常多的注解。而 Spring Date JPA 本身就有非常多的注解，上面写的真的就是九牛一毛，更多推荐参考《Spring Data JPA 从入门到精通》。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring-IN-ACTION/" rel="tag"># Spring IN ACTION</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/14/Spring-AOP-IN-ACTION/" rel="prev" title="Spring AOP IN ACTION">
+      <i class="fa fa-chevron-left"></i> Spring AOP IN ACTION
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/17/Spring-RedisTemplate-IN-ACTION/" rel="next" title="Spring RedisTemplate IN ACTION">
+      Spring RedisTemplate IN ACTION <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#经典-JDBC"><span class="nav-text">经典 JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连接数据库"><span class="nav-text">连接数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Statement-和-ResultSet"><span class="nav-text">Statement 和 ResultSet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PreparedStatement-和-CallableStatement"><span class="nav-text">PreparedStatement 和 CallableStatement</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-DateSource-来取得连接"><span class="nav-text">使用 DateSource 来取得连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-ResultSet-来卷动、更新数据"><span class="nav-text">使用 ResultSet 来卷动、更新数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批次更新"><span class="nav-text">批次更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务"><span class="nav-text">事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库的隔离级别"><span class="nav-text">数据库的隔离级别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Spring-中使用-JDBC"><span class="nav-text">在 Spring 中使用 JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用-Spring-配置数据源"><span class="nav-text">用 Spring 配置数据源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Profile-选择数据源"><span class="nav-text">使用 @Profile 选择数据源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-JdbcTemplate"><span class="nav-text">使用 JdbcTemplate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-中的事务"><span class="nav-text">Spring 中的事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置事务管理器"><span class="nav-text">配置事务管理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务传播行为"><span class="nav-text">事务传播行为</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Transactional-失效问题"><span class="nav-text">@Transactional 失效问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误使用-ServiceImpl"><span class="nav-text">错误使用 ServiceImpl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不要滥用事务"><span class="nav-text">不要滥用事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误捕捉异常"><span class="nav-text">错误捕捉异常</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-中的-JPA"><span class="nav-text">Spring 中的  JPA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用-Spring-管理-JPA"><span class="nav-text">用 Spring 管理 JPA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写基于-JPA-的-Repository"><span class="nav-text">编写基于 JPA 的 Repository</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-Spring-Data-实现自动化的-JPA"><span class="nav-text">用 Spring Data 实现自动化的 JPA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快速查询"><span class="nav-text">快速查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口说明"><span class="nav-text">接口说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义查询-Query"><span class="nav-text">自定义查询 @Query</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#混合自定义功能"><span class="nav-text">混合自定义功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他问题"><span class="nav-text">其他问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://www.xijinian.top/2018/05/16/Spring-JDBC-IN-ACTION/";
+    this.page.identifier = "2018/05/16/Spring-JDBC-IN-ACTION/";
+    this.page.title = "Spring JDBC IN ACTION";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xijinian.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

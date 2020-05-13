@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xijinian.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="安装与配置Mac 安装 Elasticsearch安装渠道最简单的办法肯定是 Homebrew（macOS），不过从官方下载安装也是不错的选择，最新的版本已经不需要额外的 JDK，如果我们有 $JAVA_HOME 的话，还是会使用本机的 JDK，这有点费劲，因为我们用的往往是 JDK 8，而 Elasticsearch 7.x 的官方建议是 JDK 11+。 使用 Elasticsearch 自带">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch 实战">
+<meta property="og:url" content="https://www.xijinian.top/2019/09/30/Elasticsearch-%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="Adventures of xijinian">
+<meta property="og:description" content="安装与配置Mac 安装 Elasticsearch安装渠道最简单的办法肯定是 Homebrew（macOS），不过从官方下载安装也是不错的选择，最新的版本已经不需要额外的 JDK，如果我们有 $JAVA_HOME 的话，还是会使用本机的 JDK，这有点费劲，因为我们用的往往是 JDK 8，而 Elasticsearch 7.x 的官方建议是 JDK 11+。 使用 Elasticsearch 自带">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xijinian.top/var/folders/qp/qs_z1nrd6h5c3qz0mg_8b4sc0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/551B64FA-B273-4ACF-8E0C-593135FF9760.png">
+<meta property="article:published_time" content="2019-09-29T17:29:32.000Z">
+<meta property="article:modified_time" content="2020-04-22T15:15:43.000Z">
+<meta property="article:author" content="xijinian">
+<meta property="article:tag" content="搜索">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.xijinian.top/var/folders/qp/qs_z1nrd6h5c3qz0mg_8b4sc0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/551B64FA-B273-4ACF-8E0C-593135FF9760.png">
+
+<link rel="canonical" href="https://www.xijinian.top/2019/09/30/Elasticsearch-%E5%AE%9E%E6%88%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Elasticsearch 实战 | Adventures of xijinian</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Adventures of xijinian</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/xijinian" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/09/30/Elasticsearch-%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Elasticsearch 实战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-30 01:29:32" itemprop="dateCreated datePublished" datetime="2019-09-30T01:29:32+08:00">2019-09-30</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/09/30/Elasticsearch-%E5%AE%9E%E6%88%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/30/Elasticsearch-实战/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><h3 id="Mac-安装-Elasticsearch"><a href="#Mac-安装-Elasticsearch" class="headerlink" title="Mac 安装 Elasticsearch"></a>Mac 安装 Elasticsearch</h3><h4 id="安装渠道"><a href="#安装渠道" class="headerlink" title="安装渠道"></a>安装渠道</h4><p>最简单的办法肯定是 Homebrew（macOS），不过从官方下载安装也是不错的选择，最新的版本已经不需要额外的 JDK，如果我们有 <code>$JAVA_HOME</code> 的话，还是会使用本机的 JDK，这有点费劲，因为我们用的往往是 JDK 8，而 Elasticsearch 7.x 的官方建议是 JDK 11+。</p>
+<h4 id="使用-Elasticsearch-自带-JDK"><a href="#使用-Elasticsearch-自带-JDK" class="headerlink" title="使用 Elasticsearch 自带 JDK"></a>使用 Elasticsearch 自带 JDK</h4><p>在 elasticsearch/bin 目录下有个叫做 elasticsearch-env 的文件，里面写了 JDK 的启用规则，把调用系统 JDK 的条件分支屏蔽掉就好啦：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># now set the path to java</span></span><br><span class="line"><span class="comment"># if [ ! -z "$JAVA_HOME" ]; then</span></span><br><span class="line"><span class="comment">#   JAVA="$JAVA_HOME/bin/java"</span></span><br><span class="line"><span class="comment">#   JAVA_TYPE="JAVA_HOME"</span></span><br><span class="line"><span class="comment"># else</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$(uname -s)</span>"</span> = <span class="string">"Darwin"</span> ]; <span class="keyword">then</span></span><br><span class="line">  <span class="comment"># macOS has a different structure</span></span><br><span class="line">  JAVA=<span class="string">"<span class="variable">$ES_HOME</span>/jdk.app/Contents/Home/bin/java"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  JAVA=<span class="string">"<span class="variable">$ES_HOME</span>/jdk/bin/java"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">JAVA_TYPE=<span class="string">"bundled jdk"</span></span><br><span class="line"><span class="comment"># fi</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> elasticsearch/bin</span><br><span class="line">$ ./elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment"># wait start success</span></span><br><span class="line">$ curl http://localhost:9200</span><br></pre></td></tr></table></figure>
+
+<h4 id="JVM-配置"><a href="#JVM-配置" class="headerlink" title="JVM 配置"></a>JVM 配置</h4><p>修改 elasticsearch/config/jvm.options，调整内存大小，注意：</p>
+<ol>
+<li>Xmx 应该和 Xms 设置一样</li>
+<li>不要超过机器的 50% 内存（Elasticsearch 7.x 默认设置 1GB 内存）</li>
+<li>内存不要设置超过 30GB</li>
+</ol>
+<h4 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ./elasticsearch-plugin list</span><br><span class="line"></span><br><span class="line">$ ./elasticsearch-plugin install analysis-icu</span><br><span class="line"></span><br><span class="line">$ curl http://localhost:9200/_cat/plugins</span><br><span class="line">Null analysis-icu 7.6.2</span><br></pre></td></tr></table></figure>
+
+<h4 id="本机多实例运行"><a href="#本机多实例运行" class="headerlink" title="本机多实例运行"></a>本机多实例运行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> elasticsearch/bin</span><br><span class="line"></span><br><span class="line">$ ./elasticsearch</span><br><span class="line"></span><br><span class="line">$ ./elasticsearch -E node.name=node0 -E cluster.name=geektime -E path.data=node0_data -d</span><br><span class="line">$ ./elasticsearch -E node.name=node1 -E cluster.name=geektime -E path.data=node1_data -d</span><br><span class="line">$ ./elasticsearch -E node.name=node2 -E cluster.name=geektime -E path.data=node2_data -d</span><br><span class="line">$ ./elasticsearch -E node.name=node3 -E cluster.name=geektime -E path.data=node3_data -d</span><br><span class="line"></span><br><span class="line">$ curl http://localhost:9200/_cat/nodes</span><br><span class="line"></span><br><span class="line">$ ps -rf|grep elasticsearch</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">kill</span> -15 pid</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mac-安装-Kibana"><a href="#Mac-安装-Kibana" class="headerlink" title="Mac 安装 Kibana"></a>Mac 安装 Kibana</h3><h4 id="安装、运行、插件"><a href="#安装、运行、插件" class="headerlink" title="安装、运行、插件"></a>安装、运行、插件</h4><p>都和 Elasticsearch 一样。</p>
+<h4 id="Dev-tools"><a href="#Dev-tools" class="headerlink" title="Dev tools"></a>Dev tools</h4><p><code>http://localhost:5601/app/kibana#/dev_tools/console</code> 在这里我们可以直接执行各种命令。</p>
+<h4 id="Kibana-定制"><a href="#Kibana-定制" class="headerlink" title="Kibana 定制"></a>Kibana 定制</h4><p>kibana/config 中的 kibana.yml，可以定制各种属性，如国际化。</p>
+<h3 id="Mac-安装-Logstash"><a href="#Mac-安装-Logstash" class="headerlink" title="Mac 安装 Logstash"></a>Mac 安装 Logstash</h3><h4 id="安装、运行"><a href="#安装、运行" class="headerlink" title="安装、运行"></a>安装、运行</h4><p>都和 Elasticsearch 一样。</p>
+<h4 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h4><p>启动的时候用脚本指定要导入 ElasticSearch 的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ .logstash -f logstash.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">input</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">file</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">path</span> <span class="string">=&gt;</span> <span class="string">"/Users/staticvoid/elk7/logstash-7.6.2/bin/movies.csv"</span></span><br><span class="line">    <span class="string">start_position</span> <span class="string">=&gt;</span> <span class="string">"beginning"</span></span><br><span class="line">    <span class="string">sincedb_path</span> <span class="string">=&gt;</span> <span class="string">"/dev/null"</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">filter</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">csv</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">separator</span> <span class="string">=&gt;</span> <span class="string">","</span></span><br><span class="line">    <span class="string">columns</span> <span class="string">=&gt;</span> <span class="string">["id","content","genre"]</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="string">mutate</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">split</span> <span class="string">=&gt;</span> <span class="string">&#123;</span> <span class="string">"genre"</span> <span class="string">=&gt;</span> <span class="string">"|"</span> <span class="string">&#125;</span></span><br><span class="line">    <span class="string">remove_field</span> <span class="string">=&gt;</span> <span class="string">["path",</span> <span class="string">"host"</span><span class="string">,"@timestamp","message"]</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="string">mutate</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">split</span> <span class="string">=&gt;</span> <span class="string">["content",</span> <span class="string">"("</span><span class="string">]</span></span><br><span class="line">    <span class="string">add_field</span> <span class="string">=&gt;</span> <span class="string">&#123;</span> <span class="string">"title"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[content][0]&#125;</span>"</span><span class="string">&#125;</span></span><br><span class="line">    <span class="string">add_field</span> <span class="string">=&gt;</span> <span class="string">&#123;</span> <span class="string">"year"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[content][1]&#125;</span>"</span><span class="string">&#125;</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="string">mutate</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">convert</span> <span class="string">=&gt;</span> <span class="string">&#123;</span></span><br><span class="line">      <span class="string">"year"</span> <span class="string">=&gt;</span> <span class="string">"integer"</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line">    <span class="string">strip</span> <span class="string">=&gt;</span> <span class="string">["title"]</span></span><br><span class="line">    <span class="string">remove_field</span> <span class="string">=&gt;</span> <span class="string">["path",</span> <span class="string">"host"</span><span class="string">,"@timestamp","message","content"]</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">output</span> <span class="string">&#123;</span></span><br><span class="line">   <span class="string">elasticsearch</span> <span class="string">&#123;</span></span><br><span class="line">     <span class="string">hosts</span> <span class="string">=&gt;</span> <span class="string">"http://localhost:9200"</span></span><br><span class="line">     <span class="string">index</span> <span class="string">=&gt;</span> <span class="string">"movies"</span></span><br><span class="line">     <span class="string">document_id</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;id&#125;</span>"</span></span><br><span class="line">   <span class="string">&#125;</span></span><br><span class="line">  <span class="string">stdout</span> <span class="string">&#123;&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ElasticSearch-入门"><a href="#ElasticSearch-入门" class="headerlink" title="ElasticSearch 入门"></a>ElasticSearch 入门</h2><h3 id="索引、文档和-REST-API"><a href="#索引、文档和-REST-API" class="headerlink" title="索引、文档和 REST API"></a>索引、文档和 REST API</h3><h4 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h4><p>文档是所有可搜索数据的最小单位，类比 MySQL 就相当于是表中的一行数据。文档会被序列化为 JSON 保存。每个文档都有一个 Unique ID，你可以指定或者交给 Elasticsearch 自动生成。</p>
+<p>每一个文档都有元数据，如：</p>
+<ul>
+<li><code>_index</code></li>
+<li><code>_type</code>：7.0 后只能设置一个 Type，即 <code>_doc</code></li>
+<li><code>_id</code>：Unique ID</li>
+<li><code>_source</code>：原始 JSON 数据</li>
+<li><code>_all</code>：7.x 中已被废除</li>
+<li><code>_version</code></li>
+<li><code>_score</code>：相关性打分</li>
+</ul>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>索引是文档的容器，是一类文档的组合，类似 MySQL 中的表，里面有很多行（文档）。</p>
+<p>每个索引都有自己的 Mapping 定义，用于包含文档的字段名和字段类型，类似于 MySQL 的表结构。</p>
+<p>每个索引都有自己的 Setting 定义，定义数据如何分布，有多少个分片。</p>
+<p>索引中的数据分布在 Shard 分片上。</p>
+<h4 id="REST-API-举例"><a href="#REST-API-举例" class="headerlink" title="REST API 举例"></a>REST API 举例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看索引相关信息</span></span><br><span class="line">GET kibana_sample_data_ecommerce</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看索引的文档总数</span></span><br><span class="line">GET kibana_sample_data_ecommerce/_count</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看前10条文档，了解文档格式</span></span><br><span class="line">POST kibana_sample_data_ecommerce/_search</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#_cat indices API</span></span><br><span class="line"><span class="comment">#查看indices</span></span><br><span class="line">GET /_cat/indices/kibana*?v&amp;s=index</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看状态为绿的索引</span></span><br><span class="line">GET /_cat/indices?v&amp;health=green</span><br><span class="line"></span><br><span class="line"><span class="comment">#按照文档个数排序</span></span><br><span class="line">GET /_cat/indices?v&amp;s=docs.count:desc</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看具体的字段</span></span><br><span class="line">GET /_cat/indices/kibana*?pri&amp;v&amp;h=health,index,pri,rep,docs.count,mt</span><br><span class="line"></span><br><span class="line"><span class="comment">#How much memory is used per index?</span></span><br><span class="line">GET /_cat/indices?v&amp;h=i,tm&amp;s=tm:desc</span><br></pre></td></tr></table></figure>
+
+<h3 id="节点、集群、分片及副本"><a href="#节点、集群、分片及副本" class="headerlink" title="节点、集群、分片及副本"></a>节点、集群、分片及副本</h3><h4 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h4><p>本质上是一个 Java 进程，一个机器上可以运行多个节点，但是生产环境一般一台机器上只有一个。</p>
+<p>每一个节点都有名字，同步配置文件配置，或者启动的时候通过 <code>-E node.name=node1</code> 来指定。</p>
+<p>每一个节点在启动后，都会分配一个 UID，保存在 data 目录下。</p>
+<h4 id="Master-eligible-Node-和-Master-Node"><a href="#Master-eligible-Node-和-Master-Node" class="headerlink" title="Master-eligible Node 和 Master Node"></a>Master-eligible Node 和 Master Node</h4><p>每个节点启动以后，默认就是一个 Master eligible 节点，可以设置 <code>node.master:false</code> 禁止。</p>
+<p>Master-eligible 节点可以参加选主流程，成为 Master 节点。当第一个节点启动的时候，它就会把自己选举成 Master 节点。</p>
+<p><strong>集群状态（Cluster State）</strong>是指一个集群中：① 所有的节点信息；② 所有的索引和其相关的 Mapping、Setting 信息；③ 分片的路由信息。</p>
+<p>每一个节点上都保存了<strong>集群状态</strong>，但是只有 Master 节点才能修改<strong>集群状态</strong>（为了防止造成数据的不一致）。</p>
+<h4 id="Data-Node-和-Coordinating-Node"><a href="#Data-Node-和-Coordinating-Node" class="headerlink" title="Data Node 和 Coordinating Node"></a>Data Node 和 Coordinating Node</h4><p>Data Node 就是可以保存数据的节点，负责保存分片的数据，在数据扩展上起到了重要的作用。</p>
+<p>Coordinating Node 负责接收 Client 的请求，将请求分发到合适的 Node，最终把结果混在一起。每个节点默认都起到了 Coordinating Node 的职责。</p>
+<h4 id="其他类型的节点"><a href="#其他类型的节点" class="headerlink" title="其他类型的节点"></a>其他类型的节点</h4><p>Hot &amp; Warm Node</p>
+<p>Machine Learning Node</p>
+<p>Tribe Node（5.3 开始使用 Cross Cluster Search），它连接到不同 Elasticsearch 集群，并且支持将这些集群当成一个单独的集群处理。</p>
+<h4 id="配置节点类型"><a href="#配置节点类型" class="headerlink" title="配置节点类型"></a>配置节点类型</h4><p>每个节点在启动的时候会读取 elasticsearch.yml 配置文件来设置自己的角色，生产环境中最好设置单一角色，开发环境中一个节点可以承担多种角色。</p>
+<table>
+<thead>
+<tr>
+<th align="left">节点类型</th>
+<th>配置参数</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">master eligible</td>
+<td><code>node.master</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td align="left">data</td>
+<td><code>node.data</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td align="left">ingest</td>
+<td><code>node.ingest</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td align="left">coordinating only</td>
+<td></td>
+<td>默认都是 coordinating 节点<br>设置其他类型全部为 <code>false</code></td>
+</tr>
+<tr>
+<td align="left">machine learning</td>
+<td><code>node.ml</code></td>
+<td><code>true</code>（需要 enable x-pack）</td>
+</tr>
+</tbody></table>
+<h4 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h4><ol>
+<li><p><strong>主分片</strong>，可以将数据分布到集群内的所有节点之上</p>
+<p>一个分片是一个运行的 Lucene 的实例</p>
+<p>主分片数在索引创建时指定，后续不允许修改，除非 Reindex</p>
+</li>
+<li><p>副本，解决数据高可用，是主分片的拷贝</p>
+<p>副本分片数可以动态调整</p>
+<p>增加副本数，还可以在一定程度上提高服务的可用性（读取的吞吐）</p>
+</li>
+</ol>
+<p>举例子：</p>
+<p><img data-src="/var/folders/qp/qs_z1nrd6h5c3qz0mg_8b4sc0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/551B64FA-B273-4ACF-8E0C-593135FF9760.png" alt="551B64FA-B273-4ACF-8E0C-593135FF9760"></p>
+<h4 id="分片的设定"><a href="#分片的设定" class="headerlink" title="分片的设定"></a>分片的设定</h4><ul>
+<li><p>分片数设置过小</p>
+<ul>
+<li><p>就算以后节点增加了，分片数也改不了，无法通过增加节点来实现水平扩展</p>
+</li>
+<li><p>单个分片的数据量太大，数据重新分配耗时</p>
+</li>
+</ul>
+</li>
+<li><p>分片数设置过大（7.0 开始，默认分片数从 5 改成了 1，因为数据量不大，如几百万，一个主分片就够了）</p>
+<ul>
+<li>影响搜索结果的相关性打分，影响统计结果的准确性</li>
+<li>单个节点上过多的分片，徒增消耗</li>
+</ul>
+</li>
+</ul>
+<h4 id="查看集群的健康状态"><a href="#查看集群的健康状态" class="headerlink" title="查看集群的健康状态"></a>查看集群的健康状态</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">GET _cluster/health</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"cluster_name"</span> : <span class="string">"geektime"</span>,</span><br><span class="line">  <span class="attr">"status"</span> : <span class="string">"green"</span>,</span><br><span class="line">  <span class="attr">"timed_out"</span> : <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"number_of_nodes"</span> : <span class="number">2</span>,</span><br><span class="line">  <span class="attr">"number_of_data_nodes"</span> : <span class="number">2</span>,</span><br><span class="line">  <span class="attr">"active_primary_shards"</span> : <span class="number">3</span>,</span><br><span class="line">  <span class="attr">"active_shards"</span> : <span class="number">6</span>,</span><br><span class="line">  <span class="attr">"relocating_shards"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"initializing_shards"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"unassigned_shards"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"delayed_unassigned_shards"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"number_of_pending_tasks"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"number_of_in_flight_fetch"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"task_max_waiting_in_queue_millis"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"active_shards_percent_as_number"</span> : <span class="number">100.0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># green 代表主分片和副本分片都正常分配；yellow 代表有副本分片未能正常分配；</span><br><span class="line"># red 代表有主分片未能正常分配，例如当服务器的磁盘容量超过 85% 时，去创建了一个新的索引</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag"># 搜索</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/24/Thrift-%E5%85%A5%E9%97%A8/" rel="prev" title="Thrift 入门">
+      <i class="fa fa-chevron-left"></i> Thrift 入门
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装与配置"><span class="nav-text">安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-安装-Elasticsearch"><span class="nav-text">Mac 安装 Elasticsearch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装渠道"><span class="nav-text">安装渠道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Elasticsearch-自带-JDK"><span class="nav-text">使用 Elasticsearch 自带 JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行"><span class="nav-text">运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM-配置"><span class="nav-text">JVM 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插件安装"><span class="nav-text">插件安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本机多实例运行"><span class="nav-text">本机多实例运行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-安装-Kibana"><span class="nav-text">Mac 安装 Kibana</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装、运行、插件"><span class="nav-text">安装、运行、插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dev-tools"><span class="nav-text">Dev tools</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kibana-定制"><span class="nav-text">Kibana 定制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-安装-Logstash"><span class="nav-text">Mac 安装 Logstash</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装、运行"><span class="nav-text">安装、运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入数据"><span class="nav-text">导入数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ElasticSearch-入门"><span class="nav-text">ElasticSearch 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引、文档和-REST-API"><span class="nav-text">索引、文档和 REST API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文档"><span class="nav-text">文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REST-API-举例"><span class="nav-text">REST API 举例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点、集群、分片及副本"><span class="nav-text">节点、集群、分片及副本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#节点"><span class="nav-text">节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Master-eligible-Node-和-Master-Node"><span class="nav-text">Master-eligible Node 和 Master Node</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-Node-和-Coordinating-Node"><span class="nav-text">Data Node 和 Coordinating Node</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他类型的节点"><span class="nav-text">其他类型的节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置节点类型"><span class="nav-text">配置节点类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分片"><span class="nav-text">分片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分片的设定"><span class="nav-text">分片的设定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看集群的健康状态"><span class="nav-text">查看集群的健康状态</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xijinian"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">xijinian</p>
+  <div class="site-description" itemprop="description">放轻松，就像在漫游地球～</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/xijinian" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/xijinian" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;xijinian" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xijinian</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://xijinian.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://www.xijinian.top/2019/09/30/Elasticsearch-%E5%AE%9E%E6%88%98/";
+    this.page.identifier = "2019/09/30/Elasticsearch-实战/";
+    this.page.title = "Elasticsearch 实战";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xijinian.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
