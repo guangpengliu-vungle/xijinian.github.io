@@ -183,6 +183,338 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/20/Spring-REST-IN-ACTION/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/20/Spring-REST-IN-ACTION/" class="post-title-link" itemprop="url">Spring REST IN ACTION</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-20 00:12:04" itemprop="dateCreated datePublished" datetime="2018-05-20T00:12:04+08:00">2018-05-20</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/20/Spring-REST-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/20/Spring-REST-IN-ACTION/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="REST-基础知识"><a href="#REST-基础知识" class="headerlink" title="REST 基础知识"></a>REST 基础知识</h2><p>REST 和 RPC 关系不大：RPC 是面向服务的，并关注行为和动作；REST 是面向资源的。</p>
+<p><strong>RE</strong>[$Representational^{表述性}$]<strong>S</strong>[$State^{状态}$]<strong>T</strong>[$Transfer^{转移}$] —— 就是将资源状态以最适合客户端或服务端的形式从服务器端转移到客户端（或者反过来）。</p>
+<p>在 REST 中，资源通过 URL 进行识别和定位，关注的是资源，而不是行为。REST 中会有行为，但不体现在 URL 中，而是通过 HTTP 方法定义的，和 CRUD 对应：</p>
+<ul>
+<li>$POST^{Create}$</li>
+<li>$GET^{Read}$</li>
+<li>$PUT/PATCH^{Update}$</li>
+<li>$DELETE^{Delete}$
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/20/Spring-REST-IN-ACTION/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/18/Spring-Cache-IN-ACTION/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/18/Spring-Cache-IN-ACTION/" class="post-title-link" itemprop="url">Spring Cache IN ACTION</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-18 23:33:38" itemprop="dateCreated datePublished" datetime="2018-05-18T23:33:38+08:00">2018-05-18</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/18/Spring-Cache-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/18/Spring-Cache-IN-ACTION/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="配置缓存管理器"><a href="#配置缓存管理器" class="headerlink" title="配置缓存管理器"></a>配置缓存管理器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableCaching</span> <span class="comment">//→ 启动缓存</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CachingConfig</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/18/Spring-Cache-IN-ACTION/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/17/Spring-RedisTemplate-IN-ACTION/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/17/Spring-RedisTemplate-IN-ACTION/" class="post-title-link" itemprop="url">Spring RedisTemplate IN ACTION</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-17 00:33:00" itemprop="dateCreated datePublished" datetime="2018-05-17T00:33:00+08:00">2018-05-17</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/17/Spring-RedisTemplate-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/17/Spring-RedisTemplate-IN-ACTION/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="配置-Redis-连接工厂"><a href="#配置-Redis-连接工厂" class="headerlink" title="配置 Redis 连接工厂"></a>配置 Redis 连接工厂</h3><p><strong>Redis 连接工厂</strong>会生成到 Redis 数据库服务器的连接，Spring Data Redis 为四种 Redis 客户端实现了连接工厂：</p>
+<ol>
+<li><code>JedisConnectionFactory</code></li>
+<li><code>JredisConnectionFactory</code></li>
+<li><code>LettuceConnectionFactory</code></li>
+<li><code>SrpConnectionFactory</code></li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/17/Spring-RedisTemplate-IN-ACTION/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/16/Spring-JDBC-IN-ACTION/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/16/Spring-JDBC-IN-ACTION/" class="post-title-link" itemprop="url">Spring JDBC IN ACTION</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-16 01:39:31" itemprop="dateCreated datePublished" datetime="2018-05-16T01:39:31+08:00">2018-05-16</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/05/16/Spring-JDBC-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/16/Spring-JDBC-IN-ACTION/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="经典-JDBC"><a href="#经典-JDBC" class="headerlink" title="经典 JDBC"></a>经典 JDBC</h3><h4 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h4><ol>
+<li>注册 <code>Driver</code> 实例（只要加载 <code>java.sql.Driver</code> 接口的实现类 <code>com.mysql.jdbc.Driver</code> 就行，会自动将 <code>com.mysql.jdbc.Driver</code> 注册到 <code>DriverManager</code>）</li>
+<li>取得 <code>Connection</code> 实例（<code>Connection conn = DriverManager.getConnection(jdbcUrl, username, password)</code>）</li>
+<li>最后关闭 <code>Connection</code> 实例（JDBC 规范没要求关闭 <code>conn</code> 的时候关闭 <code>stmt</code>，最好手动关闭 <code>stmt</code>）
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/16/Spring-JDBC-IN-ACTION/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/14/Spring-AOP-IN-ACTION/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -690,340 +1022,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/12/29/MyBatis-%E9%80%9F%E8%A7%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/29/MyBatis-%E9%80%9F%E8%A7%88/" class="post-title-link" itemprop="url">MyBatis 速览</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-12-29 20:35:16" itemprop="dateCreated datePublished" datetime="2017-12-29T20:35:16+08:00">2017-12-29</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/12/29/MyBatis-%E9%80%9F%E8%A7%88/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/29/MyBatis-速览/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="MySQL-基本命令回顾"><a href="#MySQL-基本命令回顾" class="headerlink" title="MySQL 基本命令回顾"></a>MySQL 基本命令回顾</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 创建数据库</span><br><span class="line">CREATE DATABASE &#39;database_name&#39; DEFAULT CHARACTER SET utf8mb4</span><br><span class="line"></span><br><span class="line"># 建表</span><br><span class="line">CREATE TABLE &#39;table_name&#39; (</span><br><span class="line">  &#39;column_name&#39; &#39;type&#39; &#39;restrict&#39; AUTO_INCREMENT COMMENT &#39;remark&#39;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/12/29/MyBatis-%E9%80%9F%E8%A7%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/12/28/Spring-MVC-%E9%80%9F%E8%A7%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/28/Spring-MVC-%E9%80%9F%E8%A7%88/" class="post-title-link" itemprop="url">Spring MVC 速览</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-12-28 22:22:45" itemprop="dateCreated datePublished" datetime="2017-12-28T22:22:45+08:00">2017-12-28</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/12/28/Spring-MVC-%E9%80%9F%E8%A7%88/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/28/Spring-MVC-速览/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Spring-MVC-框架简介"><a href="#Spring-MVC-框架简介" class="headerlink" title="Spring MVC 框架简介"></a>Spring MVC 框架简介</h3><h4 id="Spring-MVC-中的重要组件"><a href="#Spring-MVC-中的重要组件" class="headerlink" title="Spring MVC 中的重要组件"></a>Spring MVC 中的重要组件</h4><ol>
-<li><code>DispatcherServlet</code>：前端控制器，接收所有请求（如果路径配置为“/”，则不包括 JSP 文件）</li>
-<li><code>HandlerMapping</code>：解析请求格式的，判断希望要执行哪个具体的方法</li>
-<li><code>HandlerAdapter</code>：负责调用具体的方法</li>
-<li><code>ViewResolver</code>：视图解析器，解析结果，负责准备跳转到具体的物理视图
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/12/28/Spring-MVC-%E9%80%9F%E8%A7%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/12/27/Spring-%E9%80%9F%E8%A7%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/27/Spring-%E9%80%9F%E8%A7%88/" class="post-title-link" itemprop="url">Spring 速览</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-12-27 23:15:55" itemprop="dateCreated datePublished" datetime="2017-12-27T23:15:55+08:00">2017-12-27</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/12/27/Spring-%E9%80%9F%E8%A7%88/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/27/Spring-速览/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Spring-框架简介"><a href="#Spring-框架简介" class="headerlink" title="Spring 框架简介"></a>Spring 框架简介</h3><h4 id="主要发明者"><a href="#主要发明者" class="headerlink" title="主要发明者"></a>主要发明者</h4><p>Rod Johnson，提倡不要重复发明轮子，Spring 的宗旨：让原有的技术使用起来更方便。</p>
-<h4 id="Spring-框架核心功能"><a href="#Spring-框架核心功能" class="headerlink" title="Spring 框架核心功能"></a>Spring 框架核心功能</h4><ul>
-<li><p>IoC/DI</p>
-</li>
-<li><p>AOP</p>
-</li>
-<li><p>声明式事务</p>
-</li>
-</ul>
-<h4 id="Spring-框架的运行时环境"><a href="#Spring-框架的运行时环境" class="headerlink" title="Spring 框架的运行时环境"></a>Spring 框架的运行时环境</h4><p><img data-src="https://docs.spring.io/spring/docs/5.0.0.RC3/spring-framework-reference/images/spring-overview.png" alt="">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/12/27/Spring-%E9%80%9F%E8%A7%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/11/30/XML-%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/11/30/XML-%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">XML 配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-11-30 07:22:04" itemprop="dateCreated datePublished" datetime="2017-11-30T07:22:04+08:00">2017-11-30</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/11/30/XML-%E9%85%8D%E7%BD%AE/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/30/XML-配置/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li><p>XML 配置文件（即上文中的 <code>mybatis-config.xml</code>）中包含了对 MyBatis 系统的核心设置，包含获取数据库连接实例的数据源（DataSource）和决定事务作用域和控制方式的事务管理器（TransactionManager）。其总配置选项如下：
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/11/30/XML-%E9%85%8D%E7%BD%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1091,7 +1093,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

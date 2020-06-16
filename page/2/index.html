@@ -183,6 +183,341 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/" class="post-title-link" itemprop="url">Java 并发包的基石</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-13 23:50:12" itemprop="dateCreated datePublished" datetime="2019-01-13T23:50:12+08:00">2019-01-13</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/13/Java-并发包的基石/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="原子变量和-CAS"><a href="#原子变量和-CAS" class="headerlink" title="原子变量和 CAS"></a>原子变量和 CAS</h3><h4 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a><code>AtomicInteger</code></h4><p>对于多线程操作 <code>count++</code> 这种场景，我们可以使用原子变量来保证 update 数据的原子性。它的内部成员还是 <code>volatile</code> 修饰的，内存可见性的问题也没有啦。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">AtomicInteger</span><span class="params">(<span class="keyword">int</span> initialValue)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">AtomicInteger</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> newValue)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并设置新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndSet</span><span class="params">(<span class="keyword">int</span> newValue)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并给当前值加 1</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndIncrement</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并给当前值减 1</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndDecrement</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并给当前值加 delta</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAdd</span><span class="params">(<span class="keyword">int</span> delta)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式给当前值加 1 并获取新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">incrementAndGet</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式给当前值减 1 并获取新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">decrementAndGet</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式给当前值加 delta 并获取新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">addAndGet</span><span class="params">(<span class="keyword">int</span> delta)</span></span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">Java 并发基础知识</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-13 21:55:51" itemprop="dateCreated datePublished" datetime="2019-01-13T21:55:51+08:00">2019-01-13</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/13/Java-并发基础知识/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="线程的基本概念"><a href="#线程的基本概念" class="headerlink" title="线程的基本概念"></a>线程的基本概念</h3><h4 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h4><ol>
+<li>继承 Thread<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">publicvoid <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  Thread thread = <span class="keyword">new</span> HelloThead();</span><br><span class="line">  thread.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/11/Java-%E9%AB%98%E7%BA%A7-IO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/11/Java-%E9%AB%98%E7%BA%A7-IO/" class="post-title-link" itemprop="url">Java 高级 I/O</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-11 02:33:32" itemprop="dateCreated datePublished" datetime="2019-01-11T02:33:32+08:00">2019-01-11</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/01/11/Java-%E9%AB%98%E7%BA%A7-IO/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/11/Java-高级-IO/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="RandomAccessFile"><a href="#RandomAccessFile" class="headerlink" title="RandomAccessFile"></a><code>RandomAccessFile</code></h3><h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">RandomAccessFile</span><span class="params">(String name, String mode)</span> <span class="keyword">throws</span> FileNotFoundException</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">RandomAccessFile</span><span class="params">(File file, String mode)</span> <span class="keyword">throws</span> FileNotFoundException</span></span><br></pre></td></tr></table></figure>
+
+<p><code>mode</code> 表示打开模式，可以有四个取值：</p>
+<ul>
+<li>“<code>r</code>“: 只用于读</li>
+<li>“<code>rw</code>“: 用于读和写</li>
+<li>“<code>rws</code>“: 和 “<code>rw</code>“ 一样，用于读和写，另外，它要求文件内容和元数据的任何更新都同步到设备上</li>
+<li>“<code>rwd</code>“: 和 “<code>rw</code>“ 一样，用于读和写，另外，它要求文件内容的任何更新都同步到设备上，和 “<code>rws</code>“ 的区别是，元数据的更新不要求同步
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/11/Java-%E9%AB%98%E7%BA%A7-IO/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/09/Java-IO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/09/Java-IO/" class="post-title-link" itemprop="url">Java I/O</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-09 20:13:25" itemprop="dateCreated datePublished" datetime="2019-01-09T20:13:25+08:00">2019-01-09</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/01/09/Java-IO/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/09/Java-IO/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="文件概述"><a href="#文件概述" class="headerlink" title="文件概述"></a>文件概述</h3><h4 id="基本概念和常识"><a href="#基本概念和常识" class="headerlink" title="基本概念和常识"></a>基本概念和常识</h4><ul>
+<li>POM 头</li>
+<li>文件路径（相对、绝对）</li>
+<li>元数据信息（每个文件除了有具体内容，还有元数据信息，如文件名、文件大小等）</li>
+<li>访问权限</li>
+<li>大小写是否敏感</li>
+<li>临时文件</li>
+<li>文件读写需要两次数据拷贝</li>
+<li>文件有打开和关闭的状态。打开文件会创建“文件描述符” — 它一般通过一个整数来索引，消耗内存，应该及时关闭。</li>
+<li>为了提升文件操作的效率，可以使用缓冲区。注意要在写结束的时候，需将缓冲区的剩余内容同步到硬盘。</li>
+<li>操作系统一般支持一种称之为内存映射文件的高效的随机读写大文件的方法，将文件直接映射到内存，操作内存就是操作文件，在内存映射文件中，只有访问到的数据才会被实际拷贝到内存，且数据只会拷贝一次，被操作系统以及多个应用程序共享。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/09/Java-IO/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/03/Java-%E6%B3%9B%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -665,342 +1000,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/20/Spring-REST-IN-ACTION/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/20/Spring-REST-IN-ACTION/" class="post-title-link" itemprop="url">Spring REST IN ACTION</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-20 00:12:04" itemprop="dateCreated datePublished" datetime="2018-05-20T00:12:04+08:00">2018-05-20</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/05/20/Spring-REST-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/20/Spring-REST-IN-ACTION/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="REST-基础知识"><a href="#REST-基础知识" class="headerlink" title="REST 基础知识"></a>REST 基础知识</h2><p>REST 和 RPC 关系不大：RPC 是面向服务的，并关注行为和动作；REST 是面向资源的。</p>
-<p><strong>RE</strong>[$Representational^{表述性}$]<strong>S</strong>[$State^{状态}$]<strong>T</strong>[$Transfer^{转移}$] —— 就是将资源状态以最适合客户端或服务端的形式从服务器端转移到客户端（或者反过来）。</p>
-<p>在 REST 中，资源通过 URL 进行识别和定位，关注的是资源，而不是行为。REST 中会有行为，但不体现在 URL 中，而是通过 HTTP 方法定义的，和 CRUD 对应：</p>
-<ul>
-<li>$POST^{Create}$</li>
-<li>$GET^{Read}$</li>
-<li>$PUT/PATCH^{Update}$</li>
-<li>$DELETE^{Delete}$
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/20/Spring-REST-IN-ACTION/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/18/Spring-Cache-IN-ACTION/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/18/Spring-Cache-IN-ACTION/" class="post-title-link" itemprop="url">Spring Cache IN ACTION</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-18 23:33:38" itemprop="dateCreated datePublished" datetime="2018-05-18T23:33:38+08:00">2018-05-18</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/05/18/Spring-Cache-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/18/Spring-Cache-IN-ACTION/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="配置缓存管理器"><a href="#配置缓存管理器" class="headerlink" title="配置缓存管理器"></a>配置缓存管理器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableCaching</span> <span class="comment">//→ 启动缓存</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CachingConfig</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/18/Spring-Cache-IN-ACTION/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/17/Spring-RedisTemplate-IN-ACTION/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/17/Spring-RedisTemplate-IN-ACTION/" class="post-title-link" itemprop="url">Spring RedisTemplate IN ACTION</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-17 00:33:00" itemprop="dateCreated datePublished" datetime="2018-05-17T00:33:00+08:00">2018-05-17</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/05/17/Spring-RedisTemplate-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/17/Spring-RedisTemplate-IN-ACTION/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="配置-Redis-连接工厂"><a href="#配置-Redis-连接工厂" class="headerlink" title="配置 Redis 连接工厂"></a>配置 Redis 连接工厂</h3><p><strong>Redis 连接工厂</strong>会生成到 Redis 数据库服务器的连接，Spring Data Redis 为四种 Redis 客户端实现了连接工厂：</p>
-<ol>
-<li><code>JedisConnectionFactory</code></li>
-<li><code>JredisConnectionFactory</code></li>
-<li><code>LettuceConnectionFactory</code></li>
-<li><code>SrpConnectionFactory</code></li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/17/Spring-RedisTemplate-IN-ACTION/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/16/Spring-JDBC-IN-ACTION/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/16/Spring-JDBC-IN-ACTION/" class="post-title-link" itemprop="url">Spring JDBC IN ACTION</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-16 01:39:31" itemprop="dateCreated datePublished" datetime="2018-05-16T01:39:31+08:00">2018-05-16</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/05/16/Spring-JDBC-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/16/Spring-JDBC-IN-ACTION/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="经典-JDBC"><a href="#经典-JDBC" class="headerlink" title="经典 JDBC"></a>经典 JDBC</h3><h4 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h4><ol>
-<li>注册 <code>Driver</code> 实例（只要加载 <code>java.sql.Driver</code> 接口的实现类 <code>com.mysql.jdbc.Driver</code> 就行，会自动将 <code>com.mysql.jdbc.Driver</code> 注册到 <code>DriverManager</code>）</li>
-<li>取得 <code>Connection</code> 实例（<code>Connection conn = DriverManager.getConnection(jdbcUrl, username, password)</code>）</li>
-<li>最后关闭 <code>Connection</code> 实例（JDBC 规范没要求关闭 <code>conn</code> 的时候关闭 <code>stmt</code>，最好手动关闭 <code>stmt</code>）
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/16/Spring-JDBC-IN-ACTION/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1068,7 +1071,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

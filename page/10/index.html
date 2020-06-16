@@ -183,6 +183,324 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/09/10/JDBC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/10/JDBC/" class="post-title-link" itemprop="url">JDBC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-10 16:10:40" itemprop="dateCreated datePublished" datetime="2017-09-10T16:10:40+08:00">2017-09-10</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/09/10/JDBC/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/10/JDBC/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>写到这里，真是感触良多，很久之前开始装模作样编程<br>然后——学C语言停止在链表，学 Java 停止在 JDBC，学安卓停止在 SQL Lite，恍恍惚惚<br>真不算是很好的记忆啊…
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/10/JDBC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/09/03/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/03/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">MySQL必知必会（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-03 23:37:13" itemprop="dateCreated datePublished" datetime="2017-09-03T23:37:13+08:00">2017-09-03</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/09/03/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/03/MySQL必知必会（二）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="使用数据处理函数"><a href="#使用数据处理函数" class="headerlink" title="使用数据处理函数"></a>使用数据处理函数</h1><ul>
+<li>常用的文本处理函数：<br><img data-src="https://ws3.sinaimg.cn/large/006tKfTcgy1fjb9rme77kj30cu05st8s.jpg" alt=""></li>
+<li>Upper函数举例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name, UPPER(vend_name) AS vend_name_upcase</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/03/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/09/03/%E5%BA%94%E7%94%A8%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/03/%E5%BA%94%E7%94%A8%E5%B1%82/" class="post-title-link" itemprop="url">应用层</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-03 02:01:39" itemprop="dateCreated datePublished" datetime="2017-09-03T02:01:39+08:00">2017-09-03</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/09/03/%E5%BA%94%E7%94%A8%E5%B1%82/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/03/应用层/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>两种主流的应用程序体系结构：CS、P2P。</li>
+<li>CS体系结构中，C之间不直接通信，还有S具有固定的、周知的IP地址。</li>
+<li>P2P体系结构最吸引人的特性之一是它们的<strong>自扩展性</strong>，然而它仍面临严峻的挑战：①ISP友好；②安全性；③激励。</li>
+<li>在操作系统的术语中，进行通信的实际上是进程。当两个进程运行在同一个端系统上的时候，它们使用进程间的通信机制（由操作系统确定）进行通信；当两个进程运行在不同的端系统上时，就需要跨越计算机网络交换<strong>报文</strong>。</li>
+<li>在给定的一对进程之间的通信会话场景中，发起通信的进程是C，而等待联系的进程被称为S。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/03/%E5%BA%94%E7%94%A8%E5%B1%82/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/31/Git-from-the-inside-out/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/31/Git-from-the-inside-out/" class="post-title-link" itemprop="url">Git from the inside out</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-31 11:25:50" itemprop="dateCreated datePublished" datetime="2017-08-31T11:25:50+08:00">2017-08-31</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/08/31/Git-from-the-inside-out/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/31/Git-from-the-inside-out/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>忘记了是秋百万、猴子还是高爷，在微博上转载过这篇文章。</p>
+<p>当时我就随手收藏了，很惭愧，才想起来这个东西，本想转载到我的博客，想想算了，我也懒得去要授权了，直接贴上原文链接吧：<br><a href="https://maryrosecook.com/blog/post/git-from-the-inside-out" target="_blank" rel="noopener">https://maryrosecook.com/blog/post/git-from-the-inside-out</a></p>
+<p>然后我Google了一个翻译，我还没看，同样直接上链接吧，喜欢的同学可以给他一个Star~：<br><a href="https://github.com/pysnow530/git-from-the-inside-out" target="_blank" rel="noopener">https://github.com/pysnow530/git-from-the-inside-out</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/31/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -686,347 +1004,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/17/Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/17/Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">Lambda 表达式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-08-17 11:35:38" itemprop="dateCreated datePublished" datetime="2017-08-17T11:35:38+08:00">2017-08-17</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/08/17/Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/17/Lambda-表达式/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>匿名类</p>
-<ul>
-<li>原匿名类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Hero&gt; c = <span class="keyword">new</span> Comparator&lt;Hero&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Hero h1, Hero h2)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//按照hp进行排序</span></span><br><span class="line">        <span class="keyword">if</span>(h1.hp&gt;=h2.hp)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;  <span class="comment">//正数表示h1比h2要大</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Collections.sort(heros,c);</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/08/17/Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/16/%E6%B3%9B%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/16/%E6%B3%9B%E5%9E%8B/" class="post-title-link" itemprop="url">泛型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-08-16 23:51:20" itemprop="dateCreated datePublished" datetime="2017-08-16T23:51:20+08:00">2017-08-16</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/08/16/%E6%B3%9B%E5%9E%8B/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/16/泛型/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li><p>泛型的类型参数使用大写形式，且比较短，一般一个字母。在java库中：使用变量E表示集合的元素类型；K和V分别表示键与值的类型（比如：Map的键与值）；T（需要时还可以用临近的字母U和S）表示任意类型。</p>
-</li>
-<li><p>可以将运行时错误在编译时检查出来：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面这样的代码会在编译时直接报错</span></span><br><span class="line">Comparable&lt;Date&gt; date = <span class="keyword">new</span> Date();</span><br><span class="line">System.out.println(date.compareTo(<span class="string">"lalala"</span>));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>取出时无需进行类型转换，编译器知道它的类型，而不像之前的都是<strong>Object</strong>类型的对象。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/08/16/%E6%B3%9B%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/16/LC-3%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/16/LC-3%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">LC-3结构</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-08-16 16:29:17" itemprop="dateCreated datePublished" datetime="2017-08-16T16:29:17+08:00">2017-08-16</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/08/16/LC-3%E7%BB%93%E6%9E%84/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/16/LC-3结构/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>ISA</p>
-<ul>
-<li>ISA定义了软件编程所需要的<strong>必要而完整</strong>的描述。</li>
-<li>ISA给出了<strong>内存组织方式</strong>、<strong>寄存器组</strong>、<strong>指令集（包括操作码、数据类型、寻址模式）</strong>等信息。</li>
-</ul>
-<p>内存组织</p>
-<ul>
-<li>LC-3的可寻址空间大小是$2^{16}$，寻址基本单位是16位。$2^{16}$大小的空间并非全部用于内存。</li>
-<li>由于LC-3中数据小狐狸的基本单位是16位，所以我们在此称这16位为一个<strong>字</strong>，同时我们也称LC-3是一个<strong>字寻址</strong>机器。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/08/16/LC-3%E7%BB%93%E6%9E%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2017/08/14/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/14/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">集合框架</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-08-14 23:27:40" itemprop="dateCreated datePublished" datetime="2017-08-14T23:27:40+08:00">2017-08-14</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2017/08/14/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/14/集合框架/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>ArrayList</p>
-<ul>
-<li>ArrayList常用的方法：add、contains、get、indexOf、remove、set、size、toArray、addAll、clear。</li>
-<li>add：<br><code>heros.add(new Hero(&quot;hero &quot; + i));</code><br><code>heros.add(3, specialHero);</code></li>
-<li>contains：<br><code>heros.contains(specialHero)</code></li>
-<li>get：
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/08/14/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1094,7 +1075,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
