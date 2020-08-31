@@ -183,7 +183,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/15/Java-%E5%B9%B6%E5%8F%91%E5%8C%85/">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/17/Java-%E9%9B%86%E5%90%88%E7%BB%BC%E8%BF%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -197,7 +197,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/01/15/Java-%E5%B9%B6%E5%8F%91%E5%8C%85/" class="post-title-link" itemprop="url">Java 并发包</a>
+            <a href="/2019/01/17/Java-%E9%9B%86%E5%90%88%E7%BB%BC%E8%BF%B0/" class="post-title-link" itemprop="url">Java 集合综述</a>
         </h2>
 
         <div class="post-meta">
@@ -207,7 +207,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-01-15 23:16:44" itemprop="dateCreated datePublished" datetime="2019-01-15T23:16:44+08:00">2019-01-15</time>
+              <time title="创建时间：2019-01-17 23:08:51" itemprop="dateCreated datePublished" datetime="2019-01-17T23:08:51+08:00">2019-01-17</time>
             </span>
 
           
@@ -219,8 +219,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2019/01/15/Java-%E5%B9%B6%E5%8F%91%E5%8C%85/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/15/Java-并发包/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2019/01/17/Java-%E9%9B%86%E5%90%88%E7%BB%BC%E8%BF%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/17/Java-集合综述/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -235,12 +235,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="异步任务执行服务"><a href="#异步任务执行服务" class="headerlink" title="异步任务执行服务"></a>异步任务执行服务</h3><h4 id="基本接口"><a href="#基本接口" class="headerlink" title="基本接口"></a>基本接口</h4><ul>
-<li><code>Runnable</code> 和 <code>Callable</code><br><code>Runnable</code> 没有返回结果，而 <code>Callable</code> 有，<code>Runnable</code> 不会抛出异常，而 <code>Callable</code> 会。</li>
-<li><code>Executor</code> 和 <code>ExecutorService</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="java-util"><a href="#java-util" class="headerlink" title="java.util"></a><code>java.util</code></h3><h4 id="一图流"><a href="#一图流" class="headerlink" title="一图流"></a>一图流</h4><p><img data-src="https://i.loli.net/2020/06/01/RqtEcb8UML47Ohz.png" alt=""></p>
+<h4 id="大体说明"><a href="#大体说明" class="headerlink" title="大体说明"></a>大体说明</h4><p><code>Collection</code> 是集合的根接口，<code>List</code> 表示有序列表，<code>Set</code> 表示没有重复元素的集合，<code>Map</code> 是一种表示键值对的数据结构。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/01/15/Java-%E5%B9%B6%E5%8F%91%E5%8C%85/#more" rel="contents">
+              <a class="btn" href="/2019/01/17/Java-%E9%9B%86%E5%90%88%E7%BB%BC%E8%BF%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -264,7 +263,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E6%A6%82%E8%BF%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -278,87 +277,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/" class="post-title-link" itemprop="url">Java 并发包的基石</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-01-13 23:50:12" itemprop="dateCreated datePublished" datetime="2019-01-13T23:50:12+08:00">2019-01-13</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/13/Java-并发包的基石/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="原子变量和-CAS"><a href="#原子变量和-CAS" class="headerlink" title="原子变量和 CAS"></a>原子变量和 CAS</h3><h4 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a><code>AtomicInteger</code></h4><p>对于多线程操作 <code>count++</code> 这种场景，我们可以使用原子变量来保证 update 数据的原子性。它的内部成员还是 <code>volatile</code> 修饰的，内存可见性的问题也没有啦。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">AtomicInteger</span><span class="params">(<span class="keyword">int</span> initialValue)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">AtomicInteger</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> newValue)</span> </span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并设置新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndSet</span><span class="params">(<span class="keyword">int</span> newValue)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并给当前值加 1</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndIncrement</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并给当前值减 1</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndDecrement</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式获取旧值并给当前值加 delta</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAdd</span><span class="params">(<span class="keyword">int</span> delta)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式给当前值加 1 并获取新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">incrementAndGet</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式给当前值减 1 并获取新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">decrementAndGet</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 以原子方式给当前值加 delta 并获取新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">addAndGet</span><span class="params">(<span class="keyword">int</span> delta)</span></span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%8C%85%E7%9A%84%E5%9F%BA%E7%9F%B3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">Java 并发基础知识</a>
+            <a href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">Java 并发概述</a>
         </h2>
 
         <div class="post-meta">
@@ -380,8 +299,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/13/Java-并发基础知识/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E6%A6%82%E8%BF%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/13/Java-并发概述/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -400,7 +319,7 @@
 <li>继承 Thread<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">publicvoid <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  Thread thread = <span class="keyword">new</span> HelloThead();</span><br><span class="line">  thread.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#more" rel="contents">
+              <a class="btn" href="/2019/01/13/Java-%E5%B9%B6%E5%8F%91%E6%A6%82%E8%BF%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -999,6 +918,88 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/06/03/Spring-Security-IN-ACTION/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/03/Spring-Security-IN-ACTION/" class="post-title-link" itemprop="url">Spring Security IN ACTION</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-03 13:43:52" itemprop="dateCreated datePublished" datetime="2018-06-03T13:43:52+08:00">2018-06-03</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/06/03/Spring-Security-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/03/Spring-Security-IN-ACTION/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="启用-Spring-Security"><a href="#启用-Spring-Security" class="headerlink" title="启用 Spring Security"></a>启用 Spring Security</h3><h4 id="原理解读"><a href="#原理解读" class="headerlink" title="原理解读"></a>原理解读</h4><p>Spring Security 借助一系列的 Servlet Filter 来提供各种安全性功能。</p>
+<p>在使用 Spring 开发的时候，如果想让 Filter 享受到依赖注入的好处，常见的操作是实现 <code>GenericFilterBean</code> 并注册到 IoC 容器，为了启动它们，一般要在配置中声明一个 <code>DelegatingFilterProxy</code>，使其 filter-name 和 Ioc 中的 Filter 挂钩。</p>
+<p>Spring Security 类似，它声明一个名为 <code>springSecurityFilterChain</code> 的 <code>DelegatingFilterProxy</code>，然后指向 IoC 容器中注册的一个 <code>FilterChainProxy</code> 的实例，<code>FilterChainProxy</code> 通过拓展 <code>GenericFilterBean</code> 间接实现了 Filter 接口，同时持有一组 <code>SecurityFilterChain</code>，</p>
+<h4 id="启用办法"><a href="#启用办法" class="headerlink" title="启用办法"></a>启用办法</h4><p>在 Servlet 3.0 环境中，容器会在类路径中查找实现 <code>javax.servlet.ServletContainerInitializer</code> 接口的类，如有，就用它来配置 Servlet 容器。 Spring 提供了名为 <code>SpringServletContainerInitializer</code> 的实现，这个类反过来又会查找实现了 <code>WebApplicationInitializer</code> 的类并将配置的任务交给它们来完成。而 <code>AbstractSecurityWebApplicationInitializer</code> 就是 <code>WebApplicationInitializer</code> 的一个基础实现。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/03/Spring-Security-IN-ACTION/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1070,14 +1071,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

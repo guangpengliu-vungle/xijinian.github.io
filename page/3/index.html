@@ -183,88 +183,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/06/03/Spring-Security-IN-ACTION/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="xijinian">
-      <meta itemprop="description" content="放轻松，就像在漫游地球～">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Adventures of xijinian">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/03/Spring-Security-IN-ACTION/" class="post-title-link" itemprop="url">Spring Security IN ACTION</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-03 13:43:52" itemprop="dateCreated datePublished" datetime="2018-06-03T13:43:52+08:00">2018-06-03</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/06/03/Spring-Security-IN-ACTION/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/03/Spring-Security-IN-ACTION/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="启用-Spring-Security"><a href="#启用-Spring-Security" class="headerlink" title="启用 Spring Security"></a>启用 Spring Security</h3><h4 id="原理解读"><a href="#原理解读" class="headerlink" title="原理解读"></a>原理解读</h4><p>Spring Security 借助一系列的 Servlet Filter 来提供各种安全性功能。</p>
-<p>在使用 Spring 开发的时候，如果想让 Filter 享受到依赖注入的好处，常见的操作是实现 <code>GenericFilterBean</code> 并注册到 IoC 容器，为了启动它们，一般要在配置中声明一个 <code>DelegatingFilterProxy</code>，使其 filter-name 和 Ioc 中的 Filter 挂钩。</p>
-<p>Spring Security 类似，它声明一个名为 <code>springSecurityFilterChain</code> 的 <code>DelegatingFilterProxy</code>，然后指向 IoC 容器中注册的一个 <code>FilterChainProxy</code> 的实例，<code>FilterChainProxy</code> 通过拓展 <code>GenericFilterBean</code> 间接实现了 Filter 接口，同时持有一组 <code>SecurityFilterChain</code>，</p>
-<h4 id="启用办法"><a href="#启用办法" class="headerlink" title="启用办法"></a>启用办法</h4><p>在 Servlet 3.0 环境中，容器会在类路径中查找实现 <code>javax.servlet.ServletContainerInitializer</code> 接口的类，如有，就用它来配置 Servlet 容器。 Spring 提供了名为 <code>SpringServletContainerInitializer</code> 的实现，这个类反过来又会查找实现了 <code>WebApplicationInitializer</code> 的类并将配置的任务交给它们来完成。而 <code>AbstractSecurityWebApplicationInitializer</code> 就是 <code>WebApplicationInitializer</code> 的一个基础实现。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/03/Spring-Security-IN-ACTION/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/05/20/Spring-REST-IN-ACTION/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1022,6 +940,88 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.xijinian.top/2018/03/21/HTML-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%98%E8%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="xijinian">
+      <meta itemprop="description" content="放轻松，就像在漫游地球～">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures of xijinian">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/21/HTML-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%98%E8%A1%8C/" class="post-title-link" itemprop="url">HTML 从入门到还行</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-21 19:45:03" itemprop="dateCreated datePublished" datetime="2018-03-21T19:45:03+08:00">2018-03-21</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/03/21/HTML-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%98%E8%A1%8C/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/21/HTML-从入门到还行/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="HTML-基石"><a href="#HTML-基石" class="headerlink" title="HTML 基石"></a>HTML 基石</h2><h3 id="HTML-简介"><a href="#HTML-简介" class="headerlink" title="HTML 简介"></a>HTML 简介</h3><h4 id="什么是-HTML"><a href="#什么是-HTML" class="headerlink" title="什么是 HTML"></a>什么是 HTML</h4><p>HTML(HyperText Markup Language) 不是一种编程语言，它是一种标记语言，用于告诉您的浏览器如何构造您访问的网页。它可以像Web开发人员希望的那样复杂或简单。</p>
+<h4 id="HTML-元素"><a href="#HTML-元素" class="headerlink" title="HTML 元素"></a>HTML 元素</h4><ul>
+<li><p>构成</p>
+<p> <img data-src="https://i.loli.net/2019/01/13/5c3ac5988dadb.png" alt="">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/21/HTML-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%98%E8%A1%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1093,14 +1093,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
